@@ -1,0 +1,2554 @@
+<!doctype html>
+
+<html dir="rtl" lang="he">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>AI עובד בשבילי — מפגש 2 | קהילת חלאסרטן</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --color-bg: #0c1726;
+        --color-bg-deep: #07101b;
+        --color-surface: #18273a;
+        --color-text: #f4f8ff;
+        --color-text-secondary: #c5d7ea;
+        --color-text-muted: #88a4c3;
+        --color-accent-1: #39bdf8;
+        --color-accent-2: #a78bfa;
+        --color-accent-3: #34d399;
+        --color-glass-bg: rgba(255, 255, 255, 0.06);
+        --color-glass-border: rgba(255, 255, 255, 0.1);
+        --color-vignette: rgba(0, 0, 0, 0.45);
+      }
+    </style>
+    <style>
+      :root {
+        --color-bg: #0c1726;
+        --color-text: #f4f8ff;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        background: var(--color-bg);
+        margin: 0;
+      }
+      body {
+        font-family: "Heebo", sans-serif;
+        color: var(--color-text);
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+      }
+      .deck {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        background: var(--color-bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0.95);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .slide.active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: all;
+      }
+      .slide > .content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 1120px;
+        padding: clamp(1.3rem, 3.2vw, 3.2rem);
+      }
+      .nav-controls {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(10px);
+        padding: 10px 22px;
+        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .nav-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: rgba(255, 255, 255, 0.06);
+        color: #39bdf8;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .slide-dots {
+        display: flex;
+        gap: 8px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+      }
+      .dot.active {
+        background: #39bdf8;
+        transform: scale(1.25);
+      }
+      .slide-counter {
+        font-size: 0.82rem;
+        color: #88a4c3;
+        min-width: 46px;
+        text-align: center;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .gradient-mesh {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        animation: float-slow 10s ease-in-out infinite;
+      }
+      .blob:nth-child(2) {
+        animation: float-drift 14s ease-in-out infinite;
+      }
+      .blob:nth-child(3) {
+        animation: float-slow 18s ease-in-out infinite reverse;
+      }
+      .slide::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 256px 256px;
+        opacity: 0.03;
+        mix-blend-mode: overlay;
+      }
+      .slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 48%,
+          rgba(0, 0, 0, 0.45) 100%
+        );
+      }
+      @keyframes float-slow {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(60px, -50px) scale(1.12);
+        }
+        50% {
+          transform: translate(-40px, 40px) scale(0.9);
+        }
+        75% {
+          transform: translate(50px, 20px) scale(1.08);
+        }
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+      }
+      @keyframes float-drift {
+        0% {
+          transform: translate(0, 0) scale(1) rotate(0);
+        }
+        33% {
+          transform: translate(-50px, -60px) scale(1.15) rotate(3deg);
+        }
+        66% {
+          transform: translate(40px, 30px) scale(0.88) rotate(-2deg);
+        }
+        100% {
+          transform: translate(0, 0) scale(1) rotate(0);
+        }
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 18px;
+        padding: 1.15rem;
+      }
+      .muted {
+        color: #88a4c3;
+      }
+      .secondary {
+        color: #c5d7ea;
+      }
+      .accent {
+        color: #39bdf8;
+      }
+      .emoji-big {
+        font-size: 78px;
+        line-height: 1;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(57, 189, 248, 0.1);
+        border: 1px solid rgba(57, 189, 248, 0.2);
+        font-size: 0.88rem;
+        color: #c5d7ea;
+      }
+      .mouse-spotlight {
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        pointer-events: none;
+      }
+      .step {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem;
+        margin-bottom: 0.55rem;
+      }
+      .step-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #39bdf8;
+        color: #03111d;
+        font-weight: 800;
+        font-size: 0.8rem;
+        min-width: 28px;
+      }
+      .video-box {
+        background: linear-gradient(
+          135deg,
+          rgba(57, 189, 248, 0.08),
+          rgba(167, 139, 250, 0.08)
+        );
+        border: 1px solid rgba(57, 189, 248, 0.22);
+        border-radius: 18px;
+        padding: 1rem;
+      }
+      .small {
+        font-size: 0.86rem;
+      }
+      .code-block {
+        background: #050709;
+        border-radius: 12px;
+        padding: 0.8rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-family: monospace;
+        font-size: 0.85rem;
+        line-height: 1.55;
+        direction: ltr;
+        text-align: left;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+      .divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin: 0.6rem 0;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.2s !important;
+        }
+      }
+
+      .slide-title {
+        font-size: clamp(1.7rem, 3.8vw, 2.8rem);
+        font-weight: 800;
+        margin: 0.7rem 0 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mouse-spotlight"></div>
+    <div class="deck">
+      <!-- ─────────────── SLIDE 1: Title ─────────────── -->
+      <div class="slide active" data-slide="1">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 520px;
+              height: 520px;
+              top: -120px;
+              right: -100px;
+              background: #a78bfa;
+              opacity: 0.13;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 330px;
+              height: 330px;
+              bottom: -70px;
+              left: -40px;
+              background: #39bdf8;
+              opacity: 0.11;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 220px;
+              height: 220px;
+              top: 48%;
+              left: 18%;
+              background: #34d399;
+              opacity: 0.09;
+            "
+          ></div>
+        </div>
+        <canvas
+          class="particle-canvas"
+          style="position: absolute; inset: 0; z-index: 1"
+        ></canvas>
+        <div class="content text-center">
+          <div
+            class="reveal"
+            style="
+              font-size: 72px;
+              line-height: 1;
+              animation: float 3s ease-in-out infinite;
+              margin-bottom: 12px;
+            "
+          >
+            🤝🧠
+          </div>
+          <h1
+            class="reveal font-black"
+            style="
+              font-size: clamp(2rem, 5.2vw, 4.2rem);
+              line-height: 1.15;
+              margin: 0 0 0.8rem;
+              background: linear-gradient(135deg, #a78bfa, #39bdf8, #34d399);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+            "
+          >
+            AI עובד בשבילי
+          </h1>
+          <p
+            class="reveal"
+            style="
+              font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+              color: #88a4c3;
+              letter-spacing: 3px;
+              text-transform: uppercase;
+              margin: 0 0 1rem;
+            "
+          >
+            מפגש 2 מתוך 4 · קהילת חלאסרטן
+          </p>
+          <div
+            class="reveal flex-wrap justify-center"
+            style="display: inline-flex; gap: 1.2rem"
+          >
+            <span
+              style="
+                background: rgba(167, 139, 250, 0.12);
+                border: 1px solid rgba(167, 139, 250, 0.25);
+                border-radius: 999px;
+                padding: 0.3rem 0.9rem;
+                font-size: 0.9rem;
+                color: #a78bfa;
+              "
+              >מ-AI שרואה ← ל-AI שיוצר</span
+            >
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 2: Recap from session 1 ─────────────── -->
+      <div class="slide" data-slide="2">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 430px;
+              height: 430px;
+              top: -100px;
+              left: -60px;
+              background: #39bdf8;
+              opacity: 0.09;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 270px;
+              height: 270px;
+              bottom: -60px;
+              right: -40px;
+              background: #34d399;
+              opacity: 0.07;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">🔙 במפגש הקודם</div>
+          <h2 class="reveal slide-title">מה ראינו במפגש 1?</h2>
+          <div class="grid grid-cols-3 gap-5">
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #39bdf8"
+            >
+              <div style="font-size: 2.2rem; margin-bottom: 0.5rem">🔢</div>
+              <div class="font-bold" style="margin-bottom: 0.4rem">
+                תמונה = מספרים
+              </div>
+              <div class="secondary small">
+                כל תמונה היא מיליוני פיקסלים. לכל פיקסל ערך מספרי. מכאן מתחילה
+                הראייה.
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #a78bfa"
+            >
+              <div style="font-size: 2.2rem; margin-bottom: 0.5rem">🏷️</div>
+              <div class="font-bold" style="margin-bottom: 0.4rem">
+                קצוות → צורות → משמעות
+              </div>
+              <div class="secondary small">
+                AI לא "רואה" כמו אנחנו. הוא מזהה דפוסים בשלבים, מהפשוט למורכב.
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #34d399"
+            >
+              <div style="font-size: 2.2rem; margin-bottom: 0.5rem">📱</div>
+              <div class="font-bold" style="margin-bottom: 0.4rem">
+                ראייה בחיים שלנו
+              </div>
+              <div class="secondary small">
+                זיהוי פנים, Google Lens, CT ו-MRI — כולם משתמשים באותה
+                טכנולוגיה.
+              </div>
+            </div>
+          </div>
+          <div class="card reveal text-center" style="margin-top: 1rem">
+            <span class="secondary">המסר שלקחנו: </span
+            ><span class="font-extrabold" style="color: #39bdf8"
+              >AI לא מבין — הוא מחשב הסתברויות מתוך דפוסים.</span
+            >
+            <span class="secondary"> היום נלמד איך לדבר איתו נכון.</span>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 3: Simple example — white cat ─────────────── -->
+      <div class="slide" data-slide="3">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 420px;
+              height: 420px;
+              top: -80px;
+              right: -70px;
+              background: #39bdf8;
+              opacity: 0.09;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 280px;
+              height: 280px;
+              bottom: -60px;
+              left: -50px;
+              background: #a78bfa;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <h2 class="reveal slide-title text-center">
+            איך מחשב אומר: "אני רואה חתול לבן"?
+          </h2>
+          <div
+            class="grid grid-cols-[auto_1fr] gap-6 items-center mx-auto"
+            style="max-width: 900px"
+          >
+            <div class="reveal text-center">
+              <div style="font-size: 7rem; line-height: 1">🐱</div>
+              <div class="muted small" style="margin-top: 0.4rem">
+                תמונת קלט
+              </div>
+            </div>
+            <div class="reveal">
+              <div class="flex flex-col" style="gap: 0.6rem">
+                <div
+                  class="card flex items-center"
+                  style="border-right: 4px solid #39bdf8; gap: 1rem"
+                >
+                  <div style="font-size: 1.5rem">🔍</div>
+                  <div>
+                    <div class="font-bold">שלב 1 — יש אובייקט</div>
+                    <div class="secondary small">
+                      הגבולות בתמונה מסמנים "יש כאן ישות כלשהי"
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="border-right: 4px solid #a78bfa; gap: 1rem"
+                >
+                  <div style="font-size: 1.5rem">🎨</div>
+                  <div>
+                    <div class="font-bold">שלב 2 — יש צבע</div>
+                    <div class="secondary small">
+                      ערכי הפיקסלים → RGB גבוה בכל הערוצים =
+                      <strong>לבן</strong>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="border-right: 4px solid #34d399; gap: 1rem"
+                >
+                  <div style="font-size: 1.5rem">📊</div>
+                  <div>
+                    <div class="font-bold">שלב 3 — יש הסתברות</div>
+                    <div class="secondary small">
+                      הצורות דומות ל-2.3 מיליון חתולים שראה →
+                      <strong>חתול: 94.7%</strong>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="
+                    background: rgba(52, 211, 153, 0.08);
+                    border-color: rgba(52, 211, 153, 0.25);
+                    gap: 1rem;
+                  "
+                >
+                  <div style="font-size: 1.5rem">✅</div>
+                  <div>
+                    <div class="font-bold" style="color: #34d399">
+                      תשובה: "חתול לבן"
+                    </div>
+                    <div class="secondary small">
+                      לא הבנה — הסתברות גבוהה מספיק שמניבה תגית.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 4: The transition ─────────────── -->
+      <div class="slide" data-slide="4">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 500px;
+              height: 500px;
+              top: -110px;
+              left: -80px;
+              background: #a78bfa;
+              opacity: 0.12;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 300px;
+              height: 300px;
+              bottom: -70px;
+              right: -50px;
+              background: #34d399;
+              opacity: 0.09;
+            "
+          ></div>
+        </div>
+        <div class="content text-center">
+          <div
+            class="reveal"
+            style="
+              font-size: 66px;
+              line-height: 1;
+              animation: float 3s ease-in-out infinite;
+              margin-bottom: 0.8rem;
+            "
+          >
+            🔄
+          </div>
+          <h2 class="reveal slide-title">אבל AI לא רק רואה</h2>
+          <div
+            class="grid grid-cols-2 gap-6"
+            style="max-width: 860px; margin: 0 auto 1rem"
+          >
+            <div
+              class="card reveal"
+              style="border: 2px solid rgba(57, 189, 248, 0.3); opacity: 0.7"
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.5rem">👁️</div>
+              <div
+                class="font-extrabold"
+                style="color: #39bdf8; margin-bottom: 0.4rem"
+              >
+                מפגש 1 — AI רואה
+              </div>
+              <div class="secondary small">
+                זיהוי תמונות, דפוסים, פיקסלים. AI שמקבל תמונה ואומר מה יש בה.
+              </div>
+            </div>
+            <div
+              class="card reveal"
+              style="
+                border: 2px solid rgba(167, 139, 250, 0.5);
+                background: rgba(167, 139, 250, 0.06);
+              "
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.5rem">🤝</div>
+              <div
+                class="font-extrabold"
+                style="color: #a78bfa; margin-bottom: 0.4rem"
+              >
+                מפגש 2 — AI עובד בשבילי
+              </div>
+              <div class="secondary small">
+                AI שמבין שפה, מנסח, מציע, כותב ויוצר — דרך
+                <strong>שיחה</strong> איתו.
+              </div>
+            </div>
+          </div>
+          <div class="reveal video-box mx-auto" style="max-width: 760px">
+            <p
+              style="
+                font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+                line-height: 1.7;
+                margin: 0;
+              "
+            >
+              אם במפגש הקודם נתנו ל-AI
+              <span class="font-extrabold" style="color: #39bdf8">עיניים</span
+              >,<br />
+              היום נלמד איך
+              <span class="font-extrabold" style="color: #a78bfa"
+                >לדבר איתו נכון</span
+              >.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 5: What is LLM ─────────────── -->
+      <div class="slide" data-slide="5">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 430px;
+              height: 430px;
+              top: -90px;
+              right: -70px;
+              background: #39bdf8;
+              opacity: 0.09;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 280px;
+              height: 280px;
+              bottom: -60px;
+              left: -40px;
+              background: #a78bfa;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">🧠 הבסיס</div>
+          <h2 class="reveal slide-title">מה זה בעצם LLM?</h2>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="reveal">
+              <div
+                class="card"
+                style="margin-bottom: 0.8rem; border-right: 4px solid #39bdf8"
+              >
+                <div
+                  class="font-extrabold"
+                  style="color: #39bdf8; margin-bottom: 0.4rem"
+                >
+                  Large Language Model
+                </div>
+                <div class="secondary small">
+                  מודל שפה גדול. הוא קרא המון טקסט — ספרים, מאמרים, אתרים, שיחות
+                  — ולמד לזהות מה בדרך כלל בא אחרי מה.
+                </div>
+              </div>
+              <div class="card" style="border-right: 4px solid #a78bfa">
+                <div
+                  class="font-extrabold"
+                  style="color: #a78bfa; margin-bottom: 0.4rem"
+                >
+                  הדוגמאות שמכירים
+                </div>
+                <div
+                  class="flex flex-wrap"
+                  style="gap: 0.4rem; margin-bottom: 0.4rem"
+                >
+                  <span
+                    class="pill"
+                    style="background: rgba(57, 189, 248, 0.12); color: #39bdf8"
+                    >ChatGPT</span
+                  >
+                  <span
+                    class="pill"
+                    style="
+                      background: rgba(167, 139, 250, 0.12);
+                      color: #a78bfa;
+                    "
+                    >Claude</span
+                  >
+                  <span
+                    class="pill"
+                    style="background: rgba(52, 211, 153, 0.12); color: #34d399"
+                    >Gemini</span
+                  >
+                </div>
+                <div class="secondary small">
+                  כולם LLMs. אותה עקרון — מפעלים שונים.
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="card flex flex-col justify-between"
+                style="height: 100%"
+              >
+                <div>
+                  <div class="font-extrabold" style="margin-bottom: 0.6rem">
+                    האנלוגיה הפשוטה:
+                  </div>
+                  <div class="video-box" style="margin-bottom: 0.8rem">
+                    <div class="secondary small">
+                      זה <strong>לא מוח אנושי</strong>.<br />זה מנוע שפה שיודע
+                      להשלים, לארגן ולבנות תשובות על בסיס המון דוגמאות שלמד
+                      מהן.<br /><br />כמו שאוטוקורקט משלים מילה — רק הרבה יותר
+                      חכם.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card text-center"
+                  style="
+                    background: rgba(52, 211, 153, 0.06);
+                    border-color: rgba(52, 211, 153, 0.2);
+                  "
+                >
+                  <div class="secondary small">
+                    🎯 לכן:
+                    <span class="font-bold" style="color: #f4f8ff"
+                      >ככל שנדבר איתו יותר בבירור, נקבל תוצאה טובה יותר.</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 6: What is a prompt ─────────────── -->
+      <div class="slide" data-slide="6">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 440px;
+              height: 440px;
+              top: -90px;
+              left: -70px;
+              background: #34d399;
+              opacity: 0.09;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 290px;
+              height: 290px;
+              bottom: -70px;
+              right: -50px;
+              background: #39bdf8;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">✍️ הכלי הבסיסי</div>
+          <h2 class="reveal slide-title">מה זה פרומפט?</h2>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="reveal">
+              <div
+                class="card"
+                style="margin-bottom: 0.7rem; border-top: 3px solid #34d399"
+              >
+                <div style="font-size: 1.8rem; margin-bottom: 0.4rem">💬</div>
+                <div class="font-extrabold" style="margin-bottom: 0.4rem">
+                  פרומפט = ההוראות שאנחנו נותנים ל-AI
+                </div>
+                <div class="secondary small">
+                  זה הטקסט שנכתוב לו. שאלה, בקשה, הוראה, הקשר — הכל פרומפט.
+                </div>
+              </div>
+              <div class="card" style="border-top: 3px solid #39bdf8">
+                <div
+                  class="font-extrabold"
+                  style="margin-bottom: 0.5rem; color: #39bdf8"
+                >
+                  פרומפט טוב = תקשורת טובה
+                </div>
+                <div class="secondary small">
+                  זה לא קסם טכני. זה בדיוק כמו לתת הנחיה לעובד חדש — ככל שנהיה
+                  ברורים ומכוונים יותר, נקבל תוצאה טובה יותר.
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="font-bold"
+                style="margin-bottom: 0.6rem; color: #c5d7ea"
+              >
+                דוגמה:
+              </div>
+              <div
+                class="card"
+                style="
+                  margin-bottom: 0.6rem;
+                  border: 1px solid rgba(239, 68, 68, 0.25);
+                  background: rgba(239, 68, 68, 0.04);
+                "
+              >
+                <div
+                  class="pill"
+                  style="
+                    background: rgba(239, 68, 68, 0.12);
+                    color: #f87171;
+                    margin-bottom: 0.5rem;
+                  "
+                >
+                  ❌ פרומפט חלש
+                </div>
+                <div
+                  class="code-block text-right"
+                  style="
+                    color: #f4f8ff;
+                    font-family: &quot;Heebo&quot;, sans-serif;
+                    direction: rtl;
+                  "
+                >
+                  "תכתוב לי משהו"
+                </div>
+                <div class="secondary small" style="margin-top: 0.4rem">
+                  AI לא יודע: למי? בסגנון מה? על מה?
+                </div>
+              </div>
+              <div
+                class="card"
+                style="
+                  border: 1px solid rgba(52, 211, 153, 0.25);
+                  background: rgba(52, 211, 153, 0.04);
+                "
+              >
+                <div
+                  class="pill"
+                  style="
+                    background: rgba(52, 211, 153, 0.12);
+                    color: #34d399;
+                    margin-bottom: 0.5rem;
+                  "
+                >
+                  ✅ פרומפט חזק
+                </div>
+                <div
+                  class="code-block text-right"
+                  style="
+                    color: #f4f8ff;
+                    font-family: &quot;Heebo&quot;, sans-serif;
+                    direction: rtl;
+                  "
+                >
+                  "כתוב לי הודעה קצרה, נעימה ומעודדת לחבר שעובר שבוע קשה. בסגנון
+                  חם ואישי, 3-4 שורות."
+                </div>
+                <div class="secondary small" style="margin-top: 0.4rem">
+                  מטרה ברורה + קהל + סגנון + אורך.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 7: Why wording matters ─────────────── -->
+      <div class="slide" data-slide="7">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 460px;
+              height: 460px;
+              top: -100px;
+              right: -80px;
+              background: #a78bfa;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 290px;
+              height: 290px;
+              bottom: -60px;
+              left: -50px;
+              background: #34d399;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">⚡ הכוח שלכם</div>
+          <h2 class="reveal slide-title">אותו כלי, תוצאה אחרת</h2>
+          <p class="reveal muted" style="margin: 0 0 1rem">
+            חמישה שאלות שהופכות פרומפט רגיל למדויק:
+          </p>
+          <div class="grid grid-cols-5 gap-3">
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #39bdf8"
+            >
+              <div style="font-size: 1.6rem">🎯</div>
+              <div
+                class="font-extrabold"
+                style="color: #39bdf8; margin: 0.4rem 0; font-size: 0.9rem"
+              >
+                כ
+              </div>
+              <div class="font-bold" style="font-size: 0.85rem">כוונה</div>
+              <div class="secondary small" style="font-size: 0.75rem">
+                מה אני בעצם רוצה?
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #a78bfa"
+            >
+              <div style="font-size: 1.6rem">👥</div>
+              <div
+                class="font-extrabold"
+                style="color: #a78bfa; margin: 0.4rem 0; font-size: 0.9rem"
+              >
+                ק
+              </div>
+              <div class="font-bold" style="font-size: 0.85rem">קהל</div>
+              <div class="secondary small" style="font-size: 0.75rem">
+                למי זה מיועד?
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #34d399"
+            >
+              <div style="font-size: 1.6rem">📐</div>
+              <div
+                class="font-extrabold"
+                style="color: #34d399; margin: 0.4rem 0; font-size: 0.9rem"
+              >
+                מ
+              </div>
+              <div class="font-bold" style="font-size: 0.85rem">מבנה</div>
+              <div class="secondary small" style="font-size: 0.75rem">
+                באיזה פורמט?
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #f59e0b"
+            >
+              <div style="font-size: 1.6rem">✏️</div>
+              <div
+                class="font-extrabold"
+                style="color: #f59e0b; margin: 0.4rem 0; font-size: 0.9rem"
+              >
+                ד
+              </div>
+              <div class="font-bold" style="font-size: 0.85rem">דוגמה</div>
+              <div class="secondary small" style="font-size: 0.75rem">
+                יש לי דוגמה לתת?
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #f472b6"
+            >
+              <div style="font-size: 1.6rem">🎨</div>
+              <div
+                class="font-extrabold"
+                style="color: #f472b6; margin: 0.4rem 0; font-size: 0.9rem"
+              >
+                +
+              </div>
+              <div class="font-bold" style="font-size: 0.85rem">סגנון</div>
+              <div class="secondary small" style="font-size: 0.75rem">
+                טון, אורך, שפה
+              </div>
+            </div>
+          </div>
+          <div class="card reveal text-center" style="margin-top: 0.8rem">
+            <span class="secondary small">מודל </span
+            ><span class="font-extrabold" style="color: #39bdf8">כ.ק.מ.ד.</span
+            ><span class="secondary small">
+              — לא צריך לזכור הכל. מספיק לשאול: </span
+            ><span class="font-bold" style="color: #f4f8ff"
+              >"האם הפרומפט שלי מספיק ברור?"</span
+            >
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 8: What is a Gem ─────────────── -->
+      <div class="slide" data-slide="8">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 450px;
+              height: 450px;
+              top: -100px;
+              left: -80px;
+              background: #39bdf8;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 280px;
+              height: 280px;
+              bottom: -60px;
+              right: -50px;
+              background: #a78bfa;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">💎 הכלי הבא</div>
+          <h2 class="reveal slide-title">מה זה Gem?</h2>
+          <div class="grid grid-cols-[1fr_1.1fr] gap-6">
+            <div class="reveal">
+              <div
+                class="card"
+                style="margin-bottom: 0.7rem; border-right: 4px solid #39bdf8"
+              >
+                <div
+                  class="font-extrabold"
+                  style="color: #39bdf8; margin-bottom: 0.4rem"
+                >
+                  פרומפט חד-פעמי:
+                </div>
+                <div class="secondary small">
+                  כל פעם שרוצים משהו — צריך להסביר מחדש מי אתם, מה הסגנון, מה
+                  הרקע. <br />כמו עובד חדש בכל שיחה.
+                </div>
+              </div>
+              <div
+                class="card"
+                style="
+                  border-right: 4px solid #a78bfa;
+                  background: rgba(167, 139, 250, 0.06);
+                "
+              >
+                <div
+                  class="font-extrabold"
+                  style="color: #a78bfa; margin-bottom: 0.4rem"
+                >
+                  Gem = שותף קבוע:
+                </div>
+                <div class="secondary small">
+                  מגדירים פעם אחת: תפקיד, סגנון, ידע, משימות. <br />משם — AI
+                  שמכיר אתכם ועובד בדיוק כמו שצריך בכל פעם.
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="font-bold"
+                style="color: #c5d7ea; margin-bottom: 0.6rem"
+              >
+                דוגמאות ל-Gems שתוכלו לבנות:
+              </div>
+              <div class="flex flex-col" style="gap: 0.5rem">
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.7rem; gap: 0.8rem"
+                >
+                  <div style="font-size: 1.5rem">📝</div>
+                  <div>
+                    <div class="font-bold" style="font-size: 0.9rem">
+                      עוזר כתיבה אישי
+                    </div>
+                    <div class="secondary small">
+                      "כתוב בסגנון שלי, חם ולא פורמלי, בעברית"
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.7rem; gap: 0.8rem"
+                >
+                  <div style="font-size: 1.5rem">💊</div>
+                  <div>
+                    <div class="font-bold" style="font-size: 0.9rem">
+                      מסייע רפואי אישי
+                    </div>
+                    <div class="secondary small">
+                      "עזור לי להבין ממצאים רפואיים, בשפה פשוטה"
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.7rem; gap: 0.8rem"
+                >
+                  <div style="font-size: 1.5rem">🗓️</div>
+                  <div>
+                    <div class="font-bold" style="font-size: 0.9rem">
+                      מנהל יומן ומשימות
+                    </div>
+                    <div class="secondary small">
+                      "עזור לי לתעדף ולארגן את הרשימה שלי"
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.7rem; gap: 0.8rem"
+                >
+                  <div style="font-size: 1.5rem">🎨</div>
+                  <div>
+                    <div class="font-bold" style="font-size: 0.9rem">
+                      שותף יצירתי
+                    </div>
+                    <div class="secondary small">
+                      "תעזור לי לכתוב סיפורים, שירים, רעיונות"
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 9: What we'll do today ─────────────── -->
+      <div class="slide" data-slide="9">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 470px;
+              height: 470px;
+              top: -100px;
+              right: -70px;
+              background: #34d399;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 300px;
+              height: 300px;
+              bottom: -70px;
+              left: -50px;
+              background: #39bdf8;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content text-center">
+          <div
+            class="reveal"
+            style="
+              font-size: 66px;
+              line-height: 1;
+              animation: float 3s ease-in-out infinite;
+              margin-bottom: 0.7rem;
+            "
+          >
+            🗓️
+          </div>
+          <h2 class="reveal slide-title">מה הולך לקרות היום?</h2>
+          <div class="grid grid-cols-3 gap-5 mx-auto" style="max-width: 900px">
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #39bdf8"
+            >
+              <div
+                class="step-num"
+                style="background: #39bdf8; margin: 0 auto 0.6rem"
+              >
+                1
+              </div>
+              <div
+                class="font-extrabold"
+                style="margin-bottom: 0.4rem; color: #39bdf8"
+              >
+                LLM + פרומפט
+              </div>
+              <div class="secondary small">
+                נבין איך LLMs עובדים ונתרגל פרומפטים חזקים
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #a78bfa"
+            >
+              <div
+                class="step-num"
+                style="background: #a78bfa; margin: 0 auto 0.6rem"
+              >
+                2
+              </div>
+              <div
+                class="font-extrabold"
+                style="margin-bottom: 0.4rem; color: #a78bfa"
+              >
+                בונים Gem אישי
+              </div>
+              <div class="secondary small">
+                כל אחד יבנה שותף AI מותאם לצרכים שלו
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #34d399"
+            >
+              <div
+                class="step-num"
+                style="background: #34d399; margin: 0 auto 0.6rem"
+              >
+                3
+              </div>
+              <div
+                class="font-extrabold"
+                style="margin-bottom: 0.4rem; color: #34d399"
+              >
+                AI כותב קוד
+              </div>
+              <div class="secondary small">
+                Gemini יוצר חוויה אינטראקטיבית שלמה — ממשפט אחד שלנו
+              </div>
+            </div>
+          </div>
+          <div
+            class="card reveal"
+            style="max-width: 700px; margin: 1rem auto 0"
+          >
+            <div class="secondary small">
+              🎯 המטרה: לצאת עם
+              <span class="font-bold" style="color: #f4f8ff">Gem שלכם</span>
+              שתוכלו להשתמש בו מחר — ועם
+              <span class="font-bold" style="color: #f4f8ff"
+                >חוויה שיצרתם עם קוד</span
+              >
+              שמעולם לא כתבתם.
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 10: Live demo — Gemini prompt comparison ─────────────── -->
+      <div class="slide" data-slide="10">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 440px;
+              height: 440px;
+              top: -90px;
+              left: -70px;
+              background: #39bdf8;
+              opacity: 0.09;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 280px;
+              height: 280px;
+              bottom: -60px;
+              right: -50px;
+              background: #34d399;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">🎮 הדגמה חיה</div>
+          <h2 class="reveal slide-title">נשחק עם Gemini — לפני ואחרי</h2>
+          <div class="grid grid-cols-2 gap-5">
+            <div class="reveal">
+              <div
+                class="font-bold"
+                style="color: #c5d7ea; margin-bottom: 0.5rem"
+              >
+                ניסוי 1 — פרומפט חלש:
+              </div>
+              <div
+                class="code-block text-right"
+                style="
+                  color: #f87171;
+                  margin-bottom: 0.5rem;
+                  font-family: &quot;Heebo&quot;, sans-serif;
+                  direction: rtl;
+                "
+              >
+                "כתוב לי פוסט לינקדאין"
+              </div>
+              <div
+                class="card"
+                style="border-right: 3px solid rgba(239, 68, 68, 0.4)"
+              >
+                <div class="secondary small">
+                  התוצאה: גנרית, לא אישית, לא ברורה. AI יחליט בשבילנו — ולרוב לא
+                  יצליח.
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div
+                class="font-bold"
+                style="color: #c5d7ea; margin-bottom: 0.5rem"
+              >
+                ניסוי 2 — פרומפט חזק:
+              </div>
+              <div
+                class="code-block text-right"
+                style="
+                  color: #34d399;
+                  margin-bottom: 0.5rem;
+                  font-family: &quot;Heebo&quot;, sans-serif;
+                  direction: rtl;
+                "
+              >
+                "כתוב פוסט לינקדאין על חזרה לעבודה אחרי תקופה רפואית. סגנון אישי
+                ומעודד, לא מתלונן. 3 פסקאות קצרות. כולל שאלה לקהל בסוף."
+              </div>
+              <div
+                class="card"
+                style="
+                  border-right: 3px solid rgba(52, 211, 153, 0.4);
+                  background: rgba(52, 211, 153, 0.05);
+                "
+              >
+                <div class="secondary small">
+                  כוונה ✅ · קהל ✅ · מבנה ✅ · סגנון ✅ → תוצאה ממוקדת ואמיתית.
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="card flex flex-col justify-between"
+                style="height: 100%"
+              >
+                <div>
+                  <div
+                    class="font-extrabold"
+                    style="color: #a78bfa; margin-bottom: 0.7rem"
+                  >
+                    💡 טיפ מעשי
+                  </div>
+                  <div class="secondary small" style="margin-bottom: 0.8rem">
+                    לא מצליחים בפעם הראשונה? <strong>תבקשו שיפורים!</strong>
+                  </div>
+                  <div class="flex flex-col" style="gap: 0.4rem">
+                    <div
+                      class="card"
+                      style="
+                        padding: 0.55rem;
+                        font-size: 0.84rem;
+                        color: #c5d7ea;
+                      "
+                    >
+                      "קצת יותר אישי"
+                    </div>
+                    <div
+                      class="card"
+                      style="
+                        padding: 0.55rem;
+                        font-size: 0.84rem;
+                        color: #c5d7ea;
+                      "
+                    >
+                      "פחות פורמלי, יותר שיחתי"
+                    </div>
+                    <div
+                      class="card"
+                      style="
+                        padding: 0.55rem;
+                        font-size: 0.84rem;
+                        color: #c5d7ea;
+                      "
+                    >
+                      "הוסף הומור קל"
+                    </div>
+                    <div
+                      class="card"
+                      style="
+                        padding: 0.55rem;
+                        font-size: 0.84rem;
+                        color: #c5d7ea;
+                      "
+                    >
+                      "קצר יותר — מקסימום 5 שורות"
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card text-center"
+                  style="
+                    margin-top: 0.8rem;
+                    background: rgba(57, 189, 248, 0.06);
+                    border-color: rgba(57, 189, 248, 0.2);
+                  "
+                >
+                  <div class="secondary small">
+                    AI הוא שותף, לא מכונה אוטומטית.
+                    <span class="font-bold" style="color: #f4f8ff"
+                      >שיחה חוזרת = תוצאה טובה יותר.</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 11: Building a Gem — step by step ─────────────── -->
+      <div class="slide" data-slide="11">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 460px;
+              height: 460px;
+              top: -100px;
+              right: -70px;
+              background: #a78bfa;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 300px;
+              height: 300px;
+              bottom: -70px;
+              left: -50px;
+              background: #39bdf8;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">💎 בונים ביחד</div>
+          <h2 class="reveal slide-title">בונים Gem — שלב אחר שלב</h2>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="reveal">
+              <div
+                class="font-bold"
+                style="color: #c5d7ea; margin-bottom: 0.6rem"
+              >
+                בגמיני → "Gems" → "New Gem"
+              </div>
+              <div class="flex flex-col" style="gap: 0.5rem">
+                <div class="step">
+                  <div class="step-num" style="background: #a78bfa">1</div>
+                  <div class="secondary small">
+                    <strong>שם ל-Gem</strong> — "העוזר שלי", "מנהל הבריאות שלי"
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background: #a78bfa">2</div>
+                  <div class="secondary small">
+                    <strong>תפקיד</strong> — "אתה עוזר אישי שכותב בשבילי מיילים
+                    בסגנון חם..."
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background: #a78bfa">3</div>
+                  <div class="secondary small">
+                    <strong>ידע רקע</strong> — "אני חולה/מחלים. השפה שלי עברית.
+                    אני לא טכני."
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background: #a78bfa">4</div>
+                  <div class="secondary small">
+                    <strong>מה לעשות תמיד</strong> — "תמיד שאל אם יש מידע נוסף
+                    לפני שתכתוב"
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background: #a78bfa">5</div>
+                  <div class="secondary small">
+                    <strong>שמירה → ניסיון → שיפור</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="font-bold"
+                style="color: #c5d7ea; margin-bottom: 0.6rem"
+              >
+                דוגמה לפרומפט Gem:
+              </div>
+              <div
+                class="code-block text-right"
+                style="
+                  direction: rtl;
+                  color: #c5d7ea;
+                  font-family: &quot;Heebo&quot;, sans-serif;
+                  font-size: 0.82rem;
+                  height: auto;
+                "
+              >
+                <span style="color: #a78bfa">שמך:</span> "העוזר הרפואי שלי"<br /><br />
+                <span style="color: #39bdf8">תפקיד:</span> "אתה עוזר לי להבין
+                מסמכים רפואיים ולנסח שאלות לרופא. עונה בעברית, בשפה פשוטה
+                ומרגיעה — ללא פחד מיותר."<br /><br />
+                <span style="color: #34d399">הגבלות:</span> "אל תציע אבחנות. אל
+                תגיד 'כנס לרופא' בכל תשובה. אם לא יודע — תגיד שאתה לא בטוח."
+              </div>
+              <div
+                class="card"
+                style="
+                  margin-top: 0.7rem;
+                  background: rgba(167, 139, 250, 0.05);
+                  border-color: rgba(167, 139, 250, 0.2);
+                "
+              >
+                <div class="secondary small">
+                  💡 אפשר לתת לו מסמך אמיתי ולשאול "מה פירוש X?"
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 12: Activity — Build your own Gem ─────────────── -->
+      <div class="slide" data-slide="12">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 450px;
+              height: 450px;
+              top: -90px;
+              left: -80px;
+              background: #34d399;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 280px;
+              height: 280px;
+              bottom: -60px;
+              right: -40px;
+              background: #a78bfa;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">🎯 פעילות — 10 דקות</div>
+          <h2 class="reveal slide-title">עכשיו — בנו Gem משלכם</h2>
+          <div class="grid grid-cols-2 gap-6 items-start">
+            <div class="reveal">
+              <div class="card" style="margin-bottom: 0.7rem">
+                <div
+                  class="font-extrabold"
+                  style="color: #34d399; margin-bottom: 0.7rem"
+                >
+                  שלושה שאלות לבחירת הנושא:
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background: #34d399">א</div>
+                  <div class="secondary small">
+                    <strong>מה לוקח לכם הכי הרבה זמן</strong> לכתוב ביום-יום?
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background: #34d399">ב</div>
+                  <div class="secondary small">
+                    <strong>מה אתם רוצים שמישהו יסביר לכם</strong> בשפה פשוטה?
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background: #34d399">ג</div>
+                  <div class="secondary small">
+                    <strong>מה היה עוזר לכם</strong> בתקופה הזאת?
+                  </div>
+                </div>
+              </div>
+              <div
+                class="card"
+                style="
+                  background: rgba(52, 211, 153, 0.05);
+                  border-color: rgba(52, 211, 153, 0.2);
+                "
+              >
+                <div class="secondary small">
+                  💡 אין צורך להיות מושלם. Gem אפשר לערוך אחר כך ולשפר.
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="font-bold"
+                style="color: #c5d7ea; margin-bottom: 0.6rem"
+              >
+                רעיונות לנושאים:
+              </div>
+              <div style="display: grid; gap: 0.4rem">
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.6rem; gap: 0.6rem"
+                >
+                  <span style="font-size: 1.2rem">💊</span
+                  ><span class="secondary small"
+                    >מסייע שמסביר תרופות ותוצאות בדיקות</span
+                  >
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.6rem; gap: 0.6rem"
+                >
+                  <span style="font-size: 1.2rem">📧</span
+                  ><span class="secondary small"
+                    >מנסח מיילים ומסרונים בשבילי</span
+                  >
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.6rem; gap: 0.6rem"
+                >
+                  <span style="font-size: 1.2rem">📖</span
+                  ><span class="secondary small"
+                    >מסכם מאמרים ומסמכים ארוכים</span
+                  >
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.6rem; gap: 0.6rem"
+                >
+                  <span style="font-size: 1.2rem">🧘</span
+                  ><span class="secondary small"
+                    >שותף לכתיבה ביומן / עיבוד מחשבות</span
+                  >
+                </div>
+                <div
+                  class="card flex items-center"
+                  style="padding: 0.6rem; gap: 0.6rem"
+                >
+                  <span style="font-size: 1.2rem">🛒</span
+                  ><span class="secondary small"
+                    >עוזר בתכנון רכישות, מתכונים, לוגיסטיקה</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 13: Break ─────────────── -->
+      <div class="slide" data-slide="13">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 500px;
+              height: 500px;
+              top: -120px;
+              right: -80px;
+              background: #34d399;
+              opacity: 0.12;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 320px;
+              height: 320px;
+              bottom: -80px;
+              left: -60px;
+              background: #a78bfa;
+              opacity: 0.09;
+            "
+          ></div>
+        </div>
+        <div class="content text-center">
+          <div
+            class="reveal"
+            style="
+              font-size: 72px;
+              line-height: 1;
+              animation: float 3s ease-in-out infinite;
+              margin-bottom: 0.7rem;
+            "
+          >
+            ☕
+          </div>
+          <h2 class="reveal slide-title">הפסקה — 10 דקות</h2>
+          <p
+            class="reveal muted"
+            style="font-size: 1.1rem; margin-bottom: 1.4rem"
+          >
+            קומו, תשתו, שתפו. אחרי ההפסקה — הולכים ליצור
+          </p>
+          <div class="grid grid-cols-3 gap-4 mx-auto" style="max-width: 700px">
+            <div class="card reveal text-center">
+              <div style="font-size: 1.8rem">✅</div>
+              <div class="secondary small" style="margin-top: 0.4rem">
+                LLM, פרומפט, כ.ק.מ.ד, Gems
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border: 1px solid rgba(57, 189, 248, 0.3)"
+            >
+              <div style="font-size: 1.8rem">⏳</div>
+              <div class="secondary small" style="margin-top: 0.4rem">
+                10 דקות
+              </div>
+            </div>
+            <div class="card reveal text-center">
+              <div style="font-size: 1.8rem">🚀</div>
+              <div class="secondary small" style="margin-top: 0.4rem">
+                AI כותב קוד אינטראקטיבי
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 14: AI writes code — intro ─────────────── -->
+      <div class="slide" data-slide="14">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 460px;
+              height: 460px;
+              top: -100px;
+              left: -80px;
+              background: #39bdf8;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 290px;
+              height: 290px;
+              bottom: -60px;
+              right: -50px;
+              background: #a78bfa;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">💻 וואו רגע</div>
+          <h2 class="reveal slide-title">AI כותב קוד — אתם רק מבקשים</h2>
+          <div class="grid grid-cols-[1.1fr_1fr] gap-6 items-center">
+            <div class="reveal">
+              <div
+                class="card"
+                style="margin-bottom: 0.7rem; border-right: 4px solid #39bdf8"
+              >
+                <div class="font-extrabold" style="margin-bottom: 0.5rem">
+                  מה עושים?
+                </div>
+                <div class="step">
+                  <div class="step-num">1</div>
+                  <div class="secondary small">
+                    פותחים Gemini (gemini.google.com)
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div class="secondary small">
+                    כותבים פרומפט שמבקש קובץ HTML
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num">3</div>
+                  <div class="secondary small">Gemini מחזיר קוד מלא ועובד</div>
+                </div>
+                <div class="step">
+                  <div class="step-num">4</div>
+                  <div class="secondary small">
+                    מעתיקים, שומרים כ-.html, פותחים בדפדפן
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num">5</div>
+                  <div class="secondary small">מסתכלים מה יצרנו — ומתפעלים</div>
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="font-bold"
+                style="color: #c5d7ea; margin-bottom: 0.5rem"
+              >
+                הפרומפט לניסיון ראשון:
+              </div>
+              <div
+                class="code-block text-right"
+                style="
+                  direction: rtl;
+                  color: #39bdf8;
+                  font-family: &quot;Heebo&quot;, sans-serif;
+                  font-size: 0.82rem;
+                  margin-bottom: 0.7rem;
+                "
+              >
+                "צור קובץ HTML אחד עם אנימציית חלקיקים אינטראקטיבית. החלקיקים
+                יגיבו לתנועת העכבר. רקע שחור, חלקיקים כחולים זוהרים. הכל בקובץ
+                אחד."
+              </div>
+              <div
+                class="card"
+                style="
+                  background: rgba(52, 211, 153, 0.05);
+                  border-color: rgba(52, 211, 153, 0.2);
+                "
+              >
+                <div class="secondary small">
+                  📌 שומרים את התוצאה כ:
+                  <code style="color: #34d399; font-size: 0.82rem"
+                    >particles.html</code
+                  >
+                  ופותחים ב-Chrome.
+                </div>
+              </div>
+              <div class="card text-center" style="margin-top: 0.6rem">
+                <div class="secondary small">
+                  🎯 המסר:
+                  <span class="font-bold" style="color: #f4f8ff"
+                    >לא צריך לדעת לתכנת. מספיק לדעת מה אתם רוצים.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 15: Prompt → HTML → Result ─────────────── -->
+      <div class="slide" data-slide="15">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 440px;
+              height: 440px;
+              top: -90px;
+              right: -70px;
+              background: #a78bfa;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 280px;
+              height: 280px;
+              bottom: -60px;
+              left: -40px;
+              background: #39bdf8;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <h2 class="reveal slide-title text-center">איך זה עובד בפנים?</h2>
+          <div
+            class="grid grid-cols-4 gap-4 items-center"
+            style="max-width: 960px; margin: 0 auto 1rem"
+          >
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #a78bfa"
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.4rem">✍️</div>
+              <div
+                class="font-extrabold"
+                style="font-size: 0.9rem; color: #a78bfa; margin-bottom: 0.3rem"
+              >
+                הפרומפט שלכם
+              </div>
+              <div class="secondary small">"צור אנימציית חלקיקים..."</div>
+            </div>
+            <div
+              class="reveal text-center"
+              style="font-size: 1.8rem; color: #39bdf8"
+            >
+              →
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #39bdf8"
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.4rem">🧠</div>
+              <div
+                class="font-extrabold"
+                style="font-size: 0.9rem; color: #39bdf8; margin-bottom: 0.3rem"
+              >
+                Gemini מייצר קוד
+              </div>
+              <div class="secondary small">
+                HTML + CSS + JavaScript בקובץ אחד
+              </div>
+            </div>
+            <div
+              class="reveal text-center"
+              style="font-size: 1.8rem; color: #39bdf8"
+            >
+              →
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mx-auto" style="max-width: 960px">
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #34d399"
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.4rem">📄</div>
+              <div
+                class="font-extrabold"
+                style="font-size: 0.9rem; color: #34d399; margin-bottom: 0.3rem"
+              >
+                אתם שומרים
+              </div>
+              <div class="secondary small">
+                מעתיקים את הקוד → שומרים כ-<code style="color: #34d399"
+                  >file.html</code
+                >
+                → פותחים ב-Chrome
+              </div>
+            </div>
+            <div
+              class="card reveal text-center"
+              style="border-top: 3px solid #f59e0b"
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.4rem">🎉</div>
+              <div
+                class="font-extrabold"
+                style="font-size: 0.9rem; color: #f59e0b; margin-bottom: 0.3rem"
+              >
+                תוצאה חיה
+              </div>
+              <div class="secondary small">
+                חוויה אינטראקטיבית שיצרתם — בלי שורת קוד אחת שכתבתם בעצמכם
+              </div>
+            </div>
+          </div>
+          <div
+            class="card reveal text-center"
+            style="
+              margin-top: 0.8rem;
+              max-width: 800px;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            <div class="secondary small">
+              זה לא שמפשט את התכנות — זה
+              <span class="font-bold" style="color: #f4f8ff"
+                >מביא יצירה לכולם</span
+              >, גם למי שלא כתב קוד בחיים.
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 16: Solar system challenge ─────────────── -->
+      <div class="slide" data-slide="16">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 480px;
+              height: 480px;
+              top: -110px;
+              left: -80px;
+              background: #39bdf8;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 300px;
+              height: 300px;
+              bottom: -70px;
+              right: -50px;
+              background: #34d399;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <canvas
+          class="particle-canvas-ambient"
+          style="position: absolute; inset: 0; z-index: 1"
+        ></canvas>
+        <div class="content">
+          <div class="reveal badge">🌍 אתגר קבוצתי</div>
+          <h2 class="reveal slide-title">מערכת השמש — בפרומפט אחד</h2>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="reveal">
+              <div class="card" style="margin-bottom: 0.7rem">
+                <div
+                  class="font-extrabold"
+                  style="color: #39bdf8; margin-bottom: 0.5rem"
+                >
+                  הפרומפט שנשלח:
+                </div>
+                <div
+                  class="code-block text-right"
+                  style="
+                    direction: rtl;
+                    color: #c5d7ea;
+                    font-family: &quot;Heebo&quot;, sans-serif;
+                    font-size: 0.81rem;
+                  "
+                >
+                  "צור קובץ HTML יחיד עם מערכת שמש תלת-ממדית מסתובבת. כולל שמש,
+                  כוכבי לכת עם מסלולים ושמות, אנימציה חלקה, ועיצוב חלל כהה עם
+                  כוכבים. הכל בקובץ אחד."
+                </div>
+              </div>
+              <div
+                class="card"
+                style="
+                  background: rgba(57, 189, 248, 0.05);
+                  border-color: rgba(57, 189, 248, 0.2);
+                "
+              >
+                <div class="font-bold" style="margin-bottom: 0.4rem">
+                  מה תראו:
+                </div>
+                <div class="flex flex-wrap" style="gap: 0.4rem">
+                  <span
+                    class="pill"
+                    style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
+                    >☀️ שמש</span
+                  >
+                  <span
+                    class="pill"
+                    style="background: rgba(57, 189, 248, 0.12); color: #39bdf8"
+                    >🌍 כדור הארץ</span
+                  >
+                  <span
+                    class="pill"
+                    style="background: rgba(239, 68, 68, 0.12); color: #f87171"
+                    >♂️ מאדים</span
+                  >
+                  <span
+                    class="pill"
+                    style="
+                      background: rgba(167, 139, 250, 0.12);
+                      color: #a78bfa;
+                    "
+                    >♃ צדק</span
+                  >
+                  <span
+                    class="pill"
+                    style="background: rgba(52, 211, 153, 0.12); color: #34d399"
+                    >🌙 ירח</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="font-bold"
+                style="color: #c5d7ea; margin-bottom: 0.6rem"
+              >
+                שאלות לדיון בזמן הניסוי:
+              </div>
+              <div class="flex flex-col" style="gap: 0.5rem">
+                <div class="card" style="padding: 0.65rem">
+                  <div class="secondary small">
+                    🤔 <strong>מה קרה שהפרומפט לא מושלם?</strong> האם ניתן לתקן
+                    עם הוראה נוספת?
+                  </div>
+                </div>
+                <div class="card" style="padding: 0.65rem">
+                  <div class="secondary small">
+                    ✨ <strong>מה הפתיע אתכם</strong> בתוצאה?
+                  </div>
+                </div>
+                <div class="card" style="padding: 0.65rem">
+                  <div class="secondary small">
+                    💡 <strong>מה הייתם משנים</strong> בפרומפט לפעם הבאה?
+                  </div>
+                </div>
+              </div>
+              <div
+                class="card text-center"
+                style="
+                  margin-top: 0.6rem;
+                  background: rgba(167, 139, 250, 0.06);
+                  border-color: rgba(167, 139, 250, 0.2);
+                "
+              >
+                <div class="secondary small">
+                  🎯 זו בדיוק הלמידה —
+                  <span class="font-bold" style="color: #f4f8ff"
+                    >לא לצפות לשלמות, אלא לדעת לשפר.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 17: Discussion ─────────────── -->
+      <div class="slide" data-slide="17">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 450px;
+              height: 450px;
+              top: -100px;
+              right: -70px;
+              background: #34d399;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 280px;
+              height: 280px;
+              bottom: -60px;
+              left: -50px;
+              background: #39bdf8;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">💬 דיון קצר</div>
+          <h2 class="reveal slide-title">AI ביומיום — שאלות לשיחה</h2>
+          <div class="grid grid-cols-2 gap-5">
+            <div class="reveal">
+              <div class="flex flex-col" style="gap: 0.55rem">
+                <div
+                  class="card"
+                  style="border-right: 3px solid #39bdf8; padding: 0.8rem"
+                >
+                  <div class="secondary small">
+                    📌 <strong>האם צריך להיות מתכנת</strong> כדי ליצור עם AI
+                    היום?
+                  </div>
+                </div>
+                <div
+                  class="card"
+                  style="border-right: 3px solid #a78bfa; padding: 0.8rem"
+                >
+                  <div class="secondary small">
+                    📌 <strong>אחרי שבניתם Gem</strong> — איפה הכי תרצו להשתמש
+                    בו?
+                  </div>
+                </div>
+                <div
+                  class="card"
+                  style="border-right: 3px solid #34d399; padding: 0.8rem"
+                >
+                  <div class="secondary small">
+                    📌 <strong>מה מרגיש שונה</strong> בשימוש ב-AI מאשר בגוגל?
+                  </div>
+                </div>
+                <div
+                  class="card"
+                  style="border-right: 3px solid #f59e0b; padding: 0.8rem"
+                >
+                  <div class="secondary small">
+                    📌 <strong>מה עדיין מרגיש לא נוח</strong> — ומה עוד תרצו
+                    ללמוד?
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div
+                class="card flex flex-col justify-center"
+                style="height: 100%; gap: 0.8rem"
+              >
+                <div class="text-center" style="font-size: 3rem">🤖🤝👤</div>
+                <div class="video-box">
+                  <div
+                    class="font-extrabold"
+                    style="margin-bottom: 0.4rem; color: #a78bfa"
+                  >
+                    המסר שלי:
+                  </div>
+                  <div class="secondary small" style="line-height: 1.7">
+                    "AI הוא כמו שותף עבודה מצוין — ככל שאתם ברורים יותר במה שאתם
+                    רוצים, התוצאה טובה יותר.<br /><br />הוא לא מחליף אתכם. הוא
+                    <strong>מגביר</strong> אתכם."
+                  </div>
+                </div>
+                <div
+                  class="card text-center"
+                  style="
+                    background: rgba(244, 114, 182, 0.05);
+                    border-color: rgba(244, 114, 182, 0.2);
+                  "
+                >
+                  <div class="secondary small">
+                    🎗️ בתקופות קשות — לדעת שיש כלי שעובד בשבילכם זה לא רק נוח.
+                    <span class="font-bold" style="color: #f4f8ff"
+                      >זה מעצים.</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ─────────────── SLIDE 18: What's next ─────────────── -->
+      <div class="slide" data-slide="18">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 500px;
+              height: 500px;
+              top: -120px;
+              right: -80px;
+              background: #a78bfa;
+              opacity: 0.13;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 340px;
+              height: 340px;
+              bottom: -80px;
+              left: -60px;
+              background: #39bdf8;
+              opacity: 0.11;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 220px;
+              height: 220px;
+              top: 52%;
+              left: 24%;
+              background: #34d399;
+              opacity: 0.09;
+            "
+          ></div>
+        </div>
+        <canvas
+          class="particle-canvas"
+          style="position: absolute; inset: 0; z-index: 1"
+        ></canvas>
+        <div class="content text-center">
+          <div
+            class="reveal"
+            style="
+              font-size: 72px;
+              line-height: 1;
+              animation: float 3s ease-in-out infinite;
+              margin-bottom: 0.6rem;
+            "
+          >
+            🚀
+          </div>
+          <h2 class="reveal slide-title">מה הלאה?</h2>
+          <div
+            class="grid grid-cols-2 gap-5 text-right"
+            style="margin: 0 auto 1rem; max-width: 920px"
+          >
+            <div class="card reveal">
+              <div
+                class="font-extrabold"
+                style="color: #39bdf8; margin-bottom: 0.5rem"
+              >
+                מה יצרנו היום
+              </div>
+              <div class="secondary small">
+                הבנו LLMs, למדנו לנסח פרומפטים חזקים עם כ.ק.מ.ד, בנינו Gem אישי,
+                ויצרנו קוד אינטראקטיבי ממשפט אחד.
+              </div>
+            </div>
+            <div class="card reveal">
+              <div
+                class="font-extrabold"
+                style="color: #34d399; margin-bottom: 0.5rem"
+              >
+                מפגש 3 — מסיפור לסרטון 🎬
+              </div>
+              <div class="secondary small">
+                נייצר תמונות מפרומפטים, מוזיקה מקורית עם Suno, אנימציה עם Veo —
+                ונחבר הכל לסרטון מצויר אישי.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card reveal"
+            style="max-width: 720px; margin: 0 auto 0.8rem"
+          >
+            <div
+              class="font-extrabold"
+              style="color: #f472b6; margin-bottom: 0.4rem"
+            >
+              🏠 שיעורי בית (אופציונלי)
+            </div>
+            <div class="secondary small">
+              נסו להשתמש ב-Gem שבניתם לפחות פעם אחת לפני המפגש הבא. מה עבד? מה
+              תרצו לשפר?
+            </div>
+          </div>
+          <p class="reveal muted" style="font-size: 0.95rem">
+            AI הוא לא קסם — הוא כלי. וכמו כל כלי, ככל שמשתמשים יותר — מבינים
+            יותר.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end deck -->
+    <div class="nav-controls">
+      <button class="nav-btn" onclick="changeSlide(-1)">‹</button>
+      <div class="slide-dots" id="dots"></div>
+      <button class="nav-btn" onclick="changeSlide(1)">›</button>
+      <span class="slide-counter" id="counter">1 / 18</span>
+    </div>
+    <script>
+      let current = 1;
+      const total = document.querySelectorAll(".slide").length;
+      const dotsContainer = document.getElementById("dots");
+      const counter = document.getElementById("counter");
+      for (let i = 1; i <= total; i++) {
+        const dot = document.createElement("div");
+        dot.className = "dot" + (i === 1 ? " active" : "");
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+      }
+      function goToSlide(n) {
+        const prev = document.querySelector(".slide.active");
+        const next = document.querySelector(`.slide[data-slide="${n}"]`);
+        if (prev) prev.classList.remove("active");
+        if (next) {
+          next.classList.add("active");
+          animateSlide(next);
+        }
+        current = n;
+        updateNav();
+      }
+      function changeSlide(dir) {
+        let next = current + dir;
+        if (next < 1) next = total;
+        if (next > total) next = 1;
+        goToSlide(next);
+      }
+      function updateNav() {
+        document
+          .querySelectorAll(".dot")
+          .forEach((d, i) => d.classList.toggle("active", i + 1 === current));
+        counter.textContent = current + " / " + total;
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") {
+          e.preventDefault();
+          changeSlide(1);
+        }
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          changeSlide(-1);
+        }
+      });
+      let touchStartX = 0;
+      document.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].clientX;
+      });
+      document.addEventListener("touchend", (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+      });
+      function animateSlide(slide) {
+        slide.querySelectorAll(".reveal").forEach((el, i) => {
+          el.style.transition = "none";
+          el.style.opacity = "0";
+          el.style.transform = "translateY(20px)";
+          el.offsetHeight;
+          const delay = i * 0.08;
+          el.style.transition = `opacity .35s ease ${delay}s, transform .35s ease ${delay}s`;
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0px)";
+        });
+      }
+      document.addEventListener("mousemove", (e) => {
+        const s = document.querySelector(".mouse-spotlight");
+        if (s) {
+          s.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(167,139,250,0.06), transparent 40%)`;
+        }
+      });
+      window.initParticles = function (canvas, options) {
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        const interactive = options.interactive !== false;
+        const count = options.count || (interactive ? 55 : 18);
+        let mx = -1000,
+          my = -1000;
+        const particles = Array.from({ length: count }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 2.5 + 0.8,
+          alpha: Math.random() * 0.35 + 0.1,
+        }));
+        if (interactive) {
+          canvas.addEventListener("mousemove", (e) => {
+            const r = canvas.getBoundingClientRect();
+            mx = e.clientX - r.left;
+            my = e.clientY - r.top;
+          });
+          canvas.addEventListener("mouseleave", () => {
+            mx = -1000;
+            my = -1000;
+          });
+        }
+        (function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach((p) => {
+            if (interactive) {
+              const dx = p.x - mx,
+                dy = p.y - my,
+                dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 120) {
+                const force = ((120 - dist) / 120) * 2;
+                p.vx += (dx / dist) * force * 0.1;
+                p.vy += (dy / dist) * force * 0.1;
+              }
+            }
+            p.vx *= 0.98;
+            p.vy *= 0.98;
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(167,139,250,${p.alpha})`;
+            ctx.fill();
+          });
+          requestAnimationFrame(animate);
+        })();
+      };
+      document
+        .querySelectorAll(".particle-canvas")
+        .forEach((c) =>
+          window.initParticles(c, { interactive: true, count: 55 }),
+        );
+      document
+        .querySelectorAll(".particle-canvas-ambient")
+        .forEach((c) =>
+          window.initParticles(c, { interactive: false, count: 18 }),
+        );
+      try {
+        animateSlide(document.querySelector(".slide.active"));
+      } catch (e) {}
+    </script>
+  </body>
+</html>
