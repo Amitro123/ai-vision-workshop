@@ -2258,6 +2258,7 @@
           </div>
         </div>
       </div>
+
       <div class="slide" data-slide="16">
         <div class="gradient-mesh">
           <div
@@ -2287,63 +2288,19 @@
           class="particle-canvas-ambient"
           style="position: absolute; inset: 0; z-index: 1"
         ></canvas>
-        <div class="content">
+        <div class="content" style="z-index: 2; position: relative">
           <div class="reveal badge">🌍 אתגר קבוצתי</div>
           <h2 class="reveal slide-title">מערכת השמש — בפרומפט אחד</h2>
-          <div
-            class="reveal mx-auto mb-8 card"
-            style="
-              max-width: 800px;
-              padding: 0.5rem;
-              background: rgba(0, 0, 0, 0.3);
-              border: 1px solid rgba(255, 255, 255, 0.08);
-              box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            "
-          >
-            <!-- Window mock header -->
+          <div class="grid grid-cols-[1fr_1fr] gap-8 items-stretch">
+            <!-- Text Column -->
             <div
-              style="
-                display: flex;
-                gap: 6px;
-                padding: 0.4rem 0.5rem 0.8rem;
-                opacity: 0.6;
-                direction: ltr;
-              "
+              class="reveal flex flex-col justify-between"
+              style="gap: 1.2rem"
             >
               <div
-                style="
-                  width: 11px;
-                  height: 11px;
-                  border-radius: 50%;
-                  background: #ef4444;
-                "
-              ></div>
-              <div
-                style="
-                  width: 11px;
-                  height: 11px;
-                  border-radius: 50%;
-                  background: #eab308;
-                "
-              ></div>
-              <div
-                style="
-                  width: 11px;
-                  height: 11px;
-                  border-radius: 50%;
-                  background: #22c55e;
-                "
-              ></div>
-            </div>
-            <img
-              alt="High Quality Code Preview"
-              src="images/solar_system_hq.png"
-              style="width: 100%; border-radius: 6px; display: block"
-            />
-          </div>
-          <div class="grid grid-cols-2 gap-6">
-            <div class="reveal">
-              <div class="card" style="margin-bottom: 0.7rem">
+                class="card"
+                style="padding: 1rem; border-right: 3px solid #39bdf8"
+              >
                 <div
                   class="font-extrabold"
                   style="color: #39bdf8; margin-bottom: 0.5rem"
@@ -2356,7 +2313,7 @@
                     direction: rtl;
                     color: #c5d7ea;
                     font-family: &quot;Heebo&quot;, sans-serif;
-                    font-size: 0.81rem;
+                    font-size: 0.85rem;
                   "
                 >
                   "צור קובץ HTML יחיד עם מערכת שמש תלת-ממדית מסתובבת. כולל שמש,
@@ -2367,14 +2324,15 @@
               <div
                 class="card"
                 style="
+                  padding: 1rem;
                   background: rgba(57, 189, 248, 0.05);
                   border-color: rgba(57, 189, 248, 0.2);
                 "
               >
-                <div class="font-bold" style="margin-bottom: 0.4rem">
+                <div class="font-bold" style="margin-bottom: 0.6rem">
                   מה תראו:
                 </div>
-                <div class="flex flex-wrap" style="gap: 0.4rem">
+                <div class="flex flex-wrap" style="gap: 0.5rem">
                   <span
                     class="pill"
                     style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
@@ -2405,36 +2363,36 @@
                   >
                 </div>
               </div>
-            </div>
-            <div class="reveal">
-              <div
-                class="font-bold"
-                style="color: #c5d7ea; margin-bottom: 0.6rem"
-              >
-                שאלות לדיון בזמן הניסוי:
-              </div>
-              <div class="flex flex-col" style="gap: 0.5rem">
-                <div class="card" style="padding: 0.65rem">
-                  <div class="secondary small">
-                    🤔 <strong>מה קרה שהפרומפט לא מושלם?</strong> האם ניתן לתקן
-                    עם הוראה נוספת?
-                  </div>
+              <div>
+                <div
+                  class="font-bold"
+                  style="color: #c5d7ea; margin-bottom: 0.6rem"
+                >
+                  שאלות לדיון בזמן הניסוי:
                 </div>
-                <div class="card" style="padding: 0.65rem">
-                  <div class="secondary small">
-                    ✨ <strong>מה הפתיע אתכם</strong> בתוצאה?
+                <div class="flex flex-col" style="gap: 0.4rem">
+                  <div class="card" style="padding: 0.7rem">
+                    <div class="secondary small text-sm">
+                      🤔 <strong>מה קרה כשהפרומפט לא מושלם?</strong> האם ניתן
+                      לתקן עם הוראה נוספת?
+                    </div>
                   </div>
-                </div>
-                <div class="card" style="padding: 0.65rem">
-                  <div class="secondary small">
-                    💡 <strong>מה הייתם משנים</strong> בפרומפט לפעם הבאה?
+                  <div class="card" style="padding: 0.7rem">
+                    <div class="secondary small text-sm">
+                      ✨ <strong>מה הפתיע אתכם</strong> בתוצאה?
+                    </div>
+                  </div>
+                  <div class="card" style="padding: 0.7rem">
+                    <div class="secondary small text-sm">
+                      💡 <strong>מה הייתם משנים</strong> בפרומפט לפעם הבאה?
+                    </div>
                   </div>
                 </div>
               </div>
               <div
                 class="card text-center"
                 style="
-                  margin-top: 0.6rem;
+                  margin-top: 0.2rem;
                   background: rgba(167, 139, 250, 0.06);
                   border-color: rgba(167, 139, 250, 0.2);
                 "
@@ -2447,9 +2405,85 @@
                 </div>
               </div>
             </div>
+            <!-- High-Quality Preview Column -->
+            <div class="reveal relative">
+              <div
+                class="card flex flex-col"
+                style="
+                  padding: 0;
+                  background: rgba(0, 0, 0, 0.5);
+                  border: 1px solid rgba(255, 255, 255, 0.15);
+                  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+                  overflow: hidden;
+                  height: 100%;
+                  border-radius: 12px;
+                "
+              >
+                <!-- Window header mock -->
+                <div
+                  style="
+                    display: flex;
+                    gap: 6px;
+                    padding: 0.7rem 0.9rem;
+                    background: rgba(255, 255, 255, 0.04);
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                    direction: ltr;
+                  "
+                >
+                  <div
+                    style="
+                      width: 12px;
+                      height: 12px;
+                      border-radius: 50%;
+                      background: #ef4444;
+                    "
+                  ></div>
+                  <div
+                    style="
+                      width: 12px;
+                      height: 12px;
+                      border-radius: 50%;
+                      background: #eab308;
+                    "
+                  ></div>
+                  <div
+                    style="
+                      width: 12px;
+                      height: 12px;
+                      border-radius: 50%;
+                      background: #22c55e;
+                    "
+                  ></div>
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #000;
+                    overflow: hidden;
+                    position: relative;
+                  "
+                >
+                  <img
+                    alt="High Quality Solar System Final Result"
+                    src="images/solar_system_real.jpg"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      object-position: center;
+                      display: block;
+                    "
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="slide" data-slide="17">
         <div class="gradient-mesh">
           <div
