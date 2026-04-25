@@ -179,43 +179,52 @@
     <div class="blob" style="width:440px;height:440px;top:-90px;left:-70px;background:#34d399;opacity:.09"></div>
     <div class="blob" style="width:280px;height:280px;bottom:-60px;right:-50px;background:#a78bfa;opacity:.08"></div>
   </div>
-  <div class="content text-center">
-    <div class="reveal badge">🧠 איך AI "חושב"?</div>
-    <h1 class="reveal" style="font-size:clamp(1.6rem,3.8vw,2.6rem);font-weight:900;margin:1rem 0 2.5rem;line-height:1.25;color:#f4f8ff;max-width:900px;margin-left:auto;margin-right:auto">AI לא באמת מבין — הוא מנחש מה תהיה המילה הבאה</h1>
+  <div class="content">
+    <div class="reveal badge">🧠 איך AI חושב?</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 1rem">איך "המוח" של ה-AI עובד?</h2>
     
-    <!-- Central Example Block -->
-    <div class="reveal" style="max-width:750px;margin:0 auto 3rem">
-      <div class="card" style="padding:2.2rem;background:rgba(255,255,255,0.04);border-radius:28px;border:1px solid rgba(52,211,153,0.15);box-shadow:0 20px 50px rgba(0,0,0,0.2)">
-        <div style="font-size:4rem;margin-bottom:1.2rem;animation:float 3s ease-in-out infinite">🍎</div>
-        <div style="font-size:2rem;font-weight:800;margin-bottom:0.8rem">דוגמה: "תגדיר תפוח"</div>
-        <div style="font-size:1.6rem;color:#34d399;font-weight:800;letter-spacing:1px;background:rgba(52,211,153,0.05);display:inline-block;padding:.4rem 1.2rem;border-radius:12px">← אדום, ירוק, פרי, מתוק, טעים</div>
-        <div style="margin-top:2rem;padding-top:1.8rem;border-top:1px solid rgba(255,255,255,0.08)">
-           <p class="secondary" style="font-size:1.2rem"><strong>למה?</strong> כי אלה מילים שמופיעות הרבה ליד "תפוח"</p>
+    <div class="grid grid-cols-[1.1fr_1fr] gap-6 items-start">
+      <div class="reveal">
+        <p class="secondary" style="font-size:1.1rem;margin-bottom:1.2rem;line-height:1.6">AI לא באמת מבין את המשמעות כמו בן אדם — הוא מנוע של <strong>הסתברות וסטטיסטיקה</strong>.</p>
+        
+        <div class="card" style="padding:1.4rem;background:rgba(255,255,255,0.03);border-radius:20px;border:1px solid rgba(52,211,153,0.15)">
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+            <div style="font-size:2.5rem;animation:float 3s ease-in-out infinite">🍎</div>
+            <div>
+              <div style="font-weight:800;font-size:1.15rem;margin-bottom:0.2rem">דוגמה: "תגדיר תפוח"</div>
+              <div style="font-size:1rem;color:#34d399;font-weight:800;letter-spacing:0.5px">← אדום, פרי, מתוק, טעים</div>
+            </div>
+          </div>
+          <div style="padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08)">
+             <p class="secondary small" style="margin-bottom:0.4rem"><strong>למה הוא בחר את המילים האלה?</strong></p>
+             <p class="muted small">כי אלה המילים שמופיעות הכי הרבה ליד "תפוח" במיליוני הטקסטים שהוא קרא.</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Comparison Cards -->
-    <div class="grid grid-cols-2 gap-10" style="max-width:920px;margin:0 auto 2.5rem">
-      <div class="card reveal" style="border-right:5px solid #a78bfa;text-align:right;background:rgba(167,139,250,0.03)">
-        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem">
-           <span style="font-size:2rem">0️⃣</span>
-           <div style="font-weight:900;font-size:1.4rem;color:#a78bfa">Zero-shot</div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.8rem">
+        <div class="card" style="border-right:4px solid #a78bfa;background:rgba(167,139,250,0.03)">
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.3rem">
+            <span style="font-size:1.3rem">0️⃣</span>
+            <div style="font-weight:800;font-size:1.1rem;color:#a78bfa">Zero-shot</div>
+          </div>
+          <p class="secondary small">לבקש משהו <strong>בלי דוגמאות</strong> מראש. המודל מנחש על סמך הידע הכללי שלו.</p>
         </div>
-        <p class="secondary" style="font-size:1.1rem;font-weight:500">בלי דוגמאות מראש</p>
-      </div>
-      <div class="card reveal" style="border-right:5px solid #34d399;text-align:right;background:rgba(52,211,153,0.03)">
-        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem">
-           <span style="font-size:2rem">3️⃣</span>
-           <div style="font-weight:900;font-size:1.4rem;color:#34d399">Few-shot</div>
-        </div>
-        <p class="secondary" style="font-size:1.1rem;font-weight:500">עם כמה דוגמאות שמכוונות את התשובה</p>
-      </div>
-    </div>
 
-    <!-- Closing Line -->
-    <div class="reveal" style="font-weight:800;font-size:1.35rem;color:#f59e0b;letter-spacing:0.5px">
-       ככל שנכוון טוב יותר — נקבל תשובה מדויקת יותר ✨
+        <div class="card" style="border-right:4px solid #34d399;background:rgba(52,211,153,0.03)">
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.3rem">
+            <span style="font-size:1.3rem">3️⃣</span>
+            <div style="font-weight:800;font-size:1.1rem;color:#34d399">Few-shot</div>
+          </div>
+          <p class="secondary small">לתת ל-AI <strong>כמה דוגמאות</strong> שמכוונות אותו לסגנון ולדיוק שאנחנו מחפשים.</p>
+        </div>
+
+        <div class="card" style="margin-top:.4rem;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);text-align:center">
+          <div style="font-weight:800;font-size:1rem;color:#f59e0b">
+             ככל שנכוון טוב יותר — נקבל תשובה מדויקת יותר ✨
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
