@@ -237,36 +237,48 @@
   </div>
   <div class="content">
     <div class="reveal badge">🤖 שלב 1 — Gemini</div>
-    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.35rem);font-weight:800;margin:.7rem 0 .9rem">הפרומפט הראשי — הסיפור שלכם</h2>
-    <div class="grid grid-cols-[1.1fr_1fr] gap-5">
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 .4rem">הפרומפט הראשי — הסיפור שלכם</h2>
+    <p class="reveal secondary" style="font-size:1.1rem;margin-bottom:1.8rem">בוחרים את הנושא ומבקשים מה-AI לתכנן הכל</p>
+
+    <div class="grid grid-cols-[1.1fr_1fr] gap-8 items-start">
       <div class="reveal">
-        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.5rem">דוגמה — שולחים לג'ימיני:</div>
-        <div style="background:#050709;border-radius:14px;padding:.9rem 1rem;border:1px solid rgba(255,255,255,.08);font-size:.8rem;color:#c5d7ea;line-height:1.65;direction:rtl;text-align:right">
-          "אני רוצה ליצור סיפור ילדים לבת שלי בת השנתיים וחצי. לילדה שלי קוראים אורי, היא אוהבת חיות והסיפור יהיה על זה שהיא פוגשת חיות ומשחקת איתן. היא ילדה מאוד סקרנית ושמחה.<br><br>
-          לדוגמה היא הולכת לכלוב של הפילים והפיל משפריץ עליה מים. האריה אומר לה לעלות על הגב שלו ולוקח אותה לטיול.<br><br>
-          <span style="color:#34d399">את הוידאו אני אצור בעזרת הפרומפט שתייצר לי שאוכל לשלוח, ואני רוצה גם פרומפט לשיר שאוכל לשלוח לסונו.</span>"
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.7rem;font-size:.95rem">דוגמה למה ששולחים ל-Gemini:</div>
+        <div style="background:rgba(255,255,255,0.03);border-radius:18px;padding:1.4rem;border:1px solid rgba(255,255,255,0.08);font-size:1rem;color:#f4f8ff;line-height:1.7;position:relative">
+          <div style="position:absolute;top:-10px;right:20px;background:#39bdf8;width:20px;height:20px;transform:rotate(45deg)"></div>
+          "אני רוצה סיפור ילדים לבת שלי <strong>אורי</strong>, בת שנתיים וחצי.<br>
+          היא אוהבת חיות, שמחה וסקרנית. <br>
+          אני רוצה סיפור על ביקור בגן חיות.<br>
+          <span style="color:#34d399;font-weight:700">תן לי סיפור, פרומפטים לתמונות ופרומפט לשיר.</span>"
         </div>
       </div>
+
       <div class="reveal">
-        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.5rem">מה Gemini יחזיר:</div>
-        <div style="display:flex;flex-direction:column;gap:.5rem">
-          <div class="card" style="padding:.7rem;border-right:3px solid #39bdf8">
-            <div style="font-weight:700;font-size:.88rem">📖 הסיפור</div>
-            <div class="secondary small">פסקאות מסודרות, עם דמויות, תיאורים, ורגשות</div>
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.7rem;font-size:.95rem">מה שתקבלו מה-AI:</div>
+        <div style="display:flex;flex-direction:column;gap:.7rem">
+          <div class="card" style="padding:.8rem 1rem;border-right:4px solid #39bdf8;background:rgba(57,189,248,0.04)">
+            <div style="display:flex;align-items:center;gap:.7rem">
+              <span style="font-size:1.4rem">📖</span>
+              <div style="font-weight:800;font-size:1rem">סיפור מוכן</div>
+            </div>
           </div>
-          <div class="card" style="padding:.7rem;border-right:3px solid #a78bfa">
-            <div style="font-weight:700;font-size:.88rem">🖼️ פרומפטים לתמונות</div>
-            <div class="secondary small">תיאור מפורט לכל סצנה — מוכן לשליחה ל-Gemini/StudioAI</div>
+          <div class="card" style="padding:.8rem 1rem;border-right:4px solid #a78bfa;background:rgba(167,139,250,0.04)">
+            <div style="display:flex;align-items:center;gap:.7rem">
+              <span style="font-size:1.4rem">🖼️</span>
+              <div style="font-weight:800;font-size:1rem">פרומפטים לתמונות</div>
+            </div>
           </div>
-          <div class="card" style="padding:.7rem;border-right:3px solid #f59e0b">
-            <div style="font-weight:700;font-size:.88rem">🎵 פרומפט לסונו</div>
-            <div class="secondary small">מה סגנון השיר, מה המילים, מה המנגינה</div>
+          <div class="card" style="padding:.8rem 1rem;border-right:4px solid #f59e0b;background:rgba(245,158,11,0.04)">
+            <div style="display:flex;align-items:center;gap:.7rem">
+              <span style="font-size:1.4rem">🎵</span>
+              <div style="font-weight:800;font-size:1rem">פרומפט למוזיקה ב-Suno</div>
+            </div>
           </div>
-        </div>
-        <div class="card" style="margin-top:.6rem;background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2)">
-          <div class="secondary small">💡 <strong>טיפ:</strong> ככל שתתארו יותר על האדם שמיועד לו הסיפור — כך התוצאה תהיה יותר אישית ומדויקת. זה few shot בפעולה.</div>
         </div>
       </div>
+    </div>
+
+    <div class="card reveal" style="margin-top:2rem;background:rgba(52,211,153,0.04);border:1px solid rgba(52,211,153,0.2);text-align:center">
+      <div class="secondary small">💡 <strong>טיפ:</strong> ככל שתתארו טוב יותר את הדמות והקהל — התוצאה תהיה אישית ומדויקת יותר.</div>
     </div>
   </div>
 </div>
