@@ -291,38 +291,47 @@
   </div>
   <div class="content">
     <div class="reveal badge">🖼️ שלב 2 — יצירת תמונות</div>
-    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 .9rem">מהפרומפטים לתמונות חיות</h2>
-    <div class="grid grid-cols-2 gap-5">
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 .4rem">מהפרומפטים — לסצנות של הסיפור</h2>
+    <p class="reveal secondary" style="font-size:1.1rem;margin-bottom:2rem">הופכים את התיאורים לציורים שמרכיבים את הסרט</p>
+
+    <div class="grid grid-cols-[1.1fr_1fr] gap-10 items-start">
       <div class="reveal">
-        <div class="card" style="margin-bottom:.7rem">
-          <div style="font-weight:800;color:#a78bfa;margin-bottom:.6rem">מה עושים:</div>
-          <div class="step"><div class="step-num" style="background:#a78bfa">1</div><div class="secondary small">פותחים טאב נוסף עם Gemini (gemini.google.com)</div></div>
-          <div class="step"><div class="step-num" style="background:#a78bfa">2</div><div class="secondary small">מעתיקים כל פרומפט תמונה שקיבלנו — אחד אחד</div></div>
-          <div class="step"><div class="step-num" style="background:#a78bfa">3</div><div class="secondary small">מוסיפים בסוף: <span style="color:#f4f8ff">"סגנון ציור ילדים, צבעוני, חם ומסביר פנים"</span></div></div>
-          <div class="step"><div class="step-num" style="background:#a78bfa">4</div><div class="secondary small">שומרים כל תמונה למחשב (לחיצה ימנית → שמור)</div></div>
-          <div class="step"><div class="step-num" style="background:#a78bfa">5</div><div class="secondary small">מטרה: 4–6 תמונות לסיפור שלנו</div></div>
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:1rem;font-size:1.1rem">איך עושים את זה?</div>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <div class="card" style="padding:.9rem 1.1rem;display:flex;align-items:center;gap:.9rem;border-right:4px solid #a78bfa">
+            <div class="step-num" style="background:#a78bfa;color:#03111d;width:26px;height:26px;min-width:26px">1</div>
+            <div style="font-weight:700;font-size:1.05rem">פותחים Gemini</div>
+          </div>
+          <div class="card" style="padding:.9rem 1.1rem;display:flex;align-items:center;gap:.9rem;border-right:4px solid #a78bfa">
+            <div class="step-num" style="background:#a78bfa;color:#03111d;width:26px;height:26px;min-width:26px">2</div>
+            <div style="font-weight:700;font-size:1.05rem">מדביקים כל פרומפט תמונה בנפרד</div>
+          </div>
+          <div class="card" style="padding:.9rem 1.1rem;display:flex;align-items:center;gap:.9rem;border-right:4px solid #a78bfa">
+            <div class="step-num" style="background:#a78bfa;color:#03111d;width:26px;height:26px;min-width:26px">3</div>
+            <div style="font-weight:700;font-size:1.05rem">מוסיפים סגנון אחיד לסיפור</div>
+          </div>
+          <div class="card" style="padding:.9rem 1.1rem;display:flex;align-items:center;gap:.9rem;border-right:4px solid #a78bfa">
+            <div class="step-num" style="background:#a78bfa;color:#03111d;width:26px;height:26px;min-width:26px">4</div>
+            <div style="font-weight:700;font-size:1.05rem">שומרים 4–6 תמונות למחשב</div>
+          </div>
         </div>
       </div>
+
       <div class="reveal">
-        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem">כלים לבחירה:</div>
-        <div style="display:flex;flex-direction:column;gap:.45rem;margin-bottom:.7rem">
-          <div class="card" style="padding:.65rem;display:flex;align-items:center;gap:.7rem">
-            <div style="font-size:1.3rem">🤖</div>
-            <div><div style="font-weight:700;font-size:.88rem">Gemini ImageFX</div><div class="secondary small">ישירות מהצ'אט. פשוט וקל.</div></div>
-            <a href="https://gemini.google.com" target="_blank" class="link-btn" style="background:rgba(57,189,248,.12);color:#39bdf8;margin-right:auto">פתח</a>
+        <div class="card" style="background:rgba(167,139,250,0.04);border:1px solid rgba(167,139,250,0.2);padding:1.4rem;margin-bottom:1rem">
+          <div style="font-weight:800;color:#a78bfa;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem">
+            <span>💡</span> אם התמונה לא מדויקת:
           </div>
-          <div class="card" style="padding:.65rem;display:flex;align-items:center;gap:.7rem">
-            <div style="font-size:1.3rem">🎨</div>
-            <div><div style="font-weight:700;font-size:.88rem">StudioAI</div><div class="secondary small">איכות גבוהה, יותר שליטה.</div></div>
-            <a href="https://labs.google/fx/tools/image-fx" target="_blank" class="link-btn" style="background:rgba(167,139,250,.12);color:#a78bfa;margin-right:auto">פתח</a>
-          </div>
-          <div class="card" style="padding:.65rem;display:flex;align-items:center;gap:.7rem">
-            <div style="font-size:1.3rem">🖌️</div>
-            <div><div style="font-weight:700;font-size:.88rem">DALL-E (ב-ChatGPT)</div><div class="secondary small">אפשרות נוספת אם Gemini לא מדויק.</div></div>
+          <div class="secondary small" style="margin-bottom:.8rem">פשוט מבקשים תיקון קטן בשפה חופשית:</div>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+            <span class="pill" style="background:rgba(255,255,255,0.06);color:#c5d7ea;border:1px solid rgba(255,255,255,0.1)">"יותר חם"</span>
+            <span class="pill" style="background:rgba(255,255,255,0.06);color:#c5d7ea;border:1px solid rgba(255,255,255,0.1)">"פחות ריאליסטי"</span>
+            <span class="pill" style="background:rgba(255,255,255,0.06);color:#c5d7ea;border:1px solid rgba(255,255,255,0.1)">"הוסף חיוך"</span>
           </div>
         </div>
-        <div class="card" style="background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2)">
-          <div class="secondary small">🔁 לא מרוצים מהתמונה? כתבו: <span style="color:#f4f8ff">"יותר כהה", "פחות ריאליסטי", "הוסף חיוך"</span> — AI ישפר.</div>
+        
+        <div class="card" style="background:rgba(52,211,153,0.05);border-color:rgba(52,211,153,0.2);text-align:center">
+          <div class="secondary small" style="font-weight:700">🏁 המטרה: <span style="color:#f4f8ff">סט תמונות אחיד שמרגיש כמו אותו סיפור.</span></div>
         </div>
       </div>
     </div>
