@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מסיפור לסרטון — מפגש 3 | קהילת חלאסרטן</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #0c1726;
+      --color-text: #f4f8ff;
+      --color-text-secondary: #c5d7ea;
+      --color-text-muted: #88a4c3;
+      --color-accent-1: #34d399;
+      --color-accent-2: #f59e0b;
+      --color-accent-3: #a78bfa;
+      --color-glass-bg: rgba(255,255,255,0.06);
+      --color-glass-border: rgba(255,255,255,0.10);
+    }
+  </style>
+  <style>
+    :root{--color-bg:#0c1726;--color-text:#f4f8ff}
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{background:var(--color-bg);margin:0}
+    body{font-family:'Heebo',sans-serif;color:var(--color-text);overflow:hidden;height:100vh;width:100vw}
+    .deck{width:100vw;height:100vh;position:relative}
+    .slide{position:absolute;inset:0;background:var(--color-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:scale(.95);transition:opacity .7s ease,transform .7s ease;pointer-events:none;overflow:hidden}
+    .slide.active{opacity:1;transform:scale(1);pointer-events:all}
+    .slide>.content{position:relative;z-index:2;width:100%;max-width:1120px;padding:clamp(1.2rem,3vw,3rem)}
+    .nav-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);padding:10px 22px;border-radius:40px;border:1px solid rgba(255,255,255,.10)}
+    .nav-btn{width:40px;height:40px;border:none;background:rgba(255,255,255,.06);color:#34d399;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .slide-dots{display:flex;gap:8px}.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.10);cursor:pointer}.dot.active{background:#34d399;transform:scale(1.25)}
+    .slide-counter{font-size:.82rem;color:#88a4c3;min-width:46px;text-align:center}
+    .reveal{opacity:0;transform:translateY(20px)}
+    .gradient-mesh{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(80px);animation:float-slow 10s ease-in-out infinite}
+    .blob:nth-child(2){animation:float-drift 14s ease-in-out infinite}
+    .blob:nth-child(3){animation:float-slow 18s ease-in-out infinite reverse}
+    .slide::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px 256px;opacity:.03;mix-blend-mode:overlay}
+    .slide::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,rgba(0,0,0,.45) 100%)}
+    @keyframes float-slow{0%{transform:translate(0,0) scale(1)}25%{transform:translate(60px,-50px) scale(1.12)}50%{transform:translate(-40px,40px) scale(.9)}75%{transform:translate(50px,20px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes float-drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,-60px) scale(1.15)}66%{transform:translate(40px,30px) scale(.88)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+    .card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:1.1rem}
+    .muted{color:#88a4c3}.secondary{color:#c5d7ea}
+    .badge{display:inline-flex;align-items:center;gap:.45rem;padding:.35rem .75rem;border-radius:999px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);font-size:.88rem;color:#c5d7ea}
+    .mouse-spotlight{position:fixed;inset:0;z-index:99;pointer-events:none}
+    .step{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.5rem}
+    .step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#34d399;color:#03111d;font-weight:800;font-size:.8rem;min-width:28px}
+    .video-box{background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(245,158,11,.08));border:1px solid rgba(52,211,153,.22);border-radius:18px;padding:1rem}
+    .small{font-size:.85rem}
+    .pill{display:inline-flex;align-items:center;padding:.22rem .65rem;border-radius:999px;font-size:.8rem;font-weight:700}
+    .link-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .75rem;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;transition:opacity .2s}
+    .link-btn:hover{opacity:.8}
+    .arrow-flow{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center}
+    .flow-arrow{color:#34d399;font-size:1.4rem;opacity:.7}
+  </style>
+</head>
+<body>
+<div class="mouse-spotlight"></div>
+<div class="deck">
+
+<!-- ── SLIDE 1: Title ── -->
+<div class="slide active" data-slide="1">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:520px;height:520px;top:-120px;right:-100px;background:#34d399;opacity:.13"></div>
+    <div class="blob" style="width:330px;height:330px;bottom:-70px;left:-40px;background:#f59e0b;opacity:.11"></div>
+    <div class="blob" style="width:220px;height:220px;top:48%;left:18%;background:#a78bfa;opacity:.09"></div>
+  </div>
+  <div class="reveal" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;opacity:0.7;pointer-events:none">
+    <img src="workshop_hero.png" style="max-width:750px;width:85%;border-radius:24px;filter:blur(2px);mask-image:radial-gradient(circle, black 30%, transparent 90%);-webkit-mask-image:radial-gradient(circle, black 30%, transparent 90%)">
+  </div>
+  <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:2"></canvas>
+  <div class="content text-center">
+    <div class="reveal" style="font-size:72px;line-height:1;animation:float 3s ease-in-out infinite;margin-bottom:12px">🎬✨</div>
+    <h1 class="reveal" style="font-size:clamp(2rem,5.2vw,4.2rem);font-weight:900;line-height:1.15;margin:0 0 .8rem;background:linear-gradient(135deg,#34d399,#f59e0b,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">מסיפור לסרטון</h1>
+    <p class="reveal" style="font-size:clamp(.95rem,1.5vw,1.2rem);color:#88a4c3;letter-spacing:3px;text-transform:uppercase;margin:0 0 1rem">מפגש 3 מתוך 4 · קהילת חלאסרטן</p>
+    <div class="reveal" style="display:inline-flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+      <span style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.25);border-radius:999px;padding:.3rem .9rem;font-size:.9rem;color:#34d399">Gemini + Suno + CapCut</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 2: Recap session 2 ── -->
+<div class="slide" data-slide="2">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:430px;height:430px;top:-100px;left:-60px;background:#a78bfa;opacity:.09"></div>
+    <div class="blob" style="width:270px;height:270px;bottom:-60px;right:-40px;background:#34d399;opacity:.07"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🔙 במפגש הקודם</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,4vw,2.8rem);font-weight:800;margin:.7rem 0 1rem">מה עשינו במפגש 2?</h2>
+    <div class="grid grid-cols-3 gap-5">
+      <div class="card reveal" style="border-top:3px solid #a78bfa;text-align:center">
+        <div style="font-size:2rem;margin-bottom:.5rem">🧠</div>
+        <div style="font-weight:700;margin-bottom:.4rem">LLM + פרומפט</div>
+        <div class="secondary small">למדנו מה זה מודל שפה ואיך לנסח בקשות טובות עם כ.ק.מ.ד.</div>
+      </div>
+      <div class="card reveal" style="border-top:3px solid #f59e0b;text-align:center">
+        <div style="font-size:2rem;margin-bottom:.5rem">💎</div>
+        <div style="font-weight:700;margin-bottom:.4rem">בנינו Gem אישי</div>
+        <div class="secondary small">כל אחד יצר שותף AI קבוע — מסייע רפואי, כותב מיילים, שותף יצירתי.</div>
+      </div>
+      <div class="card reveal" style="border-top:3px solid #34d399;text-align:center">
+        <div style="font-size:2rem;margin-bottom:.5rem">💻</div>
+        <div style="font-weight:700;margin-bottom:.4rem">AI כתב קוד</div>
+        <div class="secondary small">ממשפט אחד — חלקיקים אינטראקטיביים ומערכת שמש תלת-ממדית.</div>
+      </div>
+    </div>
+    <div class="card reveal" style="margin-top:1rem;text-align:center">
+      <span class="secondary">מה שלמדנו: </span>
+      <span style="font-weight:800;color:#34d399">ככל שהפרומפט ברור יותר — AI עובד טוב יותר בשבילנו.</span>
+      <span class="secondary"> היום נקח את זה הרבה יותר רחוק.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 3: Today's pipeline ── -->
+<div class="slide" data-slide="3">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:460px;height:460px;top:-100px;right:-70px;background:#34d399;opacity:.1"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-60px;left:-50px;background:#f59e0b;opacity:.08"></div>
+  </div>
+  <div class="content text-center">
+    <div class="reveal badge">🗺️ המסע של היום</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 1.1rem">הפייפליין — מרעיון לסרטון מוגמר</h2>
+    <div class="arrow-flow reveal" style="margin-bottom:1.2rem;gap:.4rem">
+      <div class="card" style="padding:.7rem 1rem;border-top:3px solid #34d399;min-width:120px">
+        <div style="font-size:1.8rem">💡</div>
+        <div style="font-weight:800;color:#34d399;font-size:.9rem">רעיון</div>
+        <div class="secondary small">הסיפור שלכם</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="card" style="padding:.7rem 1rem;border-top:3px solid #39bdf8;min-width:120px">
+        <div style="font-size:1.8rem">🤖</div>
+        <div style="font-weight:800;color:#39bdf8;font-size:.9rem">Gemini</div>
+        <div class="secondary small">סיפור + פרומפטים</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="card" style="padding:.7rem 1rem;border-top:3px solid #a78bfa;min-width:120px">
+        <div style="font-size:1.8rem">🖼️</div>
+        <div style="font-weight:800;color:#a78bfa;font-size:.9rem">תמונות</div>
+        <div class="secondary small">Gemini / StudioAI</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="card" style="padding:.7rem 1rem;border-top:3px solid #f59e0b;min-width:120px">
+        <div style="font-size:1.8rem">🎵</div>
+        <div style="font-weight:800;color:#f59e0b;font-size:.9rem">Suno</div>
+        <div class="secondary small">מוזיקה / שיר</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="card" style="padding:.7rem 1rem;border-top:3px solid #f472b6;min-width:120px">
+        <div style="font-size:1.8rem">🎬</div>
+        <div style="font-weight:800;color:#f472b6;font-size:.9rem">CapCut</div>
+        <div class="secondary small">עריכה ויצוא</div>
+      </div>
+    </div>
+    <div class="card reveal" style="max-width:780px;margin:0 auto">
+      <div class="secondary small">🎯 <strong>המטרה:</strong> לצאת מהיום עם סרטון מצויר אישי שלכם — עם מוזיקה, תמונות ואפקטים. <span style="color:#f4f8ff;font-weight:700">בלי ניסיון קודם בעריכה.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 4: How AI models work (zero/few shot) ── -->
+<div class="slide" data-slide="4">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:440px;height:440px;top:-90px;left:-70px;background:#34d399;opacity:.09"></div>
+    <div class="blob" style="width:280px;height:280px;bottom:-60px;right:-50px;background:#a78bfa;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🧠 איך המודל חושב?</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 1rem">AI מנחש את המילה הבאה — תמיד</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.7rem;border-right:4px solid #34d399">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.4rem">דוגמת תפוח 🍎</div>
+          <div class="secondary small">כשנכתוב: <span style="color:#f4f8ff">"תגדיר לי תפוח"</span> — הוא מיד יציע: <em>גדול, אדום, ירוק, פרי, מתוק, טעים...</em><br><br>למה? כי מיליוני אנשים כבר כתבו עליו. הוא לא "יודע" — הוא <strong>מנחש בהסתברות גבוהה</strong>.</div>
+        </div>
+        <div class="card" style="border-right:4px solid #f59e0b;background:rgba(245,158,11,.05)">
+          <div style="font-weight:800;color:#f59e0b;margin-bottom:.4rem">פרי שלא קיים? 🍊❓</div>
+          <div class="secondary small">אם נמציא פרי חדש שאף אחד לא כתב עליו — AI יוכל <strong>להמציא תכונות שגויות לחלוטין</strong>. הוא לא מבין, הוא מנחש.</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem">שני מושגים חשובים:</div>
+        <div class="card" style="margin-bottom:.6rem;border-top:3px solid #a78bfa">
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem">
+            <span class="pill" style="background:rgba(167,139,250,.15);color:#a78bfa">Zero Shot</span>
+            <span style="font-weight:700">— ניסיון ראשון</span>
+          </div>
+          <div class="secondary small">בקשה שאף אחד לא שאל קודם. המודל יתן תשובה על בסיס הדברים הכי קרובים שלמד — עשויה להיות מדויקת, עשויה לפספס.</div>
+        </div>
+        <div class="card" style="border-top:3px solid #34d399">
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem">
+            <span class="pill" style="background:rgba(52,211,153,.15);color:#34d399">Few Shot</span>
+            <span style="font-weight:700">— עם דוגמאות</span>
+          </div>
+          <div class="secondary small">כשמספקים ל-AI דוגמאות קודמות ("כמו שכתבתי פעם הקודמת...") — <strong>התוצאה משתפרת דרמטית</strong>. ככה אימון מצטבר.</div>
+        </div>
+        <div class="card" style="margin-top:.6rem;background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2);text-align:center">
+          <div class="secondary small">💡 בשיעור היום: כל פרומפט שנתן ל-AI עוזר לו לדייק בפעם הבאה.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 5: Step 1 — the master prompt ── -->
+<div class="slide" data-slide="5">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:450px;height:450px;top:-90px;right:-70px;background:#f59e0b;opacity:.1"></div>
+    <div class="blob" style="width:280px;height:280px;bottom:-60px;left:-50px;background:#34d399;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🤖 שלב 1 — Gemini</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.35rem);font-weight:800;margin:.7rem 0 .9rem">הפרומפט הראשי — הסיפור שלכם</h2>
+    <div class="grid grid-cols-[1.1fr_1fr] gap-5">
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.5rem">דוגמה — שולחים לג'ימיני:</div>
+        <div style="background:#050709;border-radius:14px;padding:.9rem 1rem;border:1px solid rgba(255,255,255,.08);font-size:.8rem;color:#c5d7ea;line-height:1.65;direction:rtl;text-align:right">
+          "אני רוצה ליצור סיפור ילדים לבת שלי בת השנתיים וחצי. לילדה שלי קוראים אורי, היא אוהבת חיות והסיפור יהיה על זה שהיא פוגשת חיות ומשחקת איתן. היא ילדה מאוד סקרנית ושמחה.<br><br>
+          לדוגמה היא הולכת לכלוב של הפילים והפיל משפריץ עליה מים. האריה אומר לה לעלות על הגב שלו ולוקח אותה לטיול.<br><br>
+          <span style="color:#34d399">את הוידאו אני אצור בעזרת הפרומפט שתייצר לי שאוכל לשלוח, ואני רוצה גם פרומפט לשיר שאוכל לשלוח לסונו.</span>"
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.5rem">מה Gemini יחזיר:</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="card" style="padding:.7rem;border-right:3px solid #39bdf8">
+            <div style="font-weight:700;font-size:.88rem">📖 הסיפור</div>
+            <div class="secondary small">פסקאות מסודרות, עם דמויות, תיאורים, ורגשות</div>
+          </div>
+          <div class="card" style="padding:.7rem;border-right:3px solid #a78bfa">
+            <div style="font-weight:700;font-size:.88rem">🖼️ פרומפטים לתמונות</div>
+            <div class="secondary small">תיאור מפורט לכל סצנה — מוכן לשליחה ל-Gemini/StudioAI</div>
+          </div>
+          <div class="card" style="padding:.7rem;border-right:3px solid #f59e0b">
+            <div style="font-weight:700;font-size:.88rem">🎵 פרומפט לסונו</div>
+            <div class="secondary small">מה סגנון השיר, מה המילים, מה המנגינה</div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:.6rem;background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2)">
+          <div class="secondary small">💡 <strong>טיפ:</strong> ככל שתתארו יותר על האדם שמיועד לו הסיפור — כך התוצאה תהיה יותר אישית ומדויקת. זה few shot בפעולה.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 6: Step 2 — creating images ── -->
+<div class="slide" data-slide="6">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:440px;height:440px;top:-90px;left:-70px;background:#a78bfa;opacity:.1"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-60px;right:-50px;background:#34d399;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🖼️ שלב 2 — יצירת תמונות</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 .9rem">מהפרומפטים לתמונות חיות</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.7rem">
+          <div style="font-weight:800;color:#a78bfa;margin-bottom:.6rem">מה עושים:</div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">1</div><div class="secondary small">פותחים טאב נוסף עם Gemini (gemini.google.com)</div></div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">2</div><div class="secondary small">מעתיקים כל פרומפט תמונה שקיבלנו — אחד אחד</div></div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">3</div><div class="secondary small">מוסיפים בסוף: <span style="color:#f4f8ff">"סגנון ציור ילדים, צבעוני, חם ומסביר פנים"</span></div></div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">4</div><div class="secondary small">שומרים כל תמונה למחשב (לחיצה ימנית → שמור)</div></div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">5</div><div class="secondary small">מטרה: 4–6 תמונות לסיפור שלנו</div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem">כלים לבחירה:</div>
+        <div style="display:flex;flex-direction:column;gap:.45rem;margin-bottom:.7rem">
+          <div class="card" style="padding:.65rem;display:flex;align-items:center;gap:.7rem">
+            <div style="font-size:1.3rem">🤖</div>
+            <div><div style="font-weight:700;font-size:.88rem">Gemini ImageFX</div><div class="secondary small">ישירות מהצ'אט. פשוט וקל.</div></div>
+            <a href="https://gemini.google.com" target="_blank" class="link-btn" style="background:rgba(57,189,248,.12);color:#39bdf8;margin-right:auto">פתח</a>
+          </div>
+          <div class="card" style="padding:.65rem;display:flex;align-items:center;gap:.7rem">
+            <div style="font-size:1.3rem">🎨</div>
+            <div><div style="font-weight:700;font-size:.88rem">StudioAI</div><div class="secondary small">איכות גבוהה, יותר שליטה.</div></div>
+            <a href="https://labs.google/fx/tools/image-fx" target="_blank" class="link-btn" style="background:rgba(167,139,250,.12);color:#a78bfa;margin-right:auto">פתח</a>
+          </div>
+          <div class="card" style="padding:.65rem;display:flex;align-items:center;gap:.7rem">
+            <div style="font-size:1.3rem">🖌️</div>
+            <div><div style="font-weight:700;font-size:.88rem">DALL-E (ב-ChatGPT)</div><div class="secondary small">אפשרות נוספת אם Gemini לא מדויק.</div></div>
+          </div>
+        </div>
+        <div class="card" style="background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2)">
+          <div class="secondary small">🔁 לא מרוצים מהתמונה? כתבו: <span style="color:#f4f8ff">"יותר כהה", "פחות ריאליסטי", "הוסף חיוך"</span> — AI ישפר.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 7: Step 3 — Suno music ── -->
+<div class="slide" data-slide="7">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:460px;height:460px;top:-100px;right:-80px;background:#f59e0b;opacity:.11"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-70px;left:-50px;background:#34d399;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🎵 שלב 3 — Suno</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 .9rem">יוצרים מוזיקה מקורית בפרומפט</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.7rem">
+          <div style="font-weight:800;color:#f59e0b;margin-bottom:.6rem">מה עושים ב-Suno:</div>
+          <div class="step"><div class="step-num" style="background:#f59e0b;color:#0c1726">1</div><div class="secondary small">נכנסים ל-<a href="https://suno.com" target="_blank" style="color:#f59e0b">suno.com</a> ונרשמים עם Google</div></div>
+          <div class="step"><div class="step-num" style="background:#f59e0b;color:#0c1726">2</div><div class="secondary small">לוחצים על <strong>"Create"</strong> ומדביקים את הפרומפט שג'ימיני הכין</div></div>
+          <div class="step"><div class="step-num" style="background:#f59e0b;color:#0c1726">3</div><div class="secondary small">Suno מייצר 2 גרסאות — מאזינים ובוחרים את הטובה יותר</div></div>
+          <div class="step"><div class="step-num" style="background:#f59e0b;color:#0c1726">4</div><div class="secondary small">לוחצים על "..." ואז <strong>"Download"</strong> → שומרים MP3</div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.5rem">דוגמה לפרומפט מוזיקה:</div>
+        <div style="background:#050709;border-radius:14px;padding:.9rem 1rem;border:1px solid rgba(255,255,255,.08);font-size:.8rem;color:#c5d7ea;line-height:1.65;direction:rtl;text-align:right;margin-bottom:.6rem">
+          "שיר ילדים עליז בעברית על ילדה שמטיילת בגן חיות ומכירה חיות חדשות. מנגינה קצבית ושמחה, קצב מתון לילדים. פזמון חוזר עם שם: אורי."
+        </div>
+        <div class="card" style="background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.25)">
+          <div style="font-size:1.3rem;margin-bottom:.3rem">🎤</div>
+          <div style="font-weight:700;margin-bottom:.3rem">במקום שיר? קריינות!</div>
+          <div class="secondary small">ג'ימיני יוכל גם לכתוב Voice Over — טקסט לקריין שיסביר את הסיפור. לזה נשתמש ב-ElevenLabs (שלב בונוס).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 8: Step 4 — Veo animation ── -->
+<div class="slide" data-slide="8">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:450px;height:450px;top:-90px;left:-70px;background:#34d399;opacity:.1"></div>
+    <div class="blob" style="width:280px;height:280px;bottom:-60px;right:-50px;background:#f59e0b;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🎥 שלב 4 — אנימציה</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 .9rem">מתמונות סטטיות לוידאו חי</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.7rem">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.6rem">שיטה 1 — ב-Gemini ישירות:</div>
+          <div class="step"><div class="step-num">1</div><div class="secondary small">מעלים תמונה לג'ימיני ("<strong>+</strong>" → Upload image)</div></div>
+          <div class="step"><div class="step-num">2</div><div class="secondary small">כותבים: <span style="color:#f4f8ff">"צור קטע וידאו של 5 שניות על בסיס התמונה הזאת"</span></div></div>
+          <div class="step"><div class="step-num">3</div><div class="secondary small">Veo (המנוע של גוגל) מייצר — מורידים MP4</div></div>
+        </div>
+        <div class="card">
+          <div style="font-weight:800;color:#a78bfa;margin-bottom:.6rem">שיטה 2 — Runway:</div>
+          <div class="secondary small" style="margin-bottom:.4rem">לתוצאות מתקדמות יותר — Image to Video</div>
+          <a href="https://runwayml.com" target="_blank" class="link-btn" style="background:rgba(167,139,250,.12);color:#a78bfa">runwayml.com →</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="video-box">
+          <div style="font-weight:800;margin-bottom:.7rem;color:#34d399">💡 טיפ חשוב</div>
+          <div class="secondary small" style="margin-bottom:.7rem">לא חייבים וידאו! אפשר להשתמש ב-<strong>slideshow</strong> — כמה תמונות שמתחלפות בקפקאט. התוצאה נראית מקצועית לא פחות.</div>
+          <div class="secondary small" style="margin-bottom:.7rem">מה שחשוב הוא <strong>שילוב התמונות עם המוזיקה</strong> — וזה קורה בשלב הבא.</div>
+          <div style="font-weight:700;color:#f4f8ff">הקבצים שצריכים להיות מוכנים לשלב הבא:</div>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem">
+            <span class="pill" style="background:rgba(167,139,250,.12);color:#a78bfa">📁 4-6 תמונות</span>
+            <span class="pill" style="background:rgba(245,158,11,.12);color:#f59e0b">🎵 קובץ MP3</span>
+            <span class="pill" style="background:rgba(52,211,153,.12);color:#34d399">🎥 קטעי MP4 (אם יש)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 9: Break ── -->
+<div class="slide" data-slide="9">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:500px;height:500px;top:-120px;right:-80px;background:#34d399;opacity:.12"></div>
+    <div class="blob" style="width:320px;height:320px;bottom:-80px;left:-60px;background:#f59e0b;opacity:.09"></div>
+  </div>
+  <div class="content text-center">
+    <div class="reveal" style="font-size:72px;line-height:1;animation:float 3s ease-in-out infinite;margin-bottom:.7rem">☕</div>
+    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;margin:0 0 .8rem;background:linear-gradient(135deg,#34d399,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">הפסקה — 10 דקות</h2>
+    <p class="reveal muted" style="font-size:1.1rem;margin-bottom:1.4rem">ואחרי ההפסקה — מרכיבים את הסרטון!</p>
+    <div class="grid grid-cols-3 gap-4" style="max-width:700px;margin:0 auto 1.2rem">
+      <div class="card reveal" style="text-align:center"><div style="font-size:1.8rem">✅</div><div class="secondary small" style="margin-top:.4rem">סיפור, תמונות, מוזיקה</div></div>
+      <div class="card reveal" style="text-align:center;border:1px solid rgba(52,211,153,.3)"><div style="font-size:1.8rem">⏳</div><div class="secondary small" style="margin-top:.4rem">10 דקות</div></div>
+      <div class="card reveal" style="text-align:center"><div style="font-size:1.8rem">🎬</div><div class="secondary small" style="margin-top:.4rem">CapCut — עריכה וסרטון מוגמר</div></div>
+    </div>
+    <div class="card reveal" style="max-width:600px;margin:0 auto;background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.2)">
+      <div class="secondary small">📝 <strong>מבקש:</strong> עד סוף ההפסקה — כתבו בגוגל דוקס משפט-שניים על עצמכם. נשתמש בזה בסוף לפודקאסט של מפגש 4!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 10: Step 5 — CapCut ── -->
+<div class="slide" data-slide="10">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:460px;height:460px;top:-100px;left:-80px;background:#f472b6;opacity:.1"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-60px;right:-50px;background:#34d399;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">✂️ שלב 5 — CapCut</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 .9rem">מרכיבים הכל לסרטון מוגמר</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal">
+        <div class="card">
+          <div style="font-weight:800;color:#f472b6;margin-bottom:.7rem">שלב-אחר-שלב:</div>
+          <div class="step"><div class="step-num" style="background:#f472b6">1</div><div class="secondary small">נכנסים ל-<a href="https://www.capcut.com" target="_blank" style="color:#f472b6">capcut.com</a> ולוחצים <strong>"New Project"</strong></div></div>
+          <div class="step"><div class="step-num" style="background:#f472b6">2</div><div class="secondary small">לוחצים <strong>"Upload"</strong> ומעלים את התמונות וקטעי הוידאו</div></div>
+          <div class="step"><div class="step-num" style="background:#f472b6">3</div><div class="secondary small">גוררים לציר הזמן (Timeline) לפי סדר הסיפור</div></div>
+          <div class="step"><div class="step-num" style="background:#f472b6">4</div><div class="secondary small">לוחצים על <strong>"+Audio"</strong> ומעלים את קובץ ה-MP3 מ-Suno</div></div>
+          <div class="step"><div class="step-num" style="background:#f472b6">5</div><div class="secondary small">לוחצים על <strong>"Transition"</strong> ובוחרים מעבר חלק בין סצנות</div></div>
+          <div class="step"><div class="step-num" style="background:#f472b6">6</div><div class="secondary small">לוחצים על <strong>"Captions" → "Auto Captions"</strong> → כתוביות אוטומטיות</div></div>
+          <div class="step"><div class="step-num" style="background:#f472b6">7</div><div class="secondary small">בוחרים אפקטים לכיתוב מהרשימה בצד ימין</div></div>
+          <div class="step"><div class="step-num" style="background:#f472b6">8</div><div class="secondary small">לוחצים <strong>"Export"</strong> — הסרטון שלכם מוכן! 🎉</div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.6rem;background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2)">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.4rem">🎛️ ל"All Tools"</div>
+          <div class="secondary small">מה שמעוניין בתכונות מתקדמות יכול ללחוץ על <strong>"All Tools"</strong> ולגלות עריכות AI — הסרה של רקע, חיתוך, יצוב סרטון ועוד.</div>
+        </div>
+        <div class="card" style="background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.2)">
+          <div style="font-size:2rem;margin-bottom:.4rem">🎉</div>
+          <div style="font-weight:800;margin-bottom:.3rem">הגעתם! יצרתם סרטון!</div>
+          <div class="secondary small">תמונות + מוזיקה + כיתוב + מעברים — סרטון מצויר שיצרתם בעצמכם עם AI. בלי קורס עריכה, בלי ניסיון קודם.</div>
+        </div>
+        <a href="https://www.capcut.com" target="_blank" class="link-btn" style="background:rgba(244,114,182,.12);color:#f472b6;margin-top:.6rem;display:inline-flex">פתח CapCut →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 11: ElevenLabs — voice & TTS ── -->
+<div class="slide" data-slide="11">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:440px;height:440px;top:-90px;right:-70px;background:#a78bfa;opacity:.1"></div>
+    <div class="blob" style="width:280px;height:280px;bottom:-60px;right:-40px;background:#f59e0b;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🎤 בונוס — ElevenLabs</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 .9rem">Text-to-Speech — קול מטקסט</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.7rem;border-right:4px solid #a78bfa">
+          <div style="font-weight:800;color:#a78bfa;margin-bottom:.5rem">מה זה Text-to-Speech?</div>
+          <div class="secondary small">במקום שיר — אפשר ליצור <strong>קריינות</strong> בקול אנושי אמיתי. AI קורא את הטקסט שלכם בקול שתבחרו — בעברית או באנגלית.</div>
+        </div>
+        <div class="card" style="border-right:4px solid #34d399">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.5rem">מה אפשר ליצור:</div>
+          <div style="display:flex;flex-direction:column;gap:.3rem">
+            <div class="secondary small">🎙️ קריינות לסרטון ילדים</div>
+            <div class="secondary small">📖 קריאת ספר בקול רם</div>
+            <div class="secondary small">🎭 דמות עם קול ייחודי</div>
+            <div class="secondary small">🗣️ סינכרון שפתיים (Lip Sync)</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.6rem">
+          <div style="font-weight:800;color:#a78bfa;margin-bottom:.6rem">שלב-אחר-שלב:</div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">1</div><div class="secondary small">נכנסים ל-<a href="https://elevenlabs.io" target="_blank" style="color:#a78bfa">elevenlabs.io</a> ונרשמים</div></div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">2</div><div class="secondary small">לוחצים על <strong>"Text to Speech"</strong></div></div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">3</div><div class="secondary small">בוחרים קול מהרשימה בצד ימין — אפשר להאזין לדוגמה לפני</div></div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">4</div><div class="secondary small">מדביקים את הטקסט, לוחצים <strong>"Generate"</strong></div></div>
+          <div class="step"><div class="step-num" style="background:#a78bfa">5</div><div class="secondary small">מורידים MP3 — ומעלים לקפקאט במקום Suno</div></div>
+        </div>
+        <div class="card" style="background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.2)">
+          <div style="font-size:.85rem;color:#c5d7ea">🎬 <strong>הדגמה מעניינת:</strong> עם טכנולוגיה זו אפשר להכניס קולות מפורסמים לאומרים דברים שלא אמרו — <a href="https://www.youtube.com/watch?v=Bml9ksLwLPM" target="_blank" style="color:#f59e0b">לדוגמה: טום קרוז שר →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 12: Advanced tools ── -->
+<div class="slide" data-slide="12">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:450px;height:450px;top:-90px;left:-70px;background:#f59e0b;opacity:.1"></div>
+    <div class="blob" style="width:280px;height:280px;bottom:-60px;right:-50px;background:#a78bfa;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🚀 למי שרוצה יותר</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 1rem">כלים מתקדמים להמשך</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem">יצירת וידאו מקצועי:</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="card" style="padding:.75rem;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-weight:700;font-size:.9rem">🎬 Kling AI</div>
+              <div class="secondary small">וידאו תלת-ממד מפרומפט — עם תנועה ואנימציה</div>
+            </div>
+            <a href="https://kling.ai" target="_blank" class="link-btn" style="background:rgba(245,158,11,.12);color:#f59e0b;white-space:nowrap">פתח →</a>
+          </div>
+          <div class="card" style="padding:.75rem;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-weight:700;font-size:.9rem">💃 Seedance 2</div>
+              <div class="secondary small">אנימציית דמויות ריאליסטית מתמונה</div>
+            </div>
+            <a href="https://www.seedance2ai.io" target="_blank" class="link-btn" style="background:rgba(167,139,250,.12);color:#a78bfa;white-space:nowrap">פתח →</a>
+          </div>
+          <div class="card" style="padding:.75rem;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-weight:700;font-size:.9rem">🎵 Artlist AI</div>
+              <div class="secondary small">מוזיקה ואפקטים קוליים ברמת סטודיו</div>
+            </div>
+            <a href="https://artlist.io/ai" target="_blank" class="link-btn" style="background:rgba(52,211,153,.12);color:#34d399;white-space:nowrap">פתח →</a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem">מה ההבדל מהכלים שראינו?</div>
+        <div class="card" style="margin-bottom:.6rem">
+          <div class="secondary small" style="margin-bottom:.5rem">הכלים שלמדנו היום (Gemini, Suno, CapCut) — <strong>חינמיים, קלים, ומספיקים מצוין</strong> לרמה שלנו.</div>
+          <div class="secondary small">הכלים המתקדמים — מיועדים לתוכן מקצועי יותר, מדויק יותר, ולפעמים בתשלום.</div>
+        </div>
+        <div class="video-box">
+          <div style="font-weight:800;margin-bottom:.4rem;color:#f59e0b">💡 ההמלצה שלי</div>
+          <div class="secondary small">קודם צרו עם הכלים הפשוטים — תתנסו, תשחקו, תצאו עם תוצר. אחרי שמרגישים בנוח — אז להתקדם לכלים המורכבים יותר.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 13: Activity ── -->
+<div class="slide" data-slide="13">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:460px;height:460px;top:-90px;right:-70px;background:#34d399;opacity:.11"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-60px;left:-50px;background:#f59e0b;opacity:.09"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🎯 עכשיו — אתם יוצרים!</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 1rem">הפרויקט האישי שלכם</h2>
+    <div class="grid grid-cols-2 gap-6 items-start">
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.7rem">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.7rem">מה תיצרו עכשיו:</div>
+          <div class="step"><div class="step-num">1</div><div class="secondary small"><strong>חשבו על הסיפור</strong> — מי גיבור הסיפור? מה קורה לו? מי הקהל?</div></div>
+          <div class="step"><div class="step-num">2</div><div class="secondary small"><strong>שלחו לג'ימיני</strong> — את הרעיון המלא עם כמה שיותר פרטים</div></div>
+          <div class="step"><div class="step-num">3</div><div class="secondary small"><strong>צרו תמונות</strong> — 4 לפחות על בסיס הפרומפטים שקיבלתם</div></div>
+          <div class="step"><div class="step-num">4</div><div class="secondary small"><strong>צרו מוזיקה</strong> בSuno — עם הפרומפט שג'ימיני הכין</div></div>
+          <div class="step"><div class="step-num">5</div><div class="secondary small"><strong>הרכיבו בCapCut</strong> — תמונות + מוזיקה = סרטון!</div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.6rem;background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2)">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">💡</div>
+          <div style="font-weight:700;margin-bottom:.4rem">רעיונות לסיפור:</div>
+          <div class="secondary small">🎂 סרטון יום הולדת לנכד/נכדה<br>🌸 סיפור על ריפוי ותקווה<br>🐾 הרפתקה עם חיית המחמד<br>🏡 ציר זמן של המסע האישי שלכם<br>🌟 מכתב לגרסה העתידית של עצמכם</div>
+        </div>
+        <div class="card" style="background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.2)">
+          <div class="secondary small">🎗️ <strong>לא חייבים להגיע לסרטון מוגמר</strong> — גם אם הגעתם לתמונות + מוזיקה זה כבר הישג מדהים!</div>
+        </div>
+        <div class="card" style="margin-top:.5rem;text-align:center">
+          <div class="secondary small">🙋 תקועים? קוראים לי — אני עובר בין כולם.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 14: Showcase ── -->
+<div class="slide" data-slide="14">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:480px;height:480px;top:-100px;left:-80px;background:#f59e0b;opacity:.11"></div>
+    <div class="blob" style="width:300px;height:300px;bottom:-70px;right:-50px;background:#34d399;opacity:.09"></div>
+  </div>
+  <div class="content text-center">
+    <div class="reveal" style="font-size:72px;line-height:1;animation:float 3s ease-in-out infinite;margin-bottom:.7rem">🌟</div>
+    <h2 class="reveal" style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin:0 0 .9rem">הציגו את היצירה שלכם!</h2>
+    <p class="reveal muted" style="margin-bottom:1.2rem">3–5 מתנדבים יציגו — מה יצרתם, איך, ומה הפתיע אתכם</p>
+    <div class="grid grid-cols-3 gap-5" style="max-width:860px;margin:0 auto">
+      <div class="card reveal" style="text-align:center;border-top:3px solid #34d399">
+        <div style="font-size:2rem;margin-bottom:.4rem">🎬</div>
+        <div style="font-weight:700;margin-bottom:.3rem">הראו את הסרטון</div>
+        <div class="secondary small">כל תוצר בסדר — גם תמונות בלבד, גם עם מוזיקה, גם המלא</div>
+      </div>
+      <div class="card reveal" style="text-align:center;border-top:3px solid #f59e0b">
+        <div style="font-size:2rem;margin-bottom:.4rem">🗣️</div>
+        <div style="font-weight:700;margin-bottom:.3rem">ספרו על הרעיון</div>
+        <div class="secondary small">מי הסיפור? למה בחרתם את זה?</div>
+      </div>
+      <div class="card reveal" style="text-align:center;border-top:3px solid #a78bfa">
+        <div style="font-size:2rem;margin-bottom:.4rem">💡</div>
+        <div style="font-weight:700;margin-bottom:.3rem">מה למדתם?</div>
+        <div class="secondary small">מה הפתיע? מה הייתם עושים אחרת?</div>
+      </div>
+    </div>
+    <div class="card reveal" style="max-width:600px;margin:1rem auto 0;background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.2)">
+      <div class="secondary small">👏 <strong>אין "טוב" ו"רע" כאן</strong> — כל אחד יצר משהו שלא היה קיים לפני שעתיים. זה הישג אמיתי.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 15: Discussion ── -->
+<div class="slide" data-slide="15">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:450px;height:450px;top:-100px;right:-70px;background:#34d399;opacity:.1"></div>
+    <div class="blob" style="width:280px;height:280px;bottom:-60px;left:-50px;background:#f59e0b;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">💬 דיון קצר</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 1rem">שאלות לסיום</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal">
+        <div style="display:flex;flex-direction:column;gap:.55rem">
+          <div class="card" style="border-right:3px solid #34d399;padding:.8rem">
+            <div class="secondary small">🎬 <strong>מה הייתם הולכים ליצור</strong> בסרטון הבא — לאחר הניסיון של היום?</div>
+          </div>
+          <div class="card" style="border-right:3px solid #f59e0b;padding:.8rem">
+            <div class="secondary small">🤔 <strong>Zero shot vs Few shot</strong> — ניסיתם לשפר פרומפט ולראות שינוי?</div>
+          </div>
+          <div class="card" style="border-right:3px solid #a78bfa;padding:.8rem">
+            <div class="secondary small">💊 <strong>מחשבה אישית:</strong> איך יצירת תוכן עם AI יכולה לשרת אתכם בתקופה הנוכחית?</div>
+          </div>
+          <div class="card" style="border-right:3px solid #f472b6;padding:.8rem">
+            <div class="secondary small">🚀 <strong>מה הכלי הכי שימושי</strong> שגיליתם היום — ולמה?</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card" style="height:100%;display:flex;flex-direction:column;justify-content:center;gap:.8rem">
+          <div style="text-align:center;font-size:3rem">🎨🤖✨</div>
+          <div class="video-box">
+            <div style="font-weight:800;margin-bottom:.4rem;color:#34d399">המסר שלי:</div>
+            <div class="secondary small" style="line-height:1.7">"היום יצרתם תוכן מורכב — עם שכבות. סיפור, תמונות, מוזיקה, עריכה.<br><br>כל שכבה בנויה על פרומפט. ופרומפט הוא בסך הכל — <strong>תקשורת ברורה</strong>.<br><br>ככל שתדברו עם AI יותר, תדעו לדבר איתו טוב יותר."</div>
+          </div>
+          <div class="card" style="background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2);text-align:center">
+            <div class="secondary small">🎗️ יצירתיות לא נעלמת בתקופות קשות. לפעמות היא <span style="color:#f4f8ff;font-weight:700">מחכה לכלים הנכונים</span>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 16: What's next ── -->
+<div class="slide" data-slide="16">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:500px;height:500px;top:-120px;right:-80px;background:#34d399;opacity:.13"></div>
+    <div class="blob" style="width:340px;height:340px;bottom:-80px;left:-60px;background:#f59e0b;opacity:.11"></div>
+    <div class="blob" style="width:220px;height:220px;top:52%;left:24%;background:#a78bfa;opacity:.09"></div>
+  </div>
+  <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1"></canvas>
+  <div class="content text-center">
+    <div class="reveal" style="font-size:72px;line-height:1;animation:float 3s ease-in-out infinite;margin-bottom:.6rem">🎙️</div>
+    <h2 class="reveal" style="font-size:clamp(2rem,4.4vw,3.1rem);font-weight:900;margin:0 0 .9rem;background:linear-gradient(135deg,#34d399,#f59e0b,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">מפגש 4 — AI כשותף חכם</h2>
+    <div class="grid grid-cols-2 gap-5 text-right" style="margin:0 auto 1rem;max-width:920px">
+      <div class="card reveal">
+        <div style="font-weight:800;color:#34d399;margin-bottom:.5rem">מה יצרנו היום</div>
+        <div class="secondary small">הבנו zero/few shot, בנינו פייפליין שלם, יצרנו תמונות + מוזיקה + סרטון עם CapCut, וגילינו ElevenLabs.</div>
+      </div>
+      <div class="card reveal">
+        <div style="font-weight:800;color:#f59e0b;margin-bottom:.5rem">מפגש 4 — מה מחכה לכם?</div>
+        <div class="secondary small">
+          🎙️ <strong>פודקאסט מפתיע</strong> — AI ייצור פודקאסט על הקבוצה מתוך מה שכתבתם<br>
+          🧠 <strong>NotebookLM</strong> — AI שעובד עם המסמכים שלכם<br>
+          🎁 ארגז כלים + סיכום + חגיגה
+        </div>
+      </div>
+    </div>
+    <div class="card reveal" style="max-width:680px;margin:0 auto .8rem;background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.2)">
+      <div style="font-weight:800;color:#f472b6;margin-bottom:.4rem">📝 לפני המפגש הבא:</div>
+      <div class="secondary small">ודאו שכתבתם 1–2 משפטים על עצמכם בגוגל דוקס המשותף. <strong>הם יהיו חלק מהפודקאסט!</strong></div>
+    </div>
+    <p class="reveal muted" style="font-size:.95rem">היום הייתם יוצרים. בפגישה הבאה — נחגוג את מה שבניתם.</p>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 16</span>
+</div>
+
+<script>
+let current=1;
+const total=document.querySelectorAll('.slide').length;
+const dotsContainer=document.getElementById('dots');
+const counter=document.getElementById('counter');
+for(let i=1;i<=total;i++){const dot=document.createElement('div');dot.className='dot'+(i===1?' active':'');dot.onclick=()=>goToSlide(i);dotsContainer.appendChild(dot)}
+function goToSlide(n){const prev=document.querySelector('.slide.active');const next=document.querySelector(`.slide[data-slide="${n}"]`);if(prev)prev.classList.remove('active');if(next){next.classList.add('active');animateSlide(next)}current=n;updateNav()}
+function changeSlide(dir){let next=current+dir;if(next<1)next=total;if(next>total)next=1;goToSlide(next)}
+function updateNav(){document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i+1===current));counter.textContent=current+' / '+total}
+document.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();changeSlide(1)}if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1)}});
+let touchStartX=0;document.addEventListener('touchstart',(e)=>{touchStartX=e.touches[0].clientX});document.addEventListener('touchend',(e)=>{const diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50)changeSlide(diff>0?1:-1)});
+function animateSlide(slide){slide.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(20px)';el.offsetHeight;const delay=i*0.08;el.style.transition=`opacity .35s ease ${delay}s, transform .35s ease ${delay}s`;el.style.opacity='1';el.style.transform='translateY(0px)'})}
+document.addEventListener('mousemove',(e)=>{const s=document.querySelector('.mouse-spotlight');if(s){s.style.background=`radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(52,211,153,0.06), transparent 40%)`}});
+window.initParticles=function(canvas,options){if(!canvas)return;const ctx=canvas.getContext('2d');canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;const interactive=options.interactive!==false;const count=options.count||(interactive?55:18);let mx=-1000,my=-1000;const particles=Array.from({length:count},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,size:Math.random()*2.5+.8,alpha:Math.random()*.35+.1}));if(interactive){canvas.addEventListener('mousemove',(e)=>{const r=canvas.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});canvas.addEventListener('mouseleave',()=>{mx=-1000;my=-1000})}(function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{if(interactive){const dx=p.x-mx,dy=p.y-my,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){const force=(120-dist)/120*2;p.vx+=(dx/dist)*force*.1;p.vy+=(dy/dist)*force*.1}}p.vx*=.98;p.vy*=.98;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle=`rgba(52,211,153,${p.alpha})`;ctx.fill()});requestAnimationFrame(animate)})()};
+document.querySelectorAll('.particle-canvas').forEach(c=>window.initParticles(c,{interactive:true,count:55}));
+document.querySelectorAll('.particle-canvas-ambient').forEach(c=>window.initParticles(c,{interactive:false,count:18}));
+try{animateSlide(document.querySelector('.slide.active'))}catch(e){}
+</script>
+</body>
+</html>
