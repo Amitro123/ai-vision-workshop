@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI כשותף חכם — מפגש 4 | קהילת חלאסרטן</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #0c1726;
+      --color-text: #f4f8ff;
+      --color-text-secondary: #c5d7ea;
+      --color-text-muted: #88a4c3;
+      --color-accent-1: #34d399;
+      --color-accent-2: #f59e0b;
+      --color-accent-3: #a78bfa;
+      --color-glass-bg: rgba(255,255,255,0.06);
+      --color-glass-border: rgba(255,255,255,0.10);
+    }
+  </style>
+  <style>
+    :root{--color-bg:#0c1726;--color-text:#f4f8ff}
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{background:var(--color-bg);margin:0}
+    body{font-family:'Heebo',sans-serif;color:var(--color-text);overflow:hidden;height:100vh;width:100vw}
+    .deck{width:100vw;height:100vh;position:relative}
+    .slide{position:absolute;inset:0;background:var(--color-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:scale(.95);transition:opacity .7s ease,transform .7s ease;pointer-events:none;overflow:hidden}
+    .slide.active{opacity:1;transform:scale(1);pointer-events:all}
+    .slide>.content{position:relative;z-index:2;width:100%;max-width:1120px;padding:clamp(1.2rem,3vw,3rem)}
+    .nav-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);padding:10px 22px;border-radius:40px;border:1px solid rgba(255,255,255,.10)}
+    .nav-btn{width:40px;height:40px;border:none;background:rgba(255,255,255,.06);color:#34d399;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .slide-dots{display:flex;gap:8px}.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.10);cursor:pointer}.dot.active{background:#34d399;transform:scale(1.25)}
+    .slide-counter{font-size:.82rem;color:#88a4c3;min-width:46px;text-align:center}
+    .reveal{opacity:0;transform:translateY(20px)}
+    .gradient-mesh{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(80px);animation:float-slow 10s ease-in-out infinite}
+    .blob:nth-child(2){animation:float-drift 14s ease-in-out infinite}
+    .blob:nth-child(3){animation:float-slow 18s ease-in-out infinite reverse}
+    .slide::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px 256px;opacity:.03;mix-blend-mode:overlay}
+    .slide::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,rgba(0,0,0,.45) 100%)}
+    @keyframes float-slow{0%{transform:translate(0,0) scale(1)}25%{transform:translate(60px,-50px) scale(1.12)}50%{transform:translate(-40px,40px) scale(.9)}75%{transform:translate(50px,20px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes float-drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,-60px) scale(1.15)}66%{transform:translate(40px,30px) scale(.88)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+    @keyframes pulse-ring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.6);opacity:0}}
+    .card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:1.1rem}
+    .muted{color:#88a4c3}.secondary{color:#c5d7ea}
+    .badge{display:inline-flex;align-items:center;gap:.45rem;padding:.35rem .75rem;border-radius:999px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);font-size:.88rem;color:#c5d7ea}
+    .mouse-spotlight{position:fixed;inset:0;z-index:99;pointer-events:none}
+    .step{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.5rem}
+    .step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#34d399;color:#03111d;font-weight:800;font-size:.8rem;min-width:28px}
+    .small{font-size:.85rem}
+    .pill{display:inline-flex;align-items:center;padding:.22rem .65rem;border-radius:999px;font-size:.8rem;font-weight:700}
+    .link-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .75rem;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;transition:opacity .2s}
+    .link-btn:hover{opacity:.8}
+    .arrow-flow{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center}
+    .flow-arrow{color:#34d399;font-size:1.4rem;opacity:.7}
+    .gold{color:#f59e0b}
+    .green{color:#34d399}
+    .purple{color:#a78bfa}
+  </style>
+</head>
+<body>
+<div class="mouse-spotlight"></div>
+<div class="deck">
+
+<!-- ── SLIDE 1: Title ── -->
+<div class="slide active" data-slide="1">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:560px;height:560px;top:-130px;right:-110px;background:#f59e0b;opacity:.12"></div>
+    <div class="blob" style="width:360px;height:360px;bottom:-80px;left:-50px;background:#34d399;opacity:.09"></div>
+    <div class="blob" style="width:240px;height:240px;top:45%;left:20%;background:#a78bfa;opacity:.07"></div>
+  </div>
+  <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:2;opacity:0.6"></canvas>
+  <div class="content text-center" style="z-index:10;margin-top:-4vh">
+    <div class="reveal" style="font-size:clamp(2rem,5vw,3rem);margin-bottom:1.2rem;letter-spacing:8px">🏆 🧠 🚀</div>
+    <h1 class="reveal" style="font-size:clamp(3rem,9vw,6rem);font-weight:900;line-height:1;margin:0 0 1rem;color:#f4f8ff;text-shadow:0 10px 40px rgba(0,0,0,0.6)">AI כשותף חכם</h1>
+    <p class="reveal" style="font-size:clamp(1.1rem,1.8vw,1.5rem);color:#c5d7ea;letter-spacing:3px;text-transform:uppercase;margin:0 0 .6rem;opacity:0.9">מפגש 4 מתוך 4 · קהילת חלאסרטן</p>
+    <p class="reveal" style="font-size:clamp(.95rem,1.4vw,1.2rem);color:#88a4c3;margin:0 0 1.8rem">כלים מתקדמים ומסכמים</p>
+    <div class="reveal">
+      <span style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);padding:0.6rem 1.5rem;border-radius:999px;font-size:1rem;color:#f59e0b;font-weight:700;letter-spacing:1px">המפגש האחרון — וגם הכי מרגש! 🎉</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 2: Celebration recap — 4 sessions ── -->
+<div class="slide" data-slide="2">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:440px;height:440px;top:-100px;left:-60px;background:#f59e0b;opacity:.1"></div>
+    <div class="blob" style="width:280px;height:280px;bottom:-60px;right:-40px;background:#34d399;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🏆 רגע לחגוג</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,4vw,2.8rem);font-weight:800;margin:.7rem 0 .9rem">כמה רחוק הגענו — 4 מפגשים!</h2>
+    <div class="grid grid-cols-4 gap-4">
+      <div class="card reveal" style="border-top:3px solid #39bdf8;text-align:center">
+        <div style="font-size:1.7rem;margin-bottom:.4rem">👁️</div>
+        <div style="font-weight:800;color:#39bdf8;font-size:.95rem;margin-bottom:.3rem">מפגש 1</div>
+        <div class="secondary small">AI שרואה — מצלמה, זיהוי פנים, ראייה ממוחשבת</div>
+      </div>
+      <div class="card reveal" style="border-top:3px solid #a78bfa;text-align:center">
+        <div style="font-size:1.7rem;margin-bottom:.4rem">🧠</div>
+        <div style="font-weight:800;color:#a78bfa;font-size:.95rem;margin-bottom:.3rem">מפגש 2</div>
+        <div class="secondary small">LLM + פרומפטים + Gem אישי + קוד אינטראקטיבי</div>
+      </div>
+      <div class="card reveal" style="border-top:3px solid #f472b6;text-align:center">
+        <div style="font-size:1.7rem;margin-bottom:.4rem">🎬</div>
+        <div style="font-weight:800;color:#f472b6;font-size:.95rem;margin-bottom:.3rem">מפגש 3</div>
+        <div class="secondary small">מסיפור לסרטון — תמונות, מוזיקה, עריכה ב-CapCut</div>
+      </div>
+      <div class="card reveal" style="border-top:3px solid #f59e0b;text-align:center;background:rgba(245,158,11,0.05)">
+        <div style="font-size:1.7rem;margin-bottom:.4rem">🌟</div>
+        <div style="font-weight:800;color:#f59e0b;font-size:.95rem;margin-bottom:.3rem">מפגש 4</div>
+        <div class="secondary small">AI שמכיר אתכם — NotebookLM, ארגז כלים, סיום</div>
+      </div>
+    </div>
+    <div class="card reveal" style="margin-top:1rem;text-align:center;background:rgba(52,211,153,0.04);border-color:rgba(52,211,153,0.2)">
+      <span style="font-size:1.1rem;font-weight:800;color:#34d399">"לפני 4 מפגשים לא ידעתם מה זה AI. היום — אתם יוצרים, מדברים, ומבינים."</span>
+    </div>
+    <div class="reveal" style="margin-top:.8rem;text-align:center">
+      <span class="muted" style="font-size:.95rem">🎗️ מי שיצר סרטון במפגש 3 — מוזמן לשתף עכשיו!</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 3: Surprise — the podcast ── -->
+<div class="slide" data-slide="3">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:500px;height:500px;top:-110px;right:-80px;background:#34d399;opacity:.12"></div>
+    <div class="blob" style="width:320px;height:320px;bottom:-70px;left:-60px;background:#a78bfa;opacity:.09"></div>
+  </div>
+  <div class="content text-center">
+    <div class="reveal badge">🎧 הפתעה!</div>
+    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;margin:.7rem 0 .8rem;background:linear-gradient(135deg,#34d399,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">הפודקאסט שלכם — נוצר על ידי AI</h2>
+    <p class="reveal secondary" style="font-size:1.1rem;margin-bottom:1.5rem">לקחתי את המצגות שלכם, הזנתי ל-NotebookLM, ויצרתי פודקאסט שמספר את <strong>הסיפור של הקבוצה</strong></p>
+
+    <div class="grid grid-cols-3 gap-5" style="max-width:860px;margin:0 auto 1.4rem">
+      <div class="card reveal" style="text-align:center;border-top:3px solid #34d399">
+        <div style="font-size:2rem;margin-bottom:.4rem">📄</div>
+        <div style="font-weight:700;margin-bottom:.3rem">הכנסתי</div>
+        <div class="secondary small">לינקים למצגות של המשתתפים + עבודות שנוצרו</div>
+      </div>
+      <div class="card reveal" style="text-align:center;border-top:3px solid #f59e0b">
+        <div style="font-size:2rem;margin-bottom:.4rem">🤖</div>
+        <div style="font-weight:700;margin-bottom:.3rem">NotebookLM עיבד</div>
+        <div class="secondary small">ניתח את כל החומר, מצא נושאים משותפים ורגעים מיוחדים</div>
+      </div>
+      <div class="card reveal" style="text-align:center;border-top:3px solid #a78bfa">
+        <div style="font-size:2rem;margin-bottom:.4rem">🎙️</div>
+        <div style="font-weight:700;margin-bottom:.3rem">הוציא פודקאסט</div>
+        <div class="secondary small">שיחה בין שני מגישים — על הקבוצה שלנו!</div>
+      </div>
+    </div>
+    <div class="card reveal" style="max-width:680px;margin:0 auto;background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.25)">
+      <div style="font-size:1.5rem;margin-bottom:.4rem">🎵</div>
+      <div style="font-weight:800;color:#f59e0b;margin-bottom:.3rem">מאזינים עכשיו יחד!</div>
+      <div class="secondary small">זה מה שנלמד לעשות היום — AI שמייצר תוכן <strong>מתוך המסמכים שלכם</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 4: What is RAG? ── -->
+<div class="slide" data-slide="4">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:450px;height:450px;top:-90px;left:-70px;background:#a78bfa;opacity:.1"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-60px;right:-50px;background:#34d399;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🧠 קונספט מפתח</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 .4rem">מה זה RAG? — AI שמכיר <em>את המידע שלכם</em></h2>
+    <p class="reveal secondary" style="font-size:1.05rem;margin-bottom:1.4rem">Retrieval-Augmented Generation — הדור הבא של AI</p>
+
+    <div class="grid grid-cols-[1.1fr_1fr] gap-6 items-start">
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.8rem;border-right:4px solid #88a4c3;background:rgba(136,164,195,0.04)">
+          <div style="font-weight:800;color:#88a4c3;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span>🌐</span> AI כללי (ChatGPT, Gemini...)</div>
+          <div class="secondary small" style="line-height:1.6">למד מהאינטרנט כולו — אבל <strong>לא מכיר אתכם</strong>. לא יודע מה כתוב בדוחות שלכם, בתיק הרפואי שלכם, בספר שלכם.</div>
+        </div>
+        <div class="card" style="border-right:4px solid #34d399;background:rgba(52,211,153,0.04)">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span>📂</span> AI + RAG (NotebookLM...)</div>
+          <div class="secondary small" style="line-height:1.6">לוקחים את אותו מוח חכם — ו<strong>מאכילים אותו במסמכים שלכם</strong>. עכשיו הוא עונה רק לפי מה שהכנסתם. מדויק, אישי, ללא הזיות.</div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.8rem;font-size:1rem">הדמיה — איך RAG עובד:</div>
+        <div style="display:flex;flex-direction:column;gap:.55rem">
+          <div class="card" style="padding:.75rem;display:flex;align-items:center;gap:.75rem;border-right:3px solid #f59e0b">
+            <span style="font-size:1.5rem">1️⃣</span>
+            <div class="secondary small"><strong>מעלים מסמכים</strong> — PDF, Word, YouTube, אתר, טקסט</div>
+          </div>
+          <div class="card" style="padding:.75rem;display:flex;align-items:center;gap:.75rem;border-right:3px solid #a78bfa">
+            <span style="font-size:1.5rem">2️⃣</span>
+            <div class="secondary small"><strong>AI מפרק ומאחסן</strong> את המידע בצורה שיכול לחפש בה</div>
+          </div>
+          <div class="card" style="padding:.75rem;display:flex;align-items:center;gap:.75rem;border-right:3px solid #34d399">
+            <span style="font-size:1.5rem">3️⃣</span>
+            <div class="secondary small"><strong>שואלים שאלה</strong> — AI מחפש תחילה במסמכים, אחר כך עונה</div>
+          </div>
+          <div class="card" style="padding:.75rem;display:flex;align-items:center;gap:.75rem;border-right:3px solid #f472b6">
+            <span style="font-size:1.5rem">4️⃣</span>
+            <div class="secondary small"><strong>תשובה עם מקורות</strong> — ציטוט מדויק ממה שהכנסתם</div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:.7rem;background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.2);text-align:center">
+          <div class="secondary small" style="font-weight:700">✨ <span style="color:#f4f8ff">NotebookLM הוא ה-RAG הכי נגיש שקיים — וחינמי לחלוטין</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 5: NotebookLM — what is it? ── -->
+<div class="slide" data-slide="5">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:480px;height:480px;top:-110px;right:-80px;background:#34d399;opacity:.11"></div>
+    <div class="blob" style="width:300px;height:300px;bottom:-70px;left:-50px;background:#f59e0b;opacity:.09"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">📚 NotebookLM</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 .4rem">AI שקורא את המסמכים שלכם</h2>
+    <p class="reveal secondary" style="font-size:1.05rem;margin-bottom:1.3rem">כמו שיש לכם עוזר אישי שקרא הכל — ועכשיו אתם יכולים לשאול אותו כל שאלה</p>
+
+    <div class="grid grid-cols-[1fr_1.1fr] gap-6 items-start">
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.8rem">מה אפשר להכניס?</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="card" style="padding:.7rem 1rem;display:flex;align-items:center;gap:.75rem">
+            <span style="font-size:1.3rem">📄</span>
+            <div class="secondary small"><strong>PDF, Word, טקסט</strong> — מסמכים מכל סוג</div>
+          </div>
+          <div class="card" style="padding:.7rem 1rem;display:flex;align-items:center;gap:.75rem">
+            <span style="font-size:1.3rem">🎬</span>
+            <div class="secondary small"><strong>YouTube</strong> — קישור לסרטון, הוא מתמלל ומנתח</div>
+          </div>
+          <div class="card" style="padding:.7rem 1rem;display:flex;align-items:center;gap:.75rem">
+            <span style="font-size:1.3rem">🌐</span>
+            <div class="secondary small"><strong>אתר אינטרנט</strong> — לינק לדף, הוא קורא ומעבד</div>
+          </div>
+          <div class="card" style="padding:.7rem 1rem;display:flex;align-items:center;gap:.75rem">
+            <span style="font-size:1.3rem">🗒️</span>
+            <div class="secondary small"><strong>Google Docs / Slides</strong> — ישירות מה-Drive</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.8rem">5 הפונקציות העיקריות:</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="card" style="padding:.75rem;border-right:4px solid #34d399">
+            <div style="font-weight:800;font-size:.9rem;color:#34d399;margin-bottom:.2rem">💬 שאלות ותשובות</div>
+            <div class="secondary small">שואלים בעברית — NotebookLM עונה לפי המסמכים בלבד, עם ציטוט מקור</div>
+          </div>
+          <div class="card" style="padding:.75rem;border-right:4px solid #f59e0b">
+            <div style="font-weight:800;font-size:.9rem;color:#f59e0b;margin-bottom:.2rem">🎙️ Audio Overview — פודקאסט</div>
+            <div class="secondary small">יוצר שיחה בין 2 מגישים AI על החומר שהכנסתם — תוצאה מדהימה</div>
+          </div>
+          <div class="card" style="padding:.75rem;border-right:4px solid #a78bfa">
+            <div style="font-weight:800;font-size:.9rem;color:#a78bfa;margin-bottom:.2rem">📖 Study Guide / FAQ</div>
+            <div class="secondary small">מייצר מדריך לימוד, שאלות ותשובות, או סיכום מהחומר</div>
+          </div>
+          <div class="card" style="padding:.75rem;border-right:4px solid #f472b6">
+            <div style="font-weight:800;font-size:.9rem;color:#f472b6;margin-bottom:.2rem">✍️ כתיבה מבוססת מקורות</div>
+            <div class="secondary small">כותב דוחות, מאמרים, סיכומים — רק מהמידע שהכנסתם</div>
+          </div>
+          <div class="card" style="padding:.75rem;border-right:4px solid #39bdf8">
+            <div style="font-weight:800;font-size:.9rem;color:#39bdf8;margin-bottom:.2rem">🗺️ Mind Map ויזואלי</div>
+            <div class="secondary small">מייצר מפת מחשבה גרפית שמציגה את החיבורים בין הנושאים</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 6: NotebookLM — use cases ── -->
+<div class="slide" data-slide="6">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:460px;height:460px;top:-100px;left:-70px;background:#a78bfa;opacity:.1"></div>
+    <div class="blob" style="width:300px;height:300px;bottom:-70px;right:-50px;background:#34d399;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">💼 איפה להשתמש?</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 1rem">NotebookLM בחיי היומיום שלכם</h2>
+    <div class="grid grid-cols-[1fr_1fr] gap-5">
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.55rem">
+        <div class="card" style="border-right:4px solid #39bdf8;padding:.9rem 1.1rem">
+          <div style="font-weight:800;color:#39bdf8;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem"><span>💼</span> עבודה</div>
+          <div class="secondary small">מעלים דוחות חברה → שואלים שאלות → מקבלים תובנות מהירות. אין צורך לקרוא 50 עמוד!</div>
+        </div>
+        <div class="card" style="border-right:4px solid #34d399;padding:.9rem 1.1rem">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem"><span>📚</span> לימודים</div>
+          <div class="secondary small">חומר לימוד → Study Guide + FAQ אוטומטי. מושלם לפני מבחן או הרצאה.</div>
+        </div>
+        <div class="card reveal" style="border-right:4px solid #f472b6;padding:.9rem 1.1rem;background:rgba(244,114,182,0.04)">
+          <div style="font-weight:800;color:#f472b6;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem"><span>🏥</span> בריאות — רלוונטי לנו!</div>
+          <div class="secondary small"><strong>תיק רפואי אישי</strong> — מעלים מסמכים רפואיים, תוצאות בדיקות, סיכומי רופא. NotebookLM יוצר ציר זמן טיפולים ו-FAQ אוטומטי.</div>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.55rem">
+        <div class="card" style="border-right:4px solid #f59e0b;padding:.9rem 1.1rem">
+          <div style="font-weight:800;color:#f59e0b;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem"><span>🎯</span> פרויקטים</div>
+          <div class="secondary small">רעיונות מפוזרים → ארגון לתוכנית פעולה. מייבאים את כל הנוטים והחומר, AI מארגן.</div>
+        </div>
+        <div class="card" style="border-right:4px solid #a78bfa;padding:.9rem 1.1rem">
+          <div style="font-weight:800;color:#a78bfa;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem"><span>🔬</span> מחקר</div>
+          <div class="secondary small">מאמרים מרובים → השוואה וסיכום. אין צורך לקרוא כל מאמר בנפרד — שואלים שאלה ומקבלים תשובה מסונתזת.</div>
+        </div>
+        <div class="card" style="padding:.9rem 1.1rem;background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.25)">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.5rem;font-size:1rem">🚀 הדגמה חיה עכשיו</div>
+          <div class="secondary small">נפתח NotebookLM יחד, נעלה מסמך, ונראה איך זה עובד בזמן אמת!</div>
+          <a href="https://notebooklm.google.com" target="_blank" class="link-btn" style="background:rgba(52,211,153,.12);color:#34d399;margin-top:.6rem;display:inline-flex">פתח NotebookLM →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 7: Practical tools ── -->
+<div class="slide" data-slide="7">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:470px;height:470px;top:-100px;right:-80px;background:#f59e0b;opacity:.11"></div>
+    <div class="blob" style="width:300px;height:300px;bottom:-70px;left:-50px;background:#a78bfa;opacity:.09"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🛠️ כלים פרקטיים</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 .9rem">הדגמות מהירות — כלי Gemini</h2>
+    <div class="grid grid-cols-3 gap-4">
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem;font-size:.9rem">יצירת מצגות:</div>
+        <div class="card" style="border-top:3px solid #39bdf8;padding:.9rem">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">📊</div>
+          <div style="font-weight:800;color:#39bdf8;font-size:.9rem;margin-bottom:.3rem">Gemini → Slides</div>
+          <div class="secondary small" style="margin-bottom:.5rem">תארו נושא → Gemini מייצר מצגת Google Slides מלאה, עם עיצוב!</div>
+          <a href="https://slides.google.com" target="_blank" class="link-btn" style="background:rgba(57,189,248,.1);color:#39bdf8;font-size:.75rem">פתח Slides →</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem;font-size:.9rem">מצגות עם עיצוב מדהים:</div>
+        <div class="card" style="border-top:3px solid #f472b6;padding:.9rem">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">🎨</div>
+          <div style="font-weight:800;color:#f472b6;font-size:.9rem;margin-bottom:.3rem">Gamma.app</div>
+          <div class="secondary small" style="margin-bottom:.5rem">מצגות מקצועיות ויפות מטקסט — AI בונה הכל כולל עיצוב ותמונות.</div>
+          <a href="https://gamma.app" target="_blank" class="link-btn" style="background:rgba(244,114,182,.1);color:#f472b6;font-size:.75rem">פתח Gamma →</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem;font-size:.9rem">מחקר מעמיק:</div>
+        <div class="card" style="border-top:3px solid #f59e0b;padding:.9rem">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">🔍</div>
+          <div style="font-weight:800;color:#f59e0b;font-size:.9rem;margin-bottom:.3rem">Deep Research</div>
+          <div class="secondary small" style="margin-bottom:.5rem">AI שמחפש עשרות מקורות ומייצר דוח מחקר מקיף — בלחיצה אחת.</div>
+          <a href="https://gemini.google.com" target="_blank" class="link-btn" style="background:rgba(245,158,11,.1);color:#f59e0b;font-size:.75rem">פתח Gemini →</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem;font-size:.9rem">ג'ימיני בכל גוגל:</div>
+        <div class="card" style="border-top:3px solid #34d399;padding:.9rem">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">⚡</div>
+          <div style="font-weight:800;color:#34d399;font-size:.9rem;margin-bottom:.3rem">Google Workspace AI</div>
+          <div class="secondary small">כפתור ה-"✦ Gemini" בתוך Gmail, Docs, Sheets — AI ישירות בתוך הכלים שכבר משתמשים.</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem;font-size:.9rem">Canvas — לימוד אינטראקטיבי:</div>
+        <div class="card" style="border-top:3px solid #a78bfa;padding:.9rem">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">🖼️</div>
+          <div style="font-weight:800;color:#a78bfa;font-size:.9rem;margin-bottom:.3rem">Canvas ב-Gemini</div>
+          <div class="secondary small">ממשק שבו AI ואתם עובדים יחד על מסמך חי — עורכים, מוסיפים, רואים שינויים בזמן אמת.</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.6rem;font-size:.9rem">NotebookLM בתוך Gemini:</div>
+        <div class="card" style="border-top:3px solid #39bdf8;padding:.9rem;background:rgba(57,189,248,.03)">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">🔗</div>
+          <div style="font-weight:800;color:#39bdf8;font-size:.9rem;margin-bottom:.3rem">Gemini + NotebookLM</div>
+          <div class="secondary small">ניתן לגשת ל-NotebookLM ישירות מ-Gemini — הכל מחובר תחת חשבון Google אחד.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 8: Active learning — try it ── -->
+<div class="slide" data-slide="8">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:460px;height:460px;top:-90px;right:-70px;background:#34d399;opacity:.11"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-60px;left:-50px;background:#f59e0b;opacity:.09"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🎯 למידה אקטיבית</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 .4rem">עכשיו — מנסים ב-NotebookLM!</h2>
+    <p class="reveal secondary" style="font-size:1.05rem;margin-bottom:1.4rem">5 דקות של ניסוי אישי — כל אחד מעלה משהו ושואל שאלה</p>
+    <div class="grid grid-cols-[1.1fr_1fr] gap-6 items-start">
+      <div class="reveal">
+        <div style="font-weight:700;color:#34d399;margin-bottom:.8rem">שלבים:</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="card" style="padding:.85rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #34d399">
+            <div class="step-num">1</div>
+            <div><div style="font-weight:800">נכנסים ל-notebooklm.google.com</div><div class="secondary small">חשבון Google רגיל, חינמי</div></div>
+          </div>
+          <div class="card" style="padding:.85rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #34d399">
+            <div class="step-num">2</div>
+            <div><div style="font-weight:800">לוחצים "+ New notebook"</div><div class="secondary small">מייצרים ספר חדש</div></div>
+          </div>
+          <div class="card" style="padding:.85rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #34d399">
+            <div class="step-num">3</div>
+            <div><div style="font-weight:800">מעלים מסמך / לינק</div><div class="secondary small">PDF, YouTube, אתר — כל מה שרוצים</div></div>
+          </div>
+          <div class="card" style="padding:.85rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #34d399">
+            <div class="step-num">4</div>
+            <div><div style="font-weight:800">שואלים שאלה בעברית</div><div class="secondary small">מה עיקרי? מה לא הבנתי? תסכם לי</div></div>
+          </div>
+          <div class="card" style="padding:.85rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #34d399">
+            <div class="step-num">5</div>
+            <div><div style="font-weight:800">לוחצים "Audio Overview"</div><div class="secondary small">וממתינים לפודקאסט המדהים 🎙️</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card" style="margin-bottom:.7rem;background:rgba(167,139,250,.04);border-color:rgba(167,139,250,.2)">
+          <div style="font-weight:800;color:#a78bfa;margin-bottom:.5rem">💡 רעיונות למה להעלות:</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <div class="secondary small">🏥 סיכום ביקור רופא אחרון</div>
+            <div class="secondary small">📰 כתבה רפואית שקראתם לאחרונה</div>
+            <div class="secondary small">📋 רשימת תרופות ומידע עליהן</div>
+            <div class="secondary small">🎬 סרטון YouTube על נושא שמעניין</div>
+            <div class="secondary small">📖 מאמר / בלוג שמצאתם</div>
+          </div>
+        </div>
+        <div class="card" style="background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2)">
+          <div style="font-weight:800;color:#34d399;margin-bottom:.3rem">✨ טיפ ראשון:</div>
+          <div class="secondary small">תשאלו: <strong>"תסכם לי את 3 הנקודות הכי חשובות"</strong> — ותראו כמה מהיר וחד הוא!</div>
+        </div>
+        <a href="https://notebooklm.google.com" target="_blank" class="link-btn" style="background:rgba(52,211,153,.12);color:#34d399;margin-top:.8rem;display:inline-flex;font-size:.9rem">🚀 פתח NotebookLM עכשיו →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 9: Break ── -->
+<div class="slide" data-slide="9">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:520px;height:520px;top:-120px;right:-80px;background:#f59e0b;opacity:.13"></div>
+    <div class="blob" style="width:330px;height:330px;bottom:-80px;left:-60px;background:#34d399;opacity:.1"></div>
+  </div>
+  <div class="content text-center">
+    <div class="reveal" style="font-size:80px;line-height:1;animation:float 3s ease-in-out infinite;margin-bottom:.8rem">☕</div>
+    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;margin:0 0 .8rem;background:linear-gradient(135deg,#f59e0b,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">הפסקה — 10 דקות</h2>
+    <p class="reveal muted" style="font-size:1.1rem;margin-bottom:1.4rem">ואחרי — ארגז כלים, דיון, וסיום מיוחד!</p>
+    <div class="grid grid-cols-3 gap-4" style="max-width:720px;margin:0 auto 1.2rem">
+      <div class="card reveal" style="text-align:center"><div style="font-size:1.8rem">✅</div><div class="secondary small" style="margin-top:.4rem">RAG + NotebookLM</div></div>
+      <div class="card reveal" style="text-align:center;border:1px solid rgba(245,158,11,.3)"><div style="font-size:1.8rem">⏳</div><div class="secondary small" style="margin-top:.4rem">10 דקות</div></div>
+      <div class="card reveal" style="text-align:center"><div style="font-size:1.8rem">🎁</div><div class="secondary small" style="margin-top:.4rem">ארגז כלים + סיום</div></div>
+    </div>
+    <div class="card reveal" style="max-width:600px;margin:0 auto;background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.2)">
+      <div class="secondary small">💬 <strong>בהפסקה:</strong> נשמח לשמוע — מה הייתה הגילוי הכי גדול שלכם בקורס כולו?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 10: Tools Toolkit ── -->
+<div class="slide" data-slide="10">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:460px;height:460px;top:-90px;left:-70px;background:#34d399;opacity:.1"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-60px;right:-50px;background:#f59e0b;opacity:.09"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🛠️ ארגז כלים</div>
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;margin:.7rem 0 .9rem">רשימת הכלים שלכם להמשך הדרך</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.45rem">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.2rem;font-size:.88rem">🤖 שיחה וכתיבה:</div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-weight:700;font-size:.88rem">💬 ChatGPT</div><div class="muted" style="font-size:.78rem">שיחות, כתיבה, רעיונות</div></div>
+          <a href="https://chat.openai.com" target="_blank" class="link-btn" style="background:rgba(52,211,153,.1);color:#34d399;padding:.2rem .55rem">→</a>
+        </div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-weight:700;font-size:.88rem">🤍 Claude</div><div class="muted" style="font-size:.78rem">כתיבה ארוכה, ניתוח מסמכים</div></div>
+          <a href="https://claude.ai" target="_blank" class="link-btn" style="background:rgba(245,158,11,.1);color:#f59e0b;padding:.2rem .55rem">→</a>
+        </div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-weight:700;font-size:.88rem">🔍 Perplexity</div><div class="muted" style="font-size:.78rem">חיפוש עם תשובות ומקורות</div></div>
+          <a href="https://perplexity.ai" target="_blank" class="link-btn" style="background:rgba(167,139,250,.1);color:#a78bfa;padding:.2rem .55rem">→</a>
+        </div>
+        <div style="font-weight:700;color:#c5d7ea;margin-top:.4rem;margin-bottom:.2rem;font-size:.88rem">🎯 מחקר ומסמכים:</div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-weight:700;font-size:.88rem">⭐ Gemini</div><div class="muted" style="font-size:.78rem">מצגות, מחקר, קוד, Workspace</div></div>
+          <a href="https://gemini.google.com" target="_blank" class="link-btn" style="background:rgba(57,189,248,.1);color:#39bdf8;padding:.2rem .55rem">→</a>
+        </div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(52,211,153,.25)">
+          <div><div style="font-weight:700;font-size:.88rem;color:#34d399">📚 NotebookLM</div><div class="muted" style="font-size:.78rem">AI אישי מבוסס מסמכים</div></div>
+          <a href="https://notebooklm.google.com" target="_blank" class="link-btn" style="background:rgba(52,211,153,.12);color:#34d399;padding:.2rem .55rem">→</a>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.45rem">
+        <div style="font-weight:700;color:#c5d7ea;margin-bottom:.2rem;font-size:.88rem">🎨 יצירה ועיצוב:</div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-weight:700;font-size:.88rem">🎨 Canva</div><div class="muted" style="font-size:.78rem">עיצוב גרפי עם AI</div></div>
+          <a href="https://canva.com" target="_blank" class="link-btn" style="background:rgba(244,114,182,.1);color:#f472b6;padding:.2rem .55rem">→</a>
+        </div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-weight:700;font-size:.88rem">🎵 Suno</div><div class="muted" style="font-size:.78rem">יצירת מוזיקה ושירים</div></div>
+          <a href="https://suno.ai" target="_blank" class="link-btn" style="background:rgba(245,158,11,.1);color:#f59e0b;padding:.2rem .55rem">→</a>
+        </div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-weight:700;font-size:.88rem">🎤 ElevenLabs</div><div class="muted" style="font-size:.78rem">קריינות ודיבור AI</div></div>
+          <a href="https://elevenlabs.io" target="_blank" class="link-btn" style="background:rgba(167,139,250,.1);color:#a78bfa;padding:.2rem .55rem">→</a>
+        </div>
+        <div class="card" style="padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-weight:700;font-size:.88rem">🎬 Runway</div><div class="muted" style="font-size:.78rem">עריכת וידאו מתקדמת</div></div>
+          <a href="https://runwayml.com" target="_blank" class="link-btn" style="background:rgba(57,189,248,.1);color:#39bdf8;padding:.2rem .55rem">→</a>
+        </div>
+        <div class="card" style="margin-top:.4rem;padding:.75rem;background:rgba(52,211,153,.04);border-color:rgba(52,211,153,.2);text-align:center">
+          <div class="secondary small">📎 <strong>לינק לרשימה המלאה</strong> עם הסברים — יישלח בקבוצה!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 11: Closing package ── -->
+<div class="slide" data-slide="11">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:480px;height:480px;top:-110px;right:-80px;background:#a78bfa;opacity:.11"></div>
+    <div class="blob" style="width:320px;height:320px;bottom:-70px;left:-60px;background:#34d399;opacity:.09"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">🎁 חבילת סיום</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 .9rem">מה תקבלו אחרי המפגש</h2>
+    <div class="grid grid-cols-[1.1fr_1fr] gap-6">
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.5rem">
+        <div class="card" style="padding:.9rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #34d399">
+          <div style="font-size:1.4rem">📋</div>
+          <div>
+            <div style="font-weight:800;font-size:.95rem">סיכום 4 המפגשים</div>
+            <div class="secondary small">עמוד אחד לכל מפגש — נקודות מפתח וכלים</div>
+          </div>
+        </div>
+        <div class="card" style="padding:.9rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #f59e0b">
+          <div style="font-size:1.4rem">💬</div>
+          <div>
+            <div style="font-weight:800;font-size:.95rem">בנק פרומפטים</div>
+            <div class="secondary small">רשימת פרומפטים מוכנים לשימוש מיידי</div>
+          </div>
+        </div>
+        <div class="card" style="padding:.9rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #a78bfa">
+          <div style="font-size:1.4rem">🛠️</div>
+          <div>
+            <div style="font-weight:800;font-size:.95rem">רשימת כלים מלאה</div>
+            <div class="secondary small">עם קישורים, הסברים ורמת קושי לכל כלי</div>
+          </div>
+        </div>
+        <div class="card" style="padding:.9rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #f472b6">
+          <div style="font-size:1.4rem">📚</div>
+          <div>
+            <div style="font-weight:800;font-size:.95rem">מדריכים צעד-אחר-צעד</div>
+            <div class="secondary small">ליצירת סרטון, NotebookLM ו-HTML אינטראקטיבי</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.5rem">
+        <div class="card" style="padding:.9rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #39bdf8">
+          <div style="font-size:1.4rem">🎓</div>
+          <div>
+            <div style="font-weight:800;font-size:.95rem">משאבים ללימוד המשך</div>
+            <div class="secondary small">קורסים חינמיים, ערוצי YouTube, קהילות ישראליות</div>
+          </div>
+        </div>
+        <div class="card" style="padding:.9rem;display:flex;align-items:center;gap:.85rem;border-right:4px solid #34d399">
+          <div style="font-size:1.4rem">🎙️</div>
+          <div>
+            <div style="font-weight:800;font-size:.95rem">הפודקאסט שלנו (MP3)</div>
+            <div class="secondary small">הפודקאסט שנוצר על הקבוצה — לשמור לתמיד</div>
+          </div>
+        </div>
+        <div class="card" style="padding:.9rem;display:flex;align-items:center;gap:.85rem;background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.25)">
+          <div style="font-size:1.4rem">💬</div>
+          <div>
+            <div style="font-weight:800;font-size:.95rem;color:#f59e0b">קבוצת תמיכה</div>
+            <div class="secondary small">WhatsApp / Telegram — שאלות, שיתוף, השראה</div>
+          </div>
+        </div>
+        <div class="card" style="padding:.85rem;text-align:center;background:rgba(52,211,153,.05);border-color:rgba(52,211,153,.2)">
+          <div style="font-weight:800;color:#34d399;font-size:1rem">🎗️ הכי חשוב?</div>
+          <div class="secondary small" style="margin-top:.3rem">הידע שנשאר אצלכם — לא ייגמר. ה-AI רק ישתפר עם הזמן.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 12: Open discussion ── -->
+<div class="slide" data-slide="12">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:460px;height:460px;top:-100px;right:-70px;background:#34d399;opacity:.1"></div>
+    <div class="blob" style="width:290px;height:290px;bottom:-60px;left:-50px;background:#a78bfa;opacity:.08"></div>
+  </div>
+  <div class="content">
+    <div class="reveal badge">💬 דיון פתוח</div>
+    <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 1rem">שאלות לסיום — השיחה שלנו</h2>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.5rem">
+        <div class="card" style="border-right:3px solid #f59e0b;padding:.9rem">
+          <div class="secondary small">🌟 <strong>"מה היה ה-וואו רגע הכי גדול שלכם"</strong> בכל הקורס?</div>
+        </div>
+        <div class="card" style="border-right:3px solid #34d399;padding:.9rem">
+          <div class="secondary small">🚀 <strong>"איך אתם חושבים להשתמש ב-AI</strong> בחודש הקרוב?"</div>
+        </div>
+        <div class="card" style="border-right:3px solid #a78bfa;padding:.9rem">
+          <div class="secondary small">🔄 <strong>"מה השתנה</strong> בדרך שאתם רואים טכנולוגיה?"</div>
+        </div>
+        <div class="card" style="border-right:3px solid #f472b6;padding:.9rem">
+          <div class="secondary small">🛠️ <strong>"איזה כלי אתם הכי רוצים לנסות</strong> עכשיו?"</div>
+        </div>
+        <div class="card" style="border-right:3px solid #39bdf8;padding:.9rem;background:rgba(57,189,248,.03)">
+          <div class="secondary small">💊 <strong>"איך AI יכול לעזור לכם</strong> להקל על עומס המידע והבירוקרטיה הרפואית?"</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card" style="height:100%;display:flex;flex-direction:column;justify-content:center;gap:.8rem">
+          <div style="text-align:center;font-size:3rem">🧠 💪 🌱</div>
+          <div style="background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.15);border-radius:14px;padding:1.2rem">
+            <div style="font-weight:800;margin-bottom:.5rem;color:#34d399">המסר שלי:</div>
+            <div class="secondary small" style="line-height:1.7">"AI לא בא להחליף אתכם — הוא בא לחזק אתכם.<br><br>בתקופות קשות, כשהגוף עייף, AI יכול לדאוג לפרטים, לעזור לתקשר, ולהוריד עומס.<br><br>אתם צריכים לחשוב — הוא ידאג לביצוע."</div>
+          </div>
+          <div class="card" style="background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.2);text-align:center">
+            <div class="secondary small">🎗️ <strong>יצירתיות לא נעלמת בתקופות קשות</strong> — לפעמים היא מחכה לכלים הנכונים.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 13: Emotional closing ── -->
+<div class="slide" data-slide="13">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:560px;height:560px;top:-130px;right:-100px;background:#f59e0b;opacity:.13"></div>
+    <div class="blob" style="width:380px;height:380px;bottom:-90px;left:-70px;background:#34d399;opacity:.1"></div>
+    <div class="blob" style="width:250px;height:250px;top:44%;left:22%;background:#a78bfa;opacity:.08"></div>
+  </div>
+  <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1"></canvas>
+  <div class="content text-center" style="z-index:10;margin-top:-3vh">
+    <div class="reveal" style="font-size:clamp(2rem,4.5vw,3rem);margin-bottom:1rem;animation:float 3.5s ease-in-out infinite">🚀 ✨ 🎗️</div>
+    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;margin:0 0 1rem;background:linear-gradient(135deg,#f59e0b,#34d399,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">המסע רק מתחיל</h2>
+
+    <div class="card reveal" style="max-width:820px;margin:0 auto 1rem;text-align:right;padding:1.5rem;background:rgba(255,255,255,0.04)">
+      <p style="font-size:1.05rem;line-height:1.8;color:#c5d7ea;margin:0">
+        "לפני 4 מפגשים, ישבתם פה ולא ידעתם בדיוק מה זה AI.<br>
+        היום, אתם <strong style="color:#f4f8ff">יצרתם, חקרתם, וניסיתם</strong>.<br><br>
+        אבל הכי חשוב — הבנתם ש-AI <strong style="color:#34d399">זה לא משהו מפחיד או רחוק</strong>.<br>
+        זה כלי. כלי שעוזר לכם ליצור, לחקור, ולהישאר סקרנים.<br><br>
+        <span style="color:#f59e0b;font-weight:700">הסיפור שלי</span> — כשהייתי במהלך הטיפולים, AI עזר לי להישאר עסוק, יצירתי, וחי.<br>
+        אני מאמין שכל אחד מכם יכול למצוא איך להשתמש בזה <strong style="color:#f4f8ff">בדרך שלכם</strong>."
+      </p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 reveal" style="max-width:760px;margin:0 auto .9rem">
+      <div class="card" style="text-align:center;border-top:2px solid #34d399;padding:.7rem">
+        <div style="font-size:1.6rem">🎬</div>
+        <div class="secondary small" style="margin-top:.3rem;font-weight:700">סרטון מצויר</div>
+      </div>
+      <div class="card" style="text-align:center;border-top:2px solid #f59e0b;padding:.7rem">
+        <div style="font-size:1.6rem">🧠</div>
+        <div class="secondary small" style="margin-top:.3rem;font-weight:700">NotebookLM</div>
+      </div>
+      <div class="card" style="text-align:center;border-top:2px solid #a78bfa;padding:.7rem">
+        <div style="font-size:1.6rem">🎙️</div>
+        <div class="secondary small" style="margin-top:.3rem;font-weight:700">פודקאסט</div>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:.5rem">
+      <span style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);padding:0.7rem 2rem;border-radius:999px;font-size:1.1rem;color:#f59e0b;font-weight:800">תודה שהייתם פה. תודה על הפתיחות. אל תעצרו! 🎉</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 13</span>
+</div>
+
+<script>
+let current=1;
+const total=document.querySelectorAll('.slide').length;
+const dotsContainer=document.getElementById('dots');
+const counter=document.getElementById('counter');
+for(let i=1;i<=total;i++){const dot=document.createElement('div');dot.className='dot'+(i===1?' active':'');dot.onclick=()=>goToSlide(i);dotsContainer.appendChild(dot)}
+function goToSlide(n){const prev=document.querySelector('.slide.active');const next=document.querySelector(`.slide[data-slide="${n}"]`);if(prev)prev.classList.remove('active');if(next){next.classList.add('active');animateSlide(next)}current=n;updateNav()}
+function changeSlide(dir){let next=current+dir;if(next<1)next=total;if(next>total)next=1;goToSlide(next)}
+function updateNav(){document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i+1===current));counter.textContent=current+' / '+total}
+document.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();changeSlide(1)}if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1)}});
+let touchStartX=0;document.addEventListener('touchstart',(e)=>{touchStartX=e.touches[0].clientX});document.addEventListener('touchend',(e)=>{const diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50)changeSlide(diff>0?1:-1)});
+function animateSlide(slide){slide.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(20px)';el.offsetHeight;const delay=i*0.08;el.style.transition=`opacity .35s ease ${delay}s, transform .35s ease ${delay}s`;el.style.opacity='1';el.style.transform='translateY(0px)'})}
+document.addEventListener('mousemove',(e)=>{const s=document.querySelector('.mouse-spotlight');if(s){s.style.background=`radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(52,211,153,0.06), transparent 40%)`}});
+window.initParticles=function(canvas,options){if(!canvas)return;const ctx=canvas.getContext('2d');canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;const interactive=options.interactive!==false;const count=options.count||(interactive?55:18);let mx=-1000,my=-1000;const particles=Array.from({length:count},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,size:Math.random()*2.5+.8,alpha:Math.random()*.35+.1}));if(interactive){canvas.addEventListener('mousemove',(e)=>{const r=canvas.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});canvas.addEventListener('mouseleave',()=>{mx=-1000;my=-1000})}(function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{if(interactive){const dx=p.x-mx,dy=p.y-my,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){const force=(120-dist)/120*2;p.vx+=(dx/dist)*force*.1;p.vy+=(dy/dist)*force*.1}}p.vx*=.98;p.vy*=.98;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle=`rgba(52,211,153,${p.alpha})`;ctx.fill()});requestAnimationFrame(animate)})()};
+document.querySelectorAll('.particle-canvas').forEach(c=>window.initParticles(c,{interactive:true,count:55}));
+try{animateSlide(document.querySelector('.slide.active'))}catch(e){}
+</script>
+</body>
+</html>
