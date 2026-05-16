@@ -750,27 +750,54 @@
   <!-- ══════════════════════════════════════════ -->
   <div class="slide slide-dark">
     <div class="part-badge">חלק 3 · מ-Markdown ל-Cognee</div>
-    <h2>מהלוח לגרף — <span class="accent">Cognee</span></h2>
-    <p class="muted" style="margin-bottom:20px;">Markdown ו-notes הם התחלה. אבל לאייג'נט שצריך "לטייל" על ידע, למצוא קשרים ולהסיק — צריך מבנה richer.</p>
-    <div class="card-grid card-grid-3" style="max-width:820px;">
-      <div class="card card-accent">
-        <span class="icon">🕸️</span>
-        <h4>Graph Store</h4>
-        <p><strong>מי קשור למי</strong><br>ישויות, יחסים, קשרים בין קונספטים</p>
+    <h2 style="margin-bottom: 24px; font-size: 1.8rem;"><span class="accent" style="display:inline-block; direction:ltr;">Cognee</span> — זיכרון שמבין הקשרים, לא רק מחפש טקסט</h2>
+    
+    <div style="display:flex; gap:36px; max-width:1000px; width:100%; align-items:center;">
+      <!-- Left side: Text content -->
+      <div style="flex:1.1;">
+        
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div style="display:flex; gap:14px; align-items:flex-start;">
+            <div style="font-size:1.6rem; line-height:1.2;">🔗</div>
+            <div>
+              <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:4px; color:#e2e8f0;">Knowledge Graph</h4>
+              <p style="font-size:0.95rem; color:var(--text-muted); line-height:1.5; margin:0;">במקום לאחסן chunks של טקסט, Cognee בונה גרף של ישויות וקשרים ביניהן</p>
+            </div>
+          </div>
+          
+          <div style="display:flex; gap:14px; align-items:flex-start;">
+            <div style="font-size:1.6rem; line-height:1.2;">🧠</div>
+            <div>
+              <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:4px; color:#e2e8f0;">Semantic deduplication</h4>
+              <p style="font-size:0.95rem; color:var(--text-muted); line-height:1.5; margin:0;">זיכרונות דומים מתמזגים, לא מצטברים לאינסוף</p>
+            </div>
+          </div>
+          
+          <div style="display:flex; gap:14px; align-items:flex-start;">
+            <div style="font-size:1.6rem; line-height:1.2;">🔍</div>
+            <div>
+              <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:4px; color:#e2e8f0;">Graph traversal retrieval</h4>
+              <p style="font-size:0.95rem; color:var(--text-muted); line-height:1.5; margin:0;">שליפה עוקבת קשרים, לא רק similarity search</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 36px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="color:#f87171; font-weight:bold; font-size:1.0rem;">❌ RAG רגיל:</span>
+            <span style="font-size:0.95rem; color:var(--text-muted);">"מצא את ה-chunk הכי דומה"</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="color:var(--cyan); font-weight:bold; font-size:1.0rem;">✅ Cognee:</span>
+            <span style="font-size:0.95rem; color:#e2e8f0; font-weight:500;">"מצא את הישות, עקוב אחרי הקשרים שלה"</span>
+          </div>
+        </div>
       </div>
-      <div class="card card-cyan">
-        <span class="icon">🔢</span>
-        <h4>Vector Store</h4>
-        <p><strong>מה דומה למה</strong><br>Semantic similarity, retrieval רלוונטי</p>
+      
+      <!-- Right side: Visual -->
+      <div style="flex:0.9; display:flex; justify-content:center;">
+        <img src="assets/knowledge_graph.png" alt="Cognee Knowledge Graph" style="width: 100%; max-width: 440px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
       </div>
-      <div class="card" style="border-color:#a78bfa; background:rgba(167,139,250,0.08);">
-        <span class="icon">📋</span>
-        <h4>Relational Store</h4>
-        <p><strong>מאיפה זה הגיע</strong><br>Provenance, מקור, עקיבות אחרי מידע</p>
-      </div>
-    </div>
-    <div class="key-phrase" style="margin-top:22px;">
-      "Obsidian עוזר לאדם לארגן ידע — Cognee עוזרת לאייג'נט להבין את הקיר הזה."
     </div>
   </div>
 
