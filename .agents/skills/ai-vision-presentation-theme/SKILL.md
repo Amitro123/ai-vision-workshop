@@ -1,0 +1,107 @@
+---
+name: ai-vision-presentation-theme
+description: Apply the Deep Slate Blue theme, Hebrew typography, and styling system to AI Vision workshop presentations (meeting-2, meeting-3, etc.).
+---
+
+# AI Vision Workshop Presentation Theme & Styling Guide
+
+Use this skill whenever creating, editing, or converting presentations for the AI Vision workshop series (Halasartan community).
+
+## 🎨 Color Palette (Deep Slate Blue)
+
+- **Background (`--color-bg`):** `#0f172a` (Deep Slate Blue)
+- **Background Deep (`--color-bg-deep`):** `#090d16` (Deep Midnight Blue)
+- **Surface / Container (`--color-surface`):** `#1e293b`
+- **Text (`--color-text`):** `#f8fafc` (Slate 50 Pristine Light)
+- **Secondary Text (`--color-text-secondary`):** `#cbd5e1` (Slate 300)
+- **Muted Text (`--color-text-muted`):** `#94a3b8` (Slate 400)
+
+### Accents
+- **Accent 1 (Sky Blue / Tech):** `#38bdf8`
+- **Accent 2 (Halasartan Pink / Rose):** `#ec4899`
+- **Accent 3 (Emerald Green / Success):** `#34d399`
+- **Accent 4 (Amber Gold / Warning):** `#fbbf24`
+
+---
+
+## 🛠️ CSS Definitions Template
+
+Include this Tailwind & Custom CSS configuration in the `<head>` of any presentation:
+
+```html
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #0f172a;
+      --color-bg-deep: #090d16;
+      --color-surface: #1e293b;
+      --color-text: #f8fafc;
+      --color-text-secondary: #cbd5e1;
+      --color-text-muted: #94a3b8;
+      --color-accent-1: #38bdf8;
+      --color-accent-2: #ec4899;
+      --color-accent-3: #34d399;
+      --color-accent-4: #fbbf24;
+      --color-glass-bg: rgba(30, 41, 59, 0.75);
+      --color-glass-border: rgba(255, 255, 255, 0.12);
+      --color-vignette: rgba(9, 13, 22, 0.6);
+      --font-display: 'Heebo', sans-serif;
+      --font-body: 'Heebo', sans-serif;
+    }
+  </style>
+  <style>
+    :root { 
+      --color-bg: #0f172a; 
+      --color-text: #f8fafc; 
+      --glow-color-rgb: 56,189,248;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{background:var(--color-bg);margin:0;font-family:'Heebo',sans-serif;color:var(--color-text);overflow:hidden;height:100vh;width:100vw}
+    .deck{width:100vw;height:100vh;position:relative;perspective:1200px}
+    .slide{position:absolute;inset:0;background:var(--color-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:translateY(40px) scale(0.95);filter:blur(15px);transition:opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);pointer-events:none;overflow:hidden}
+    .slide.active{opacity:1;transform:translateY(0) scale(1);filter:blur(0);pointer-events:all}
+    .slide>.content{position:relative;z-index:2;width:100%;max-width:1120px;padding:clamp(1.3rem,3.2vw,3.2rem)}
+    .nav-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(15,23,42,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:12px 24px;border-radius:50px;border:1px solid rgba(255,255,255,0.15);box-shadow:0 10px 40px rgba(0,0,0,0.4)}
+    .nav-btn{width:40px;height:40px;border:none;background:rgba(255,255,255,0.06);color:var(--color-accent-1);border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease}
+    .nav-btn:hover{background:rgba(255,255,255,0.15);transform:scale(1.1);color:#fff}
+    .slide-dots{display:flex;gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)}
+    .dot.active{background:var(--color-accent-1);transform:scale(1.4);box-shadow:0 0 10px rgba(56,189,248,0.5)}
+    .slide-counter{font-size:.85rem;color:var(--color-text-muted);min-width:46px;text-align:center;font-weight:600}
+    .reveal{opacity:0;transform:translateY(30px)}
+    .gradient-mesh{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(100px);animation:float-slow 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;mix-blend-mode:screen}
+    .blob:nth-child(2){animation:float-drift 16s cubic-bezier(0.4, 0, 0.2, 1) infinite}
+    .blob:nth-child(3){animation:float-slow 20s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse}
+    .slide::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px 256px;opacity:.04;mix-blend-mode:overlay}
+    .slide::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at center,transparent 40%,rgba(9,13,22,0.6) 100%)}
+    @keyframes float-slow{0%{transform:translate(0,0) scale(1)}25%{transform:translate(40px,-30px) scale(1.1)}50%{transform:translate(-30px,30px) scale(.95)}75%{transform:translate(30px,20px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes float-drift{0%{transform:translate(0,0) scale(1) rotate(0)}33%{transform:translate(-40px,-40px) scale(1.1) rotate(5deg)}66%{transform:translate(30px,20px) scale(.9) rotate(-3deg)}100%{transform:translate(0,0) scale(1) rotate(0)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .card{background:linear-gradient(145deg, rgba(30,41,59,0.75), rgba(15,23,42,0.65));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:1.4rem;transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+    .card:hover{transform:translateY(-5px);border-color:rgba(56,189,248,0.35);box-shadow:0 15px 40px rgba(0,0,0,0.45)}
+    .muted{color:var(--color-text-muted)} .secondary{color:var(--color-text-secondary)} .accent{color:var(--color-accent-1)}
+    .emoji-big{font-size:78px;line-height:1;filter:drop-shadow(0 10px 20px rgba(0,0,0,0.4))}
+    .badge{display:inline-flex;align-items:center;gap:.45rem;padding:.4rem 1rem;border-radius:999px;background:rgba(30,41,59,0.8);border:1px solid rgba(255,255,255,0.15);font-size:.9rem;color:var(--color-text);font-weight:600;box-shadow:0 4px 15px rgba(0,0,0,0.2);backdrop-filter:blur(10px)}
+    .mouse-spotlight{position:fixed;inset:0;z-index:99;pointer-events:none;transition:background 0.1s}
+    .timeline{display:flex;flex-direction:column;gap:1.2rem}
+    .step{display:flex;align-items:flex-start;gap:1rem}
+    .step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, var(--color-accent-1), #0284c7);color:#fff;font-weight:800;font-size:.9rem;min-width:32px;box-shadow:0 4px 10px rgba(56,189,248,0.35)}
+    .video-box{background:linear-gradient(135deg,rgba(56,189,248,.08),rgba(236,73,153,.08));border:1px solid rgba(236,73,153,.25);border-radius:24px;padding:1.4rem;box-shadow:inset 0 0 40px rgba(236,73,153,0.04)}
+    .terminal{background:#040711;border-radius:18px;padding:1.2rem;border:1px solid rgba(255,255,255,.12);font-family:monospace;color:#34d399;line-height:1.5;font-size:.9rem;height:260px;overflow:hidden;box-shadow:inset 0 0 20px rgba(0,0,0,0.8)}
+    .small{font-size:.9rem;line-height:1.5}
+    .session-badge{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;font-weight:800;font-size:1rem;min-width:40px;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+    .glowing-image{border-radius:24px;box-shadow:0 0 40px rgba(56,189,248,0.25);border:1px solid rgba(255,255,255,0.12);object-fit:cover;transition:all 0.4s ease}
+    .glowing-image:hover{transform:scale(1.02);box-shadow:0 0 50px rgba(236,73,153,0.35)}
+    @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}}
+  </style>
+```
+
+---
+
+## 📌 Main Title Gradient Standard
+```html
+<h1 style="background:linear-gradient(135deg,#38bdf8,#818cf8,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">
+  כותרת המצגת
+</h1>
+```

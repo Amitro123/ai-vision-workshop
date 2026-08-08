@@ -10,63 +10,67 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
     @theme {
-      --color-bg: #0c1726;
-      --color-bg-deep: #07101b;
-      --color-surface: #18273a;
-      --color-text: #f4f8ff;
-      --color-text-secondary: #c5d7ea;
-      --color-text-muted: #88a4c3;
-      --color-accent-1: #39bdf8;
-      --color-accent-2: #a78bfa;
+      --color-bg: #0f172a;
+      --color-bg-deep: #090d16;
+      --color-surface: #1e293b;
+      --color-text: #f8fafc;
+      --color-text-secondary: #cbd5e1;
+      --color-text-muted: #94a3b8;
+      --color-accent-1: #38bdf8;
+      --color-accent-2: #ec4899;
       --color-accent-3: #34d399;
-      --color-accent-4: #f59e0b;
-      --color-glass-bg: rgba(255,255,255,0.06);
-      --color-glass-border: rgba(255,255,255,0.10);
-      --color-vignette: rgba(0,0,0,0.45);
+      --color-accent-4: #fbbf24;
+      --color-glass-bg: rgba(30, 41, 59, 0.75);
+      --color-glass-border: rgba(255, 255, 255, 0.12);
+      --color-vignette: rgba(9, 13, 22, 0.6);
       --font-display: 'Heebo', sans-serif;
       --font-body: 'Heebo', sans-serif;
     }
   </style>
   <style>
-    :root { --color-bg:#050a10; --color-text:#f4f8ff; --glow-color-rgb:57,189,248; }
+    :root { 
+      --color-bg: #0f172a; 
+      --color-text: #f8fafc; 
+      --glow-color-rgb: 56,189,248;
+    }
     *,*::before,*::after{box-sizing:border-box}
     html,body{background:var(--color-bg);margin:0;font-family:'Heebo',sans-serif;color:var(--color-text);overflow:hidden;height:100vh;width:100vw}
     .deck{width:100vw;height:100vh;position:relative;perspective:1200px}
     .slide{position:absolute;inset:0;background:var(--color-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:translateY(40px) scale(0.95);filter:blur(15px);transition:opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);pointer-events:none;overflow:hidden}
     .slide.active{opacity:1;transform:translateY(0) scale(1);filter:blur(0);pointer-events:all}
     .slide>.content{position:relative;z-index:2;width:100%;max-width:1120px;padding:clamp(1.3rem,3.2vw,3.2rem)}
-    .nav-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(255,255,255,0.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:12px 24px;border-radius:50px;border:1px solid rgba(255,255,255,0.15);box-shadow:0 10px 40px rgba(0,0,0,0.5)}
-    .nav-btn{width:40px;height:40px;border:none;background:rgba(255,255,255,0.05);color:var(--color-accent-1);border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease}
+    .nav-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(15,23,42,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:12px 24px;border-radius:50px;border:1px solid rgba(255,255,255,0.15);box-shadow:0 10px 40px rgba(0,0,0,0.4)}
+    .nav-btn{width:40px;height:40px;border:none;background:rgba(255,255,255,0.06);color:var(--color-accent-1);border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease}
     .nav-btn:hover{background:rgba(255,255,255,0.15);transform:scale(1.1);color:#fff}
     .slide-dots{display:flex;gap:8px}
-    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.15);cursor:pointer;transition:all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)}
-    .dot.active{background:var(--color-accent-1);transform:scale(1.4);box-shadow:0 0 10px var(--color-accent-1)}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)}
+    .dot.active{background:var(--color-accent-1);transform:scale(1.4);box-shadow:0 0 10px rgba(56,189,248,0.5)}
     .slide-counter{font-size:.85rem;color:var(--color-text-muted);min-width:46px;text-align:center;font-weight:600}
     .reveal{opacity:0;transform:translateY(30px)}
     .gradient-mesh{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
     .blob{position:absolute;border-radius:50%;filter:blur(100px);animation:float-slow 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;mix-blend-mode:screen}
     .blob:nth-child(2){animation:float-drift 16s cubic-bezier(0.4, 0, 0.2, 1) infinite}
     .blob:nth-child(3){animation:float-slow 20s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse}
-    .slide::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px 256px;opacity:.05;mix-blend-mode:overlay}
-    .slide::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at center,transparent 40%,rgba(0,0,0,0.6) 100%)}
+    .slide::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px 256px;opacity:.04;mix-blend-mode:overlay}
+    .slide::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at center,transparent 40%,rgba(9,13,22,0.6) 100%)}
     @keyframes float-slow{0%{transform:translate(0,0) scale(1)}25%{transform:translate(40px,-30px) scale(1.1)}50%{transform:translate(-30px,30px) scale(.95)}75%{transform:translate(30px,20px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}
     @keyframes float-drift{0%{transform:translate(0,0) scale(1) rotate(0)}33%{transform:translate(-40px,-40px) scale(1.1) rotate(5deg)}66%{transform:translate(30px,20px) scale(.9) rotate(-3deg)}100%{transform:translate(0,0) scale(1) rotate(0)}}
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-    .card{background:linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:1.4rem;transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 20px rgba(0,0,0,0.2)}
-    .card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,0.2);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+    .card{background:linear-gradient(145deg, rgba(30,41,59,0.75), rgba(15,23,42,0.65));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:1.4rem;transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+    .card:hover{transform:translateY(-5px);border-color:rgba(56,189,248,0.35);box-shadow:0 15px 40px rgba(0,0,0,0.45)}
     .muted{color:var(--color-text-muted)} .secondary{color:var(--color-text-secondary)} .accent{color:var(--color-accent-1)}
-    .emoji-big{font-size:78px;line-height:1;filter:drop-shadow(0 10px 20px rgba(0,0,0,0.3))}
-    .badge{display:inline-flex;align-items:center;gap:.45rem;padding:.4rem 1rem;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);font-size:.9rem;color:var(--color-text);font-weight:600;box-shadow:0 4px 15px rgba(0,0,0,0.1);backdrop-filter:blur(10px)}
+    .emoji-big{font-size:78px;line-height:1;filter:drop-shadow(0 10px 20px rgba(0,0,0,0.4))}
+    .badge{display:inline-flex;align-items:center;gap:.45rem;padding:.4rem 1rem;border-radius:999px;background:rgba(30,41,59,0.8);border:1px solid rgba(255,255,255,0.15);font-size:.9rem;color:var(--color-text);font-weight:600;box-shadow:0 4px 15px rgba(0,0,0,0.2);backdrop-filter:blur(10px)}
     .mouse-spotlight{position:fixed;inset:0;z-index:99;pointer-events:none;transition:background 0.1s}
     .timeline{display:flex;flex-direction:column;gap:1.2rem}
     .step{display:flex;align-items:flex-start;gap:1rem}
-    .step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, var(--color-accent-1), #0284c7);color:#fff;font-weight:800;font-size:.9rem;min-width:32px;box-shadow:0 4px 10px rgba(57,189,248,0.3)}
-    .video-box{background:linear-gradient(135deg,rgba(57,189,248,.05),rgba(167,139,250,.05));border:1px solid rgba(167,139,250,.25);border-radius:24px;padding:1.4rem;box-shadow:inset 0 0 40px rgba(167,139,250,0.05)}
-    .terminal{background:#000;border-radius:18px;padding:1.2rem;border:1px solid rgba(255,255,255,.1);font-family:monospace;color:#10b981;line-height:1.5;font-size:.9rem;height:260px;overflow:hidden;box-shadow:inset 0 0 20px rgba(0,0,0,0.8)}
+    .step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, var(--color-accent-1), #0284c7);color:#fff;font-weight:800;font-size:.9rem;min-width:32px;box-shadow:0 4px 10px rgba(56,189,248,0.35)}
+    .video-box{background:linear-gradient(135deg,rgba(56,189,248,.08),rgba(236,73,153,.08));border:1px solid rgba(236,73,153,.25);border-radius:24px;padding:1.4rem;box-shadow:inset 0 0 40px rgba(236,73,153,0.04)}
+    .terminal{background:#040711;border-radius:18px;padding:1.2rem;border:1px solid rgba(255,255,255,.12);font-family:monospace;color:#34d399;line-height:1.5;font-size:.9rem;height:260px;overflow:hidden;box-shadow:inset 0 0 20px rgba(0,0,0,0.8)}
     .small{font-size:.9rem;line-height:1.5}
-    .session-badge{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;font-weight:800;font-size:1rem;min-width:40px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-    .glowing-image{border-radius:24px;box-shadow:0 0 40px rgba(57,189,248,0.3);border:1px solid rgba(255,255,255,0.1);object-fit:cover;transition:all 0.4s ease}
-    .glowing-image:hover{transform:scale(1.02);box-shadow:0 0 60px rgba(167,139,250,0.4)}
+    .session-badge{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;font-weight:800;font-size:1rem;min-width:40px;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+    .glowing-image{border-radius:24px;box-shadow:0 0 40px rgba(56,189,248,0.25);border:1px solid rgba(255,255,255,0.12);object-fit:cover;transition:all 0.4s ease}
+    .glowing-image:hover{transform:scale(1.02);box-shadow:0 0 50px rgba(236,73,153,0.35)}
     @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}}
   </style>
 </head>
@@ -80,8 +84,8 @@
   <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1"></canvas>
   <div class="content text-center" style="display:flex;flex-direction:column;align-items:center;">
     <img src="assets/friendly_hero_1775675685711.png" class="reveal glowing-image" style="width:220px;height:220px;margin-bottom:1.5rem;animation:float 5s ease-in-out infinite;border-radius:50%;object-fit:cover;" alt="Friendly AI Robot hero" />
-    <h1 class="reveal" style="font-size:clamp(2.2rem,5.6vw,4.5rem);font-weight:900;line-height:1.15;margin:0 0 .8rem;background:linear-gradient(135deg,#39bdf8,#a78bfa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">איך הבינה המלאכותית רואה?</h1>
-    <p class="reveal muted" style="font-size:clamp(.95rem,1.5vw,1.2rem);letter-spacing:3px;text-transform:uppercase;margin:0">מפגש 1 מתוך 4 · קהילת חלאסרטן · בגובה העיניים</p>
+    <h1 class="reveal" style="font-size:clamp(2.2rem,5.6vw,4.5rem);font-weight:900;line-height:1.15;margin:0 0 .8rem;background:linear-gradient(135deg,#38bdf8,#818cf8,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">איך הבינה המלאכותית רואה?</h1>
+    <p class="reveal muted" style="font-size:clamp(.95rem,1.5vw,1.2rem);letter-spacing:3px;text-transform:uppercase;margin:0">מפגש 1 מתוך 3 · קהילת חלאסרטן · בגובה העיניים</p>
   </div>
 </div>
 
@@ -100,7 +104,7 @@
       <div class="card reveal" style="border-right:3px solid #f472b6">
         <img src="assets/unnamed%20(1).jpg" style="width:70px;height:70px;border-radius:50%;object-fit:cover;margin-bottom:.8rem;border:2px solid #f472b6;" alt="Journey" />
         <div style="font-weight:700;margin-bottom:.4rem;color:#f472b6">גם אני עברתי את המסע הזה.</div>
-        <div class="secondary small">ב-2018 גיליתי שאני חולה, ועברתי שנה וחצי של 8 ניתוחים ו-4 סבבי כימו. את הלפטופ לקחתי לכל מקום — והמשכתי לעבוד, ליצור ולהיות עסוק גם בתוך הכימו. <span style="color:#f4f8ff;font-weight:600">זה היה העוגן שלי בתוך כל הבלגן.</span></div>
+        <div class="secondary small">ב-2018 גיליתי שאני חולה, ועברתי שנה וחצי של 8 ניתוחים ו-4 סבבי כימו. את הלפטופ לקחתי לכל מקום — והמשכתי לעבוד, ליצור ולהיות עסוק גם בתוך הכימו. <span style="color:var(--color-accent-2);font-weight:700">זה היה העוגן שלי בתוך כל הבלגן.</span></div>
       </div>
       <div class="card reveal"><div style="font-size:46px;margin-bottom:.5rem">💡</div><div style="font-weight:700;margin-bottom:.4rem">מה שעזר לי, יכול לעזור גם לכם.</div><div class="secondary small">הסדנה הזו לא נועדה ללמד מדעי המחשב — אלא לתת כלים פשוטים שיכולים לעזור, לעורר סקרנות, ולחזק תחושת מסוגלות.</div></div>
       <div class="card reveal"><div style="font-size:46px;margin-bottom:.5rem">🤝</div><div style="font-weight:700;margin-bottom:.4rem">זו שיחה, לא הרצאה</div><div class="secondary small">תעצרו אותי, תשאלו, תשתפו. כל אחד מכם נמצא במקום אחר — ואני כאן בשביל כולכם.</div></div>
@@ -116,47 +120,40 @@
     <h2 class="reveal" style="font-size:clamp(1.7rem,4vw,2.7rem);font-weight:800;margin:.7rem 0 1rem">איך הגעתי לעמוד כאן?</h2>
     <div class="timeline">
       <div class="card reveal" style="border-right:4px solid var(--color-accent-1)"><div style="font-weight:700;margin-bottom:.35rem">2017 — WSC Sports</div><div class="secondary small">נכנסתי להייטק, לא בתכנות — בתפקידי ייעול תהליכים והכשרה. גיליתי שאני אוהב לחבר בין אנשים לטכנולוגיה.</div></div>
-      <div class="card reveal" style="border-right:4px solid #f472b6"><div style="font-weight:700;margin-bottom:.35rem;color:#f472b6">2018 — "זה לא שטויות"</div><div class="secondary small">משהו בולט בצוואר. רופא, בדיקה, החלטה: חשד ללימפומה. שאלתי "זה שטויות נכון?" — הוא אמר שלא. יצאתי, עשיתי גוגל, הבנתי שאני הולך למות. <span style="color:#f4f8ff">בסוף — סרטן אשך, 8 ניתוחים, 4 כימו.</span></div></div>
-      <div class="card reveal" style="border-right:4px solid var(--color-accent-2)"><div style="font-weight:700;margin-bottom:.35rem">תקופת הטיפולים — לא להפסיק</div><div class="secondary small">ביקשתי מהבוס דבר אחד: לא להפסיק לעבוד. חצי משרה, בזמנים שלי. הייתי עובד תוך כדי שהכימו מתחיל לזרום. <span style="color:#f4f8ff">זה שמר אותי שפוי וחי.</span></div></div>
+      <div class="card reveal" style="border-right:4px solid #f472b6"><div style="font-weight:700;margin-bottom:.35rem;color:#f472b6">2018 — "זה לא שטויות"</div><div class="secondary small">משהו בולט בצוואר. רופא, בדיקה, החלטה: חשד ללימפומה. שאלתי "זה שטויות נכון?" — הוא אמר שלא. יצאתי, עשיתי גוגל, הבנתי שאני הולך למות. <span style="color:var(--color-accent-2);font-weight:700">בסוף — סרטן אשך, 8 ניתוחים, 4 כימו.</span></div></div>
+      <div class="card reveal" style="border-right:4px solid var(--color-accent-2)"><div style="font-weight:700;margin-bottom:.35rem">תקופת הטיפולים — לא להפסיק</div><div class="secondary small">ביקשתי מהבוס דבר אחד: לא להפסיק לעבוד. חצי משרה, בזמנים שלי. הייתי עובד תוך כדי שהכימו מתחיל לזרום. <span style="color:var(--color-accent-1);font-weight:700">זה שמר אותי שפוי וחי.</span></div></div>
       <div class="card reveal" style="border-right:4px solid var(--color-accent-3)"><div style="font-weight:700;margin-bottom:.35rem">היום — לשתף את מה שעזר</div><div class="secondary small">כל אחד מכם נמצא במקום אחר — תוך כדי הטיפולים, אחרי, עדיין מחפש. אני כאן לתת לכם כלים שיגרמו לכם להרגיש מסוגל, יצירתי, ועסוק.</div></div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 4: NEW — Course overview (4 sessions) -->
+<!-- SLIDE 4: NEW — Course overview (3 sessions) -->
 <div class="slide" data-slide="4">
   <div class="gradient-mesh"><div class="blob" style="width:450px;height:450px;top:-100px;right:-70px;background:var(--color-accent-3);opacity:.1"></div><div class="blob" style="width:280px;height:280px;bottom:-60px;left:-40px;background:var(--color-accent-2);opacity:.08"></div></div>
   <div class="content">
-    <div class="reveal badge">🗓️ 4 מפגשים</div>
+    <div class="reveal badge">🗓️ 3 מפגשים</div>
     <h2 class="reveal" style="font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:800;margin:.7rem 0 1.1rem">מה נעשה יחד?</h2>
-    <div class="grid grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <div class="card reveal" style="border-top:3px solid var(--color-accent-1)">
         <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem">
-          <div class="session-badge" style="background:rgba(57,189,248,.15);color:var(--color-accent-1)">1</div>
+          <div class="session-badge" style="background:rgba(2,132,199,.1);color:var(--color-accent-1)">1</div>
           <div style="font-weight:800;color:var(--color-accent-1)">👁️ AI רואה את העולם — היום</div>
         </div>
         <div class="secondary small">ראייה ממוחשבת, Google Lens, דפדפנים אייג'נטים. כלים שמבינים תמונות ומסכים.</div>
       </div>
       <div class="card reveal" style="border-top:3px solid var(--color-accent-2)">
         <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem">
-          <div class="session-badge" style="background:rgba(167,139,250,.15);color:var(--color-accent-2)">2</div>
-          <div style="font-weight:800;color:var(--color-accent-2)">✨ AI יוצר ממילים</div>
+          <div class="session-badge" style="background:rgba(219,39,119,.1);color:var(--color-accent-2)">2</div>
+          <div style="font-weight:800;color:var(--color-accent-2)">✨ מילים הופכות לתוכן — AI כיוצר</div>
         </div>
-        <div class="secondary small">מודלי שפה, Prompt Engineering, יצירת קוד אינטראקטיבי ומערכת שמש תלת-ממדית.</div>
+        <div class="secondary small">הבנת LLMs, כתיבת פרומפטים נכונים, יצירת עוזר אישי ב-Gemini Gems, יצירת קוד אינטראקטיבי ותמונות.</div>
       </div>
       <div class="card reveal" style="border-top:3px solid var(--color-accent-3)">
         <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem">
-          <div class="session-badge" style="background:rgba(52,211,153,.15);color:var(--color-accent-3)">3</div>
-          <div style="font-weight:800;color:var(--color-accent-3)">🎬 מסיפור לסרטון</div>
+          <div class="session-badge" style="background:rgba(5,150,105,.1);color:var(--color-accent-3)">3</div>
+          <div style="font-weight:800;color:var(--color-accent-3)">🧠 AI כשותף חכם</div>
         </div>
-        <div class="secondary small">יצירת תמונות, מוזיקה מקורית וסרטון מצויר אישי — שרשרת כלים מ-Gemini עד CapCut.</div>
-      </div>
-      <div class="card reveal" style="border-top:3px solid var(--color-accent-4)">
-        <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem">
-          <div class="session-badge" style="background:rgba(245,158,11,.15);color:var(--color-accent-4)">4</div>
-          <div style="font-weight:800;color:var(--color-accent-4)">🧠 AI כשותף חכם</div>
-        </div>
-        <div class="secondary small">NotebookLM — AI שעובד עם המסמכים שלכם. כלים פרקטיים ופודקאסט מפתיע על הקבוצה.</div>
+        <div class="secondary small">NotebookLM — בינה מלאכותית שעובדת עם המסמכים והקבצים שלכם. כלים פרקטיים ויצירת פודקאסט.</div>
       </div>
     </div>
     <div class="card reveal" style="margin-top:.8rem;text-align:center"><span class="secondary small">לא נדרש רקע טכני · לא נדרש תכנות · רק</span> <span style="font-weight:800;color:var(--color-accent-1)">סקרנות</span></div>
@@ -237,17 +234,39 @@
 <div class="slide" data-slide="9">
   <div class="gradient-mesh"><div class="blob" style="width:420px;height:420px;top:-80px;right:-80px;background:var(--color-accent-1);opacity:.08"></div><div class="blob" style="width:280px;height:280px;bottom:-60px;left:-50px;background:var(--color-accent-3);opacity:.08"></div></div>
   <div class="content">
-    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;text-align:center;margin-bottom:.6rem">איך ראייה ממוחשבת עובדת בפשטות?</h2>
-    <p class="reveal muted" style="text-align:center;margin:0 0 1.3rem">אפשר לחשוב על זה כמו 3 שכבות של הסתכלות — כמו שהמוח שלנו עובד.</p>
-    <div class="reveal" style="display:flex;justify-content:center;margin-bottom:1.5rem;">
-      <img src="assets/friendly_layers_1775675717532.png" class="glowing-image" style="width:100%;max-width:900px;height:240px;border-radius:24px;object-fit:contain;background:#fff;" alt="Computer Vision educational drawing" />
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;text-align:center;margin-bottom:.4rem">איך ראייה ממוחשבת עובדת בפשטות?</h2>
+    <p class="reveal muted" style="text-align:center;margin:0 0 1.2rem">אפשר לחשוב על זה כמו 3 שכבות של הסתכלות — כמו שהמוח שלנו עובד.</p>
+    <div class="grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-6 items-stretch">
+      <div class="reveal">
+        <img src="assets/split_friendly_vision.png" class="glowing-image" style="width:100%;height:100%;border-radius:20px;display:block;object-fit:cover;" alt="Friendly visual drawing of computer vision layers" />
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:.65rem;justify-content:stretch;">
+        <div class="card" style="flex:1;padding:1rem 1.2rem;border-right:4px solid var(--color-accent-1);display:flex;align-items:center;gap:1rem">
+          <div style="font-size:2rem">🖊️</div>
+          <div>
+            <div style="font-weight:800;color:var(--color-accent-1);font-size:1.05rem">1. קצוות</div>
+            <div class="secondary" style="font-size:.95rem;line-height:1.5">איפה יש שינוי בין אור וחושך, צבעים ואזורים. השלב הבסיסי.</div>
+          </div>
+        </div>
+        <div class="card" style="flex:1;padding:1rem 1.2rem;border-right:4px solid var(--color-accent-2);display:flex;align-items:center;gap:1rem">
+          <div style="font-size:2rem">🧩</div>
+          <div>
+            <div style="font-weight:800;color:var(--color-accent-2);font-size:1.05rem">2. צורות</div>
+            <div class="secondary" style="font-size:.95rem;line-height:1.5">הקווים מתחברים לצורות מוכרות: עיגולים, עלי כותרת, תאים.</div>
+          </div>
+        </div>
+        <div class="card" style="flex:1;padding:1rem 1.2rem;border-right:4px solid var(--color-accent-3);display:flex;align-items:center;gap:1rem">
+          <div style="font-size:2rem">🏷️</div>
+          <div>
+            <div style="font-weight:800;color:var(--color-accent-3);font-size:1.05rem">3. משמעות</div>
+            <div class="secondary" style="font-size:.95rem;line-height:1.5">המערכת משערת: "זה פנים", "זו יד", "זה פרח".</div>
+          </div>
+        </div>
+        <div class="card" style="padding:.8rem 1.2rem;text-align:center;background:rgba(56,189,248,.06);border-color:rgba(56,189,248,.2)">
+          <span class="secondary" style="font-size:.95rem">כמו בלימוד קריאה: </span><span style="color:var(--color-accent-1);font-weight:800;font-size:.95rem">אותיות → מילים → משפטים → משמעות</span>
+        </div>
+      </div>
     </div>
-    <div class="grid grid-cols-3 gap-5">
-      <div class="card reveal" style="border-top:3px solid var(--color-accent-1);text-align:center"><div style="font-size:2.4rem">🖊️</div><div style="font-weight:800;margin:.5rem 0;color:var(--color-accent-1)">1. קצוות</div><div class="secondary small">איפה יש שינוי בין אור וחושך, בין צבעים, בין אזורים. השלב הכי בסיסי.</div></div>
-      <div class="card reveal" style="border-top:3px solid var(--color-accent-2);text-align:center"><div style="font-size:2.4rem">🧩</div><div style="font-weight:800;margin:.5rem 0;color:var(--color-accent-2)">2. צורות</div><div class="secondary small">הקווים מתחברים לצורות מוכרות: עיגולים, אצבעות, עיניים, עלי כותרת, תאים.</div></div>
-      <div class="card reveal" style="border-top:3px solid var(--color-accent-3);text-align:center"><div style="font-size:2.4rem">🏷️</div><div style="font-weight:800;margin:.5rem 0;color:var(--color-accent-3)">3. משמעות</div><div class="secondary small">המערכת משערת: "זה פנים", "זו יד", "זה רקמה חולה", "זו מחיאת כפיים".</div></div>
-    </div>
-    <div class="card reveal" style="margin-top:1rem;text-align:center">כמו בלימוד קריאה: <span style="color:var(--color-accent-1);font-weight:800">אותיות → מילים → משפטים → משמעות</span>. <span class="muted small">המחשב אימן את עצמו על מיליוני תמונות.</span></div>
   </div>
 </div>
 
@@ -263,7 +282,7 @@
       <div class="card reveal" style="border:1px solid rgba(244,114,182,.3);background:rgba(244,114,182,.05)">
         <div style="font-size:2rem">🔬</div>
         <div style="font-weight:700;margin:.4rem 0;color:#f472b6">רפואה — AI שעוזר גם בפענוח בדיקות</div>
-        <div class="secondary small">ניתוחי CT, MRI ורנטגן. <span style="color:#f4f8ff">אותה טכנולוגיה שעוזרת לרופאים להבין טוב יותר מה הם רואים.</span></div>
+        <div class="secondary small">ניתוחי CT, MRI ורנטגן. <span style="color:var(--color-accent-2);font-weight:700">אותה טכנולוגיה שעוזרת לרופאים להבין טוב יותר מה הם רואים.</span></div>
       </div>
       <div class="card reveal"><div style="font-size:2rem">🌿</div><div style="font-weight:700;margin:.4rem 0">Google Lens</div><div class="secondary small">מצלמים משהו ומקבלים הסבר, תרגום או זיהוי.</div></div>
       <div class="card reveal"><div style="font-size:2rem">🛒</div><div style="font-weight:700;margin:.4rem 0">חנות חכמה</div><div class="secondary small">זיהוי מוצרים ותשלום אוטומטי בלי קופה.</div></div>
@@ -283,12 +302,12 @@
         <div style="margin-bottom:.9rem">
           <div style="font-weight:700;color:var(--color-accent-1);margin-bottom:.3rem">✏️ Quick, Draw! (מצייר + AI מנחש)</div>
           <div class="secondary small" style="margin-bottom:.4rem">תציירו ו-AI ינסה לנחש בתוך 20 שניות. תראו איך הוא "חושב" בזמן אמת.</div>
-          <a href="https://quickdraw.withgoogle.com" target="_blank" style="display:inline-block;padding:.35rem .8rem;background:rgba(57,189,248,.15);border:1px solid rgba(57,189,248,.3);border-radius:8px;color:var(--color-accent-1);font-weight:700;font-size:.85rem;text-decoration:none">🔗 quickdraw.withgoogle.com</a>
+          <a href="https://quickdraw.withgoogle.com" target="_blank" style="display:inline-block;padding:.35rem .8rem;background:rgba(2,132,199,.08);border:1px solid rgba(2,132,199,.25);border-radius:8px;color:var(--color-accent-1);font-weight:700;font-size:.85rem;text-decoration:none">🔗 quickdraw.withgoogle.com</a>
         </div>
         <div>
           <div style="font-weight:700;color:var(--color-accent-2);margin-bottom:.3rem">🔍 Emoji Scavenger Hunt (מצלם + AI מזהה)</div>
           <div class="secondary small" style="margin-bottom:.4rem">AI מבקש למצוא חפצים בסביבה. תצלמו והוא יבדוק אם זיהה נכון.</div>
-          <a href="https://emojiscavengerhunt.withgoogle.com" target="_blank" style="display:inline-block;padding:.35rem .8rem;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.3);border-radius:8px;color:var(--color-accent-2);font-weight:700;font-size:.85rem;text-decoration:none">🔗 emojiscavengerhunt.withgoogle.com</a>
+          <a href="https://emojiscavengerhunt.withgoogle.com" target="_blank" style="display:inline-block;padding:.35rem .8rem;background:rgba(219,39,119,.08);border:1px solid rgba(219,39,119,.25);border-radius:8px;color:var(--color-accent-2);font-weight:700;font-size:.85rem;text-decoration:none">🔗 emojiscavengerhunt.withgoogle.com</a>
         </div>
       </div>
       <div class="card reveal" style="text-align:center">
@@ -338,9 +357,9 @@
           style="width:100%;border-radius:16px;border:1px solid rgba(57,189,248,.25);background:#000;max-height:300px;object-fit:contain"
         ></video>
         <div style="margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap">
-          <span style="background:rgba(57,189,248,.12);border:1px solid rgba(57,189,248,.25);border-radius:6px;padding:.25rem .6rem;font-size:.78rem;color:var(--color-accent-1)">👁️ זיהוי ידיים</span>
-          <span style="background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);border-radius:6px;padding:.25rem .6rem;font-size:.78rem;color:var(--color-accent-2)">😊 זיהוי פנים</span>
-          <span style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.25);border-radius:6px;padding:.25rem .6rem;font-size:.78rem;color:var(--color-accent-3)">👏 זיהוי אירוע</span>
+          <span style="background:rgba(2,132,199,.08);border:1px solid rgba(2,132,199,.2);border-radius:6px;padding:.25rem .6rem;font-size:.78rem;color:var(--color-accent-1)">👁️ זיהוי ידיים</span>
+          <span style="background:rgba(219,39,119,.08);border:1px solid rgba(219,39,119,.2);border-radius:6px;padding:.25rem .6rem;font-size:.78rem;color:var(--color-accent-2)">😊 זיהוי פנים</span>
+          <span style="background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:.25rem .6rem;font-size:.78rem;color:var(--color-accent-3)">👏 זיהוי אירוע</span>
         </div>
       </div>
       <div class="reveal">
@@ -372,7 +391,7 @@
   <div class="gradient-mesh"><div class="blob" style="width:500px;height:500px;top:-120px;right:-80px;background:var(--color-accent-3);opacity:.12"></div><div class="blob" style="width:320px;height:320px;bottom:-80px;left:-60px;background:var(--color-accent-2);opacity:.09"></div></div>
   <div class="content text-center">
     <div class="reveal emoji-big" style="animation:float 3s ease-in-out infinite;margin-bottom:.7rem">☕</div>
-    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;margin:0 0 .8rem;background:linear-gradient(135deg,#34d399,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">הפסקה — 5 דקות</h2>
+    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;margin:0 0 .8rem;background:linear-gradient(135deg,#34d399,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">הפסקה — 5 דקות</h2>
     <p class="reveal muted" style="font-size:1.1rem;margin-bottom:1.5rem">תרגישו חופשי לקום, לשתות, לנשום</p>
     <div class="grid grid-cols-3 gap-4" style="max-width:700px;margin:0 auto">
       <div class="card reveal" style="text-align:center"><div style="font-size:2rem">🔙</div><div class="secondary small" style="margin-top:.4rem">ראינו: ראייה ממוחשבת, פיקסלים, שכבות, Google Lens</div></div>
@@ -393,7 +412,7 @@
         <div style="font-size:2rem">💬</div>
         <div style="font-weight:800;margin:.5rem 0;color:var(--color-accent-2)">צ'אטבוט — משיב</div>
         <div class="secondary small">מדבר איתי, עונה לי, מסביר, מסכם, עוזר לי לחשוב — אבל מחכה שאגיד לו מה לעשות כל פעם מחדש.</div>
-        <div class="card" style="margin-top:.7rem;padding:.6rem;background:rgba(167,139,250,.07)"><div class="secondary small">דוגמה: "מה ההבדל בין ביטוח א׳ לביטוח ב׳?" → "עכשיו תסביר לי את ב׳ יותר פשוט" → מסביר. שאלה אחת כל פעם.</div></div>
+        <div class="card" style="margin-top:.7rem;padding:.6rem;background:rgba(2,132,199,.05);border-color:rgba(2,132,199,.15)"><div class="secondary small">דוגמה: "מה ההבדל בין ביטוח א׳ לביטוח ב׳?" → "עכשיו תסביר לי את ב׳ יותר פשוט" → מסביר. שאלה אחת כל פעם.</div></div>
       </div>
       <div class="card reveal" style="border-top:3px solid var(--color-accent-1)">
         <div style="font-size:2rem">🧭</div>
@@ -457,9 +476,9 @@
         <div style="font-weight:800;color:var(--color-accent-3);margin-bottom:.6rem">הדגמה: מייל רפואי באנגלית</div>
         <div class="secondary small" style="margin-bottom:.7rem">נפתח מייל עם תוצאות בדיקה, תמונה וטקסט טכני. Comet:</div>
         <div style="display:grid;gap:.4rem">
-          <div class="card" style="padding:.5rem;background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.2)"><div class="secondary small">✅ יקרא את כל הטקסט + ינתח את התמונה</div></div>
-          <div class="card" style="padding:.5rem;background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.2)"><div class="secondary small">✅ יתרגם ויסביר במילים פשוטות בעברית</div></div>
-          <div class="card" style="padding:.5rem;background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.2)"><div class="secondary small">✅ יכול ליצור תגובה ולשלוח — הכל בלי לעזוב את הדף</div></div>
+          <div class="card" style="padding:.5rem;background:rgba(5,150,105,.05);border-color:rgba(5,150,105,.18)"><div class="secondary small">✅ יקרא את כל הטקסט + ינתח את התמונה</div></div>
+          <div class="card" style="padding:.5rem;background:rgba(5,150,105,.05);border-color:rgba(5,150,105,.18)"><div class="secondary small">✅ יתרגם ויסביר במילים פשוטות בעברית</div></div>
+          <div class="card" style="padding:.5rem;background:rgba(5,150,105,.05);border-color:rgba(5,150,105,.18)"><div class="secondary small">✅ יכול ליצור תגובה ולשלוח — הכל בלי לעזוב את הדף</div></div>
         </div>
       </div>
     </div>
@@ -473,15 +492,15 @@
   <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1"></canvas>
   <div class="content text-center">
     <div class="reveal emoji-big" style="margin-bottom:.6rem">🚀</div>
-    <h2 class="reveal" style="font-size:clamp(2rem,4.4vw,3.1rem);font-weight:900;margin:0 0 .9rem;background:linear-gradient(135deg,#39bdf8,#a78bfa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">מה הלאה?</h2>
+    <h2 class="reveal" style="font-size:clamp(2rem,4.4vw,3.1rem);font-weight:900;margin:0 0 .9rem;background:linear-gradient(135deg,#38bdf8,#818cf8,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">מה הלאה?</h2>
     <div class="grid grid-cols-2 gap-5 text-right" style="margin:0 auto 1rem;max-width:920px">
       <div class="card reveal">
         <div style="font-weight:800;color:var(--color-accent-1);margin-bottom:.5rem">מה למדנו היום</div>
         <div class="secondary small">ראייה ממוחשבת, פיקסלים ושכבות, Google Lens, Quick Draw, צ'אטבוט מול אייג'נט, Claude Extension ו-Comet.</div>
       </div>
       <div class="card reveal">
-        <div style="font-weight:800;color:var(--color-accent-3);margin-bottom:.5rem">מפגש 2 — AI יוצר</div>
-        <div class="secondary small">מודלי שפה, Prompt Engineering, יצירת קוד אינטראקטיבי — ומערכת שמש תלת-ממדית שתכתבו במשפט אחד.</div>
+        <div style="font-weight:800;color:var(--color-accent-2);margin-bottom:.5rem">מפגש 2 — מילים הופכות לתוכן</div>
+        <div class="secondary small">הבנת מודלי שפה, כתיבת פרומפטים נכונים, יצירת עוזר אישי ב-Gemini Gems, יצירת קוד אינטראקטיבי ותמונות.</div>
       </div>
     </div>
     <div class="card reveal" style="max-width:700px;margin:0 auto .9rem">
@@ -514,8 +533,8 @@ function updateNav(){document.querySelectorAll('.dot').forEach((d,i)=>d.classLis
 document.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();changeSlide(1)}if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1)}});
 let touchStartX=0;document.addEventListener('touchstart',(e)=>{touchStartX=e.touches[0].clientX});document.addEventListener('touchend',(e)=>{const diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50)changeSlide(diff>0?1:-1)});
 function animateSlide(slide){slide.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(20px)';el.offsetHeight;const delay=i*0.08;el.style.transition=`opacity .35s ease ${delay}s, transform .35s ease ${delay}s`;el.style.opacity='1';el.style.transform='translateY(0px)'})}
-document.addEventListener('mousemove',(e)=>{const s=document.querySelector('.mouse-spotlight');if(s){s.style.background=`radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(57,189,248,0.06), transparent 40%)`}});
-window.initParticles=function(canvas,options){if(!canvas)return;const ctx=canvas.getContext('2d');canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;const interactive=options.interactive!==false;const count=options.count||(interactive?55:18);let mx=-1000,my=-1000;const particles=Array.from({length:count},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,size:Math.random()*2.5+.8,alpha:Math.random()*.35+.1}));if(interactive){canvas.addEventListener('mousemove',(e)=>{const r=canvas.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});canvas.addEventListener('mouseleave',()=>{mx=-1000;my=-1000})}(function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{if(interactive){const dx=p.x-mx,dy=p.y-my,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){const force=(120-dist)/120*2;p.vx+=(dx/dist)*force*.1;p.vy+=(dy/dist)*force*.1}}p.vx*=.98;p.vy*=.98;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle=`rgba(57,189,248,${p.alpha})`;ctx.fill()});requestAnimationFrame(animate)})()};
+document.addEventListener('mousemove',(e)=>{const s=document.querySelector('.mouse-spotlight');if(s){s.style.background=`radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(56,189,248,0.08), transparent 40%)`}});
+window.initParticles=function(canvas,options){if(!canvas)return;const ctx=canvas.getContext('2d');canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;const interactive=options.interactive!==false;const count=options.count||(interactive?55:18);let mx=-1000,my=-1000;const particles=Array.from({length:count},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,size:Math.random()*2.5+.8,alpha:Math.random()*.35+.1}));if(interactive){canvas.addEventListener('mousemove',(e)=>{const r=canvas.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});canvas.addEventListener('mouseleave',()=>{mx=-1000;my=-1000})}(function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{if(interactive){const dx=p.x-mx,dy=p.y-my,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){const force=(120-dist)/120*2;p.vx+=(dx/dist)*force*.1;p.vy+=(dy/dist)*force*.1}}p.vx*=.98;p.vy*=.98;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${p.alpha})`;ctx.fill()});requestAnimationFrame(animate)})()};
 document.querySelectorAll('.particle-canvas').forEach(c=>window.initParticles(c,{interactive:true,count:55}));
 document.querySelectorAll('.particle-canvas-ambient').forEach(c=>window.initParticles(c,{interactive:false,count:18}));
 try{animateSlide(document.querySelector('.slide.active'))}catch(e){}
