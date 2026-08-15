@@ -341,15 +341,13 @@
       <!-- ─────────────── SLIDE 7: Why wording matters ─────────────── -->
       <!-- ─────────────── SLIDE 8: What is a Gem ─────────────── -->
       <!-- ─────────────── SLIDE 9: What we'll do today ─────────────── -->
-      <!-- ─────────────── SLIDE 10: Live demo — Gemini prompt comparison ─────────────── -->
-      <!-- ─────────────── SLIDE 11: Building a Gem — step by step ─────────────── -->
-      <!-- ─────────────── SLIDE 12: Activity — Build your own Gem ─────────────── -->
+      <!-- ─────────────── SLIDE 11: Live demo — Gemini prompt comparison ─────────────── -->
+      <!-- ─────────────── SLIDE 12: Building a Gem & Hands-on Activity ─────────────── -->
       <!-- ─────────────── SLIDE 13: Break ─────────────── -->
       <!-- ─────────────── SLIDE 14: AI writes code — intro ─────────────── -->
-      <!-- ─────────────── SLIDE 15: Prompt → HTML → Result ─────────────── -->
-      <!-- ─────────────── SLIDE 16: Solar system challenge ─────────────── -->
-      <!-- ─────────────── SLIDE 17: Discussion ─────────────── -->
-      <!-- ─────────────── SLIDE 18: What's next ─────────────── -->
+      <!-- ─────────────── SLIDE 15: Solar system challenge ─────────────── -->
+      <!-- ─────────────── SLIDE 16: Discussion ─────────────── -->
+      <!-- ─────────────── SLIDE 17: What's next ─────────────── -->
       <div class="slide active" data-slide="1">
         <div class="gradient-mesh">
           <div
@@ -1764,8 +1762,8 @@
           <div
             class="blob"
             style="
-              width: 460px;
-              height: 460px;
+              width: 480px;
+              height: 480px;
               top: -100px;
               right: -70px;
               background: #a78bfa;
@@ -1775,8 +1773,8 @@
           <div
             class="blob"
             style="
-              width: 300px;
-              height: 300px;
+              width: 320px;
+              height: 320px;
               bottom: -70px;
               left: -50px;
               background: #39bdf8;
@@ -1785,153 +1783,93 @@
           ></div>
         </div>
         <div class="content">
-          <div class="reveal badge">💎 בונים ביחד</div>
-          <h2 class="reveal slide-title">בונים Gem — שלב אחר שלב</h2>
+          <div class="reveal badge">💎 סדנה מעשית · 15 דקות</div>
+          <h2 class="reveal slide-title" style="margin-bottom: 0.5rem">בונים Gem משלכם — שלב אחר שלב</h2>
+          
           <img
             alt="Gem Manager UI"
-            class="reveal mx-auto mb-6"
+            class="reveal mx-auto mb-4"
             src="images/gem_manager_ui.png"
             style="
-              max-width: 650px;
-              height: auto;
+              max-width: 540px;
               width: 100%;
+              height: auto;
               border-radius: 8px;
-              border: 1px solid rgba(255, 255, 255, 0.1);
-              box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5);
+              border: 1px solid rgba(255, 255, 255, 0.15);
+              box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+              display: block;
             "
           />
-          <div class="grid grid-cols-2 gap-6">
-            <div class="reveal">
-              <div
-                class="font-bold"
-                style="color: #c5d7ea; margin-bottom: 0.8rem"
-              >
-                בגמיני → "Gems" → "New Gem"
+          
+          <div class="grid grid-cols-2 gap-5 items-start">
+            <!-- Column 1: Steps & Structure -->
+            <div class="reveal flex flex-col" style="gap: 0.75rem">
+              <div class="card" style="border-right: 3px solid #a78bfa; padding: 0.85rem">
+                <div class="font-extrabold" style="color: #a78bfa; margin-bottom: 0.6rem; font-size: 0.95rem">
+                  🛠️ איך בונים? (בגמיני ← Gems ← New Gem)
+                </div>
+                <div class="flex flex-col" style="gap: 0.45rem">
+                  <div class="step">
+                    <div class="step-num" style="background: #a78bfa">1</div>
+                    <div class="secondary small"><strong>שם ל-Gem</strong> — איך תקראו לו?</div>
+                  </div>
+                  <div class="step">
+                    <div class="step-num" style="background: #a78bfa">2</div>
+                    <div class="secondary small"><strong>תפקיד</strong> — במה הוא עוזר לכם?</div>
+                  </div>
+                  <div class="step">
+                    <div class="step-num" style="background: #a78bfa">3</div>
+                    <div class="secondary small"><strong>רקע</strong> — מה חשוב לו לדעת עליכם?</div>
+                  </div>
+                  <div class="step">
+                    <div class="step-num" style="background: #a78bfa">4</div>
+                    <div class="secondary small"><strong>סגנון</strong> — איך אתם רוצים שהוא יענה?</div>
+                  </div>
+                </div>
               </div>
-              <div class="flex flex-col" style="gap: 0.6rem">
-                <div class="step">
-                  <div class="step-num" style="background: #a78bfa">1</div>
-                  <div class="secondary small">
-                    <strong>שם ל-Gem</strong> — איך תקראו לו?
-                  </div>
+
+              <!-- Quick Example Box -->
+              <div class="card" style="background: rgba(167, 139, 250, 0.05); border-color: rgba(167, 139, 250, 0.2); padding: 0.75rem">
+                <div class="font-bold" style="color: #34d399; font-size: 0.88rem; margin-bottom: 0.3rem">
+                  💡 דוגמה: "העוזר לכתיבה"
                 </div>
-                <div class="step">
-                  <div class="step-num" style="background: #a78bfa">2</div>
-                  <div class="secondary small">
-                    <strong>תפקיד</strong> — במה הוא עוזר לכם?
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-num" style="background: #a78bfa">3</div>
-                  <div class="secondary small">
-                    <strong>רקע</strong> — מה חשוב לו לדעת עליכם?
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-num" style="background: #a78bfa">4</div>
-                  <div class="secondary small">
-                    <strong>סגנון</strong> — איך אתם רוצים שהוא יענה?
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-num" style="background: #a78bfa">5</div>
-                  <div class="secondary small">
-                    <strong>שומרים, מנסים, ומשפרים</strong>
-                  </div>
+                <div class="secondary small" style="line-height: 1.5">
+                  <strong>מה עושה:</strong> מנסח הודעות ומיילים ברורים.<br />
+                  <strong>סגנון:</strong> בעברית פשוטה ובטון חם.
                 </div>
               </div>
             </div>
 
-            <div class="reveal">
-              <div
-                class="font-extrabold"
-                style="color: #c5d7ea; margin-bottom: 0.8rem; font-size: 1.1rem"
-              >
-                דוגמה ל-Gem פשוט ושימושי
-              </div>
-              <div class="flex flex-col" style="gap: 0.5rem">
-                <!-- Card 1 -->
-                <div
-                  class="card"
-                  style="
-                    padding: 0.7rem;
-                    border-right: 3px solid #34d399;
-                    background: rgba(52, 211, 153, 0.05);
-                  "
-                >
-                  <div
-                    class="secondary small"
-                    style="
-                      color: #34d399;
-                      font-weight: 800;
-                      font-size: 0.75rem;
-                      margin-bottom: 0.2rem;
-                    "
-                  >
-                    שם ה-Gem
-                  </div>
-                  <div class="font-bold">העוזר שלי לכתיבה</div>
+            <!-- Column 2: Guiding Questions & Ideas -->
+            <div class="reveal flex flex-col" style="gap: 0.75rem">
+              <div class="card" style="border-right: 3px solid #34d399; padding: 0.85rem">
+                <div class="font-extrabold" style="color: #34d399; margin-bottom: 0.6rem; font-size: 0.95rem">
+                  🎯 מה לבנות? שאלות למחשבה
                 </div>
-                <!-- Card 2 -->
-                <div
-                  class="card"
-                  style="
-                    padding: 0.7rem;
-                    border-right: 3px solid #39bdf8;
-                    background: rgba(57, 189, 248, 0.05);
-                  "
-                >
-                  <div
-                    class="secondary small"
-                    style="
-                      color: #39bdf8;
-                      font-weight: 800;
-                      font-size: 0.75rem;
-                      margin-bottom: 0.2rem;
-                    "
-                  >
-                    מה הוא עושה?
-                  </div>
-                  <div class="text-sm font-bold">
-                    עוזר לי לנסח הודעות, מיילים ופוסטים בצורה ברורה ונעימה.
-                  </div>
-                </div>
-                <!-- Card 3 -->
-                <div
-                  class="card"
-                  style="
-                    padding: 0.7rem;
-                    border-right: 3px solid #a78bfa;
-                    background: rgba(167, 139, 250, 0.05);
-                  "
-                >
-                  <div
-                    class="secondary small"
-                    style="
-                      color: #a78bfa;
-                      font-weight: 800;
-                      font-size: 0.75rem;
-                      margin-bottom: 0.2rem;
-                    "
-                  >
-                    איך הוא עונה?
-                  </div>
-                  <div class="text-sm font-bold">
-                    בקצרה, בעברית פשוטה, ובטון חם ולא רשמי.
-                  </div>
+                <div class="flex flex-col" style="gap: 0.4rem">
+                  <div class="secondary small">✍️ <strong>מה לוקח לכם זמן</strong> לכתוב ביום-יום?</div>
+                  <div class="secondary small">💡 <strong>מה תרצו שיסבירו לכם</strong> בשפה פשוטה?</div>
+                  <div class="secondary small">🤝 <strong>מה היה עוזר לכם</strong> בתקופה הזאת?</div>
                 </div>
               </div>
-              <div
-                class="card text-center"
-                style="
-                  margin-top: 0.8rem;
-                  background: rgba(255, 255, 255, 0.04);
-                  border-color: rgba(255, 255, 255, 0.1);
-                "
-              >
-                <div class="secondary small" style="font-size: 0.75rem">
-                  בפועל, אפשר לכתוב לו: "תנסח לי הודעה", "תקצר לי טקסט", או
-                  "תכתוב לי גרסה יותר נעימה".
+
+              <div class="card" style="padding: 0.75rem">
+                <div class="font-bold" style="color: #c5d7ea; margin-bottom: 0.5rem; font-size: 0.88rem">
+                  🚀 רעיונות מהירים לבחירה:
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="card flex items-center" style="padding: 0.45rem; gap: 0.4rem">
+                    <span>📧</span><span class="secondary small">מנסח מיילים</span>
+                  </div>
+                  <div class="card flex items-center" style="padding: 0.45rem; gap: 0.4rem">
+                    <span>📖</span><span class="secondary small">מסכם מאמרים</span>
+                  </div>
+                  <div class="card flex items-center" style="padding: 0.45rem; gap: 0.4rem">
+                    <span>🧘</span><span class="secondary small">שותף ליומן</span>
+                  </div>
+                  <div class="card flex items-center" style="padding: 0.45rem; gap: 0.4rem">
+                    <span>🛒</span><span class="secondary small">עוזר בתכנון</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1939,132 +1877,6 @@
         </div>
       </div>
       <div class="slide" data-slide="13">
-        <div class="gradient-mesh">
-          <div
-            class="blob"
-            style="
-              width: 450px;
-              height: 450px;
-              top: -90px;
-              left: -80px;
-              background: #34d399;
-              opacity: 0.1;
-            "
-          ></div>
-          <div
-            class="blob"
-            style="
-              width: 280px;
-              height: 280px;
-              bottom: -60px;
-              right: -40px;
-              background: #a78bfa;
-              opacity: 0.08;
-            "
-          ></div>
-        </div>
-        <div class="content">
-          <div class="reveal badge">🎯 פעילות — 15 דקות</div>
-          <h2 class="reveal slide-title">עכשיו — בנו Gem משלכם</h2>
-          <div class="grid grid-cols-2 gap-6 items-start">
-            <div class="reveal">
-              <div class="card" style="margin-bottom: 0.7rem">
-                <div
-                  class="font-extrabold"
-                  style="color: #34d399; margin-bottom: 0.7rem"
-                >
-                  שלושה שאלות לבחירת הנושא:
-                </div>
-                <div class="step">
-                  <div class="step-num" style="background: #34d399">א</div>
-                  <div class="secondary small">
-                    <strong>מה לוקח לכם הכי הרבה זמן</strong> לכתוב ביום-יום?
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-num" style="background: #34d399">ב</div>
-                  <div class="secondary small">
-                    <strong>מה אתם רוצים שמישהו יסביר לכם</strong> בשפה פשוטה?
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-num" style="background: #34d399">ג</div>
-                  <div class="secondary small">
-                    <strong>מה היה עוזר לכם</strong> בתקופה הזאת?
-                  </div>
-                </div>
-              </div>
-              <div
-                class="card"
-                style="
-                  background: rgba(52, 211, 153, 0.05);
-                  border-color: rgba(52, 211, 153, 0.2);
-                "
-              >
-                <div class="secondary small">
-                  💡 לא צריך לדייק מההתחלה — אפשר להתחיל פשוט, ואז לשפר תוך כדי.
-                </div>
-              </div>
-            </div>
-            <div class="reveal">
-              <div
-                class="font-bold"
-                style="color: #c5d7ea; margin-bottom: 0.6rem"
-              >
-                רעיונות לנושאים:
-              </div>
-              <div style="display: grid; gap: 0.4rem">
-                <div
-                  class="card flex items-center"
-                  style="padding: 0.6rem; gap: 0.6rem"
-                >
-                  <span style="font-size: 1.2rem">💊</span
-                  ><span class="secondary small"
-                    >🧠 RAG Brain — מנהל ידע אישי מ-Google Docs</span
-                  >
-                </div>
-                <div
-                  class="card flex items-center"
-                  style="padding: 0.6rem; gap: 0.6rem"
-                >
-                  <span style="font-size: 1.2rem">📧</span
-                  ><span class="secondary small"
-                    >מנסח מיילים ומסרונים בשבילי</span
-                  >
-                </div>
-                <div
-                  class="card flex items-center"
-                  style="padding: 0.6rem; gap: 0.6rem"
-                >
-                  <span style="font-size: 1.2rem">📖</span
-                  ><span class="secondary small"
-                    >מסכם מאמרים ומסמכים ארוכים</span
-                  >
-                </div>
-                <div
-                  class="card flex items-center"
-                  style="padding: 0.6rem; gap: 0.6rem"
-                >
-                  <span style="font-size: 1.2rem">🧘</span
-                  ><span class="secondary small"
-                    >שותף לכתיבה ביומן / עיבוד מחשבות</span
-                  >
-                </div>
-                <div
-                  class="card flex items-center"
-                  style="padding: 0.6rem; gap: 0.6rem"
-                >
-                  <span style="font-size: 1.2rem">🛒</span
-                  ><span class="secondary small"
-                    >עוזר בתכנון רכישות, מתכונים, לוגיסטיקה</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="slide" data-slide="14">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2133,7 +1945,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="15">
+      <div class="slide" data-slide="14">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2258,7 +2070,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="16">
+      <div class="slide" data-slide="15">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2482,7 +2294,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="17">
+      <div class="slide" data-slide="16">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2588,7 +2400,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="18">
+      <div class="slide" data-slide="17">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2642,32 +2454,18 @@
           </div>
           <h2 class="reveal slide-title">מה הלאה?</h2>
           <div
-            class="grid grid-cols-2 gap-5 text-right"
-            style="margin: 0 auto 1rem; max-width: 920px"
+            class="card reveal text-right"
+            style="margin: 0 auto 1rem; max-width: 720px"
           >
-            <div class="card reveal">
-              <div
-                class="font-extrabold"
-                style="color: #39bdf8; margin-bottom: 0.5rem"
-              >
-                מה יצרנו היום
-              </div>
-              <div class="secondary small">
-                הבנו LLMs, למדנו לנסח פרומפטים חזקים עם כ.ק.מ.ד, בנינו Gem אישי,
-                ויצרנו קוד אינטראקטיבי ממשפט אחד.
-              </div>
+            <div
+              class="font-extrabold"
+              style="color: #39bdf8; margin-bottom: 0.5rem"
+            >
+              מה יצרנו היום
             </div>
-            <div class="card reveal">
-              <div
-                class="font-extrabold"
-                style="color: #34d399; margin-bottom: 0.5rem"
-              >
-                מפגש 3 — מסיפור לסרטון 🎬
-              </div>
-              <div class="secondary small">
-                נייצר תמונות מפרומפטים, מוזיקה מקורית עם Suno, אנימציה עם Veo —
-                ונחבר הכל לסרטון מצויר אישי.
-              </div>
+            <div class="secondary small">
+              הבנו LLMs, למדנו לנסח פרומפטים חזקים עם כ.ק.מ.ד, בנינו Gem אישי,
+              ויצרנו קוד אינטראקטיבי ממשפט אחד.
             </div>
           </div>
           <div
@@ -2681,7 +2479,7 @@
               🏠 שיעורי בית (אופציונלי)
             </div>
             <div class="secondary small">
-              נסו להשתמש ב-Gem שבניתם לפחות פעם אחת לפני המפגש הבא. מה עבד? מה
+              נסו להשתמש ב-Gem שבניתם לפחות פעם אחת השבוע. מה עבד? מה
               תרצו לשפר?
             </div>
           </div>
@@ -2697,7 +2495,7 @@
       <button class="nav-btn" onclick="changeSlide(-1)">‹</button>
       <div class="slide-dots" id="dots"></div>
       <button class="nav-btn" onclick="changeSlide(1)">›</button>
-      <span class="slide-counter" id="counter">1 / 18</span>
+      <span class="slide-counter" id="counter">1 / 17</span>
     </div>
     <script>
       let current = 1;
