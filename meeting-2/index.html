@@ -336,18 +336,20 @@
       <!-- ─────────────── SLIDE 2: Recap from session 1 ─────────────── -->
       <!-- ─────────────── SLIDE 3: Simple example — white cat ─────────────── -->
       <!-- ─────────────── SLIDE 4: The transition ─────────────── -->
-      <!-- ─────────────── SLIDE 5: What is LLM ─────────────── -->
-      <!-- ─────────────── SLIDE 6: What is a prompt ─────────────── -->
-      <!-- ─────────────── SLIDE 7: Why wording matters ─────────────── -->
-      <!-- ─────────────── SLIDE 8: What is a Gem ─────────────── -->
-      <!-- ─────────────── SLIDE 9: What we'll do today ─────────────── -->
-      <!-- ─────────────── SLIDE 11: Live demo — Gemini prompt comparison ─────────────── -->
-      <!-- ─────────────── SLIDE 12: Building a Gem & Hands-on Activity ─────────────── -->
-      <!-- ─────────────── SLIDE 13: Break ─────────────── -->
-      <!-- ─────────────── SLIDE 14: AI writes code — intro ─────────────── -->
-      <!-- ─────────────── SLIDE 15: Solar system challenge ─────────────── -->
-      <!-- ─────────────── SLIDE 16: Discussion ─────────────── -->
-      <!-- ─────────────── SLIDE 17: What's next ─────────────── -->
+      <!-- ─────────────── SLIDE 5: What we'll do today ─────────────── -->
+      <!-- ─────────────── SLIDE 6: What is LLM ─────────────── -->
+      <!-- ─────────────── SLIDE 7: What is a token ─────────────── -->
+      <!-- ─────────────── SLIDE 8: What is a prompt ─────────────── -->
+      <!-- ─────────────── SLIDE 9: Why wording matters ─────────────── -->
+      <!-- ─────────────── SLIDE 10: Image prompt example ─────────────── -->
+      <!-- ─────────────── SLIDE 11: What is a Gem ─────────────── -->
+      <!-- ─────────────── SLIDE 12: Live demo — Gemini prompt comparison ─────────────── -->
+      <!-- ─────────────── SLIDE 13: Building a Gem & Hands-on Activity ─────────────── -->
+      <!-- ─────────────── SLIDE 14: Break ─────────────── -->
+      <!-- ─────────────── SLIDE 15: AI writes code — intro ─────────────── -->
+      <!-- ─────────────── SLIDE 16: Solar system challenge ─────────────── -->
+      <!-- ─────────────── SLIDE 17: Discussion ─────────────── -->
+      <!-- ─────────────── SLIDE 18: What's next ─────────────── -->
       <div class="slide active" data-slide="1">
         <div class="gradient-mesh">
           <div
@@ -962,6 +964,178 @@
             style="
               width: 440px;
               height: 440px;
+              top: -100px;
+              left: -70px;
+              background: #34d399;
+              opacity: 0.1;
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 280px;
+              height: 280px;
+              bottom: -60px;
+              right: -50px;
+              background: #a78bfa;
+              opacity: 0.08;
+            "
+          ></div>
+        </div>
+        <div class="content">
+          <div class="reveal badge">🧩 הבסיס</div>
+          <h2 class="reveal slide-title" style="margin-bottom: 0.5rem">
+            מה זה בכלל טוקן?
+          </h2>
+          <p class="reveal muted" style="margin: 0 0 1.1rem; max-width: 760px">
+            המודל לא קורא מילים שלמות — הוא מפרק את הטקסט לחתיכות קטנות
+            שנקראות טוקנים, ומעבד אותו טוקן אחרי טוקן.
+          </p>
+          <div class="grid grid-cols-[0.7fr_1.3fr] gap-5">
+            <div class="reveal">
+              <div
+                class="card text-center"
+                style="
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  border-top: 3px solid #39bdf8;
+                "
+              >
+                <div class="secondary small" style="margin-bottom: 0.5rem">
+                  כלל אצבע
+                </div>
+                <div
+                  class="font-black accent"
+                  style="font-size: 3rem; line-height: 1"
+                >
+                  ¾
+                </div>
+                <div class="secondary small" style="margin-top: 0.6rem">
+                  טוקן אחד ≈ ¾ ממילה<br />(בערך 4 תווים)
+                </div>
+              </div>
+            </div>
+            <div class="reveal">
+              <div class="card" style="border-top: 3px solid #a78bfa">
+                <div class="secondary small" style="margin-bottom: 0.6rem">
+                  המשפט "אני לומד להשתמש בבינה מלאכותית" מתפרק לחתיכות:
+                </div>
+                <div
+                  class="code-block"
+                  style="
+                    direction: rtl;
+                    text-align: right;
+                    font-family: &quot;Heebo&quot;, sans-serif;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.35rem;
+                  "
+                >
+                  <span
+                    class="pill"
+                    style="background: rgba(57, 189, 248, 0.16); color: #39bdf8"
+                    >אני</span
+                  ><span
+                    class="pill"
+                    style="background: rgba(167, 139, 250, 0.16); color: #a78bfa"
+                    >לומד</span
+                  ><span
+                    class="pill"
+                    style="background: rgba(52, 211, 153, 0.16); color: #34d399"
+                    >להש</span
+                  ><span
+                    class="pill"
+                    style="background: rgba(245, 158, 11, 0.16); color: #f59e0b"
+                    >תמש</span
+                  ><span
+                    class="pill"
+                    style="background: rgba(244, 114, 182, 0.16); color: #f472b6"
+                    >ב</span
+                  ><span
+                    class="pill"
+                    style="background: rgba(239, 68, 68, 0.16); color: #f87171"
+                    >בינה</span
+                  ><span
+                    class="pill"
+                    style="background: rgba(57, 189, 248, 0.16); color: #39bdf8"
+                    >מלאכ</span
+                  ><span
+                    class="pill"
+                    style="background: rgba(167, 139, 250, 0.16); color: #a78bfa"
+                    >ותית</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-between"
+                  style="margin-top: 0.6rem"
+                >
+                  <span class="font-bold small" style="color: #f4f8ff"
+                    >8 טוקנים</span
+                  >
+                  <span class="muted small">4 מילים בלבד</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="reveal card" style="margin-top: 0.9rem">
+            <div class="font-extrabold" style="margin-bottom: 0.6rem">
+              איך AI "כותב"? טוקן אחרי טוקן
+            </div>
+            <div
+              class="grid grid-cols-[1.2fr_1fr] gap-5"
+              style="align-items: center"
+            >
+              <div class="secondary small">
+                AI לא כותב משפט שלם בבת אחת. הוא מנחש טוקן אחד, מוסיף אותו
+                לטקסט, ומנחש את הבא — שוב ושוב, על סמך מה שכבר נכתב. ה-AI
+                בוחר את הטוקן עם ההסתברות הגבוהה ביותר, וחוזר על התהליך עד
+                שהתשובה שלמה.
+              </div>
+              <div class="video-box">
+                <div class="secondary small" style="margin-bottom: 0.5rem">
+                  "החתול ישב על ה___"
+                </div>
+                <div class="flex flex-col" style="gap: 0.3rem">
+                  <div class="flex items-center justify-between">
+                    <span class="small">שטיח</span>
+                    <span class="font-bold accent small">61%</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="small">ספה</span>
+                    <span class="font-bold small" style="color: #a78bfa"
+                      >24%</span
+                    >
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="small">כיסא</span>
+                    <span class="font-bold small" style="color: #88a4c3"
+                      >9%</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card reveal text-center" style="margin-top: 0.9rem">
+            <span class="secondary small"
+              >גם הפרומפט שאנחנו כותבים, וגם התשובה שחוזרת — שניהם בעצם
+              <span class="font-extrabold" style="color: #34d399"
+                >רצף של טוקנים</span
+              >. בשקף הבא נראה איך מנסחים פרומפט שמכוון את הניחוש הזה
+              נכון.</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="slide" data-slide="8">
+        <div class="gradient-mesh">
+          <div
+            class="blob"
+            style="
+              width: 440px;
+              height: 440px;
               top: -90px;
               left: -70px;
               background: #34d399;
@@ -1085,7 +1259,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="8">
+      <div class="slide" data-slide="9">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -1176,7 +1350,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="9">
+      <div class="slide" data-slide="10">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -1382,7 +1556,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="10">
+      <div class="slide" data-slide="11">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -1544,7 +1718,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="11">
+      <div class="slide" data-slide="12">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -1757,7 +1931,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="12">
+      <div class="slide" data-slide="13">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -1876,7 +2050,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="13">
+      <div class="slide" data-slide="14">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -1945,7 +2119,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="14">
+      <div class="slide" data-slide="15">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2070,7 +2244,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="15">
+      <div class="slide" data-slide="16">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2294,7 +2468,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="16">
+      <div class="slide" data-slide="17">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2400,7 +2574,7 @@
           </div>
         </div>
       </div>
-      <div class="slide" data-slide="17">
+      <div class="slide" data-slide="18">
         <div class="gradient-mesh">
           <div
             class="blob"
@@ -2495,7 +2669,7 @@
       <button class="nav-btn" onclick="changeSlide(-1)">‹</button>
       <div class="slide-dots" id="dots"></div>
       <button class="nav-btn" onclick="changeSlide(1)">›</button>
-      <span class="slide-counter" id="counter">1 / 17</span>
+      <span class="slide-counter" id="counter">1 / 18</span>
     </div>
     <script>
       let current = 1;
