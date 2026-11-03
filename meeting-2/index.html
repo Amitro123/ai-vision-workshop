@@ -713,10 +713,11 @@
                 class="font-extrabold"
                 style="margin-bottom: 0.4rem; color: #39bdf8"
               >
-                LLM + פרומפט
+                LLM, טוקנים ופרומפט
               </div>
               <div class="secondary small">
-                נבין איך LLMs עובדים ונתרגל פרומפטים חזקים
+                נבין איך LLMs עובדים, איך הם "קוראים" טקסט דרך טוקנים, ונתרגל
+                פרומפטים חזקים
               </div>
             </div>
             <div
@@ -889,6 +890,17 @@
               </div>
             </div>
           </div>
+          <div class="card reveal text-center" style="margin-top: 1rem">
+            <span class="secondary small"
+              >🤔 אבל רגע — איך בדיוק הוא "משלים"? כמו האוטוקורקט, הוא מנחש
+              מה בא הלאה. רק שהוא לא מנחש מילים שלמות, אלא
+              <span class="font-extrabold" style="color: #39bdf8"
+                >חתיכות קטנות של טקסט</span
+              >. לחתיכות האלה קוראים
+              <span class="font-extrabold" style="color: #a78bfa">טוקנים</span
+              >.</span
+            >
+          </div>
         </div>
       </div>
       <div class="slide" data-slide="6">
@@ -917,13 +929,13 @@
           ></div>
         </div>
         <div class="content">
-          <div class="reveal badge">🧩 הבסיס</div>
+          <div class="reveal badge">🧩 מתחת למכסה המנוע</div>
           <h2 class="reveal slide-title" style="margin-bottom: 0.5rem">
             מה זה בכלל טוקן?
           </h2>
-          <p class="reveal muted" style="margin: 0 0 1.1rem; max-width: 760px">
-            המודל לא קורא מילים שלמות — הוא מפרק את הטקסט לחתיכות קטנות
-            שנקראות טוקנים, ומעבד אותו טוקן אחרי טוקן.
+          <p class="reveal muted" style="margin: 0 0 0.8rem">
+            טוקן = יחידת הטקסט הקטנה שהמודל עובד איתה. כל טקסט מתפרק לטוקנים,
+            וגם התשובה נבנית טוקן אחרי טוקן.
           </p>
           <div class="grid grid-cols-[0.7fr_1.3fr] gap-5">
             <div class="reveal">
@@ -1013,7 +1025,7 @@
               </div>
             </div>
           </div>
-          <div class="reveal card" style="margin-top: 0.9rem">
+          <div class="reveal card" style="margin-top: 0.7rem">
             <div class="font-extrabold" style="margin-bottom: 0.6rem">
               איך AI "כותב"? טוקן אחרי טוקן
             </div>
@@ -1026,6 +1038,19 @@
                 לטקסט, ומנחש את הבא — שוב ושוב, על סמך מה שכבר נכתב. ה-AI
                 בוחר את הטוקן עם ההסתברות הגבוהה ביותר, וחוזר על התהליך עד
                 שהתשובה שלמה.
+                <div
+                  style="
+                    margin-top: 0.8rem;
+                    padding-top: 0.7rem;
+                    border-top: 1px solid rgba(255, 255, 255, 0.08);
+                  "
+                >
+                  גם הפרומפט שאנחנו כותבים, וגם התשובה שחוזרת — שניהם בעצם
+                  <span class="font-extrabold" style="color: #34d399"
+                    >רצף של טוקנים</span
+                  >. בשקף הבא נראה איך מנסחים פרומפט שמכוון את הניחוש הזה
+                  נכון.
+                </div>
               </div>
               <div class="video-box">
                 <div class="secondary small" style="margin-bottom: 0.5rem">
@@ -1051,15 +1076,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="card reveal text-center" style="margin-top: 0.9rem">
-            <span class="secondary small"
-              >גם הפרומפט שאנחנו כותבים, וגם התשובה שחוזרת — שניהם בעצם
-              <span class="font-extrabold" style="color: #34d399"
-                >רצף של טוקנים</span
-              >. בשקף הבא נראה איך מנסחים פרומפט שמכוון את הניחוש הזה
-              נכון.</span
-            >
           </div>
         </div>
       </div>
