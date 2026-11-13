@@ -136,158 +136,231 @@ meta = {
     }
 }
 
+
+# ---------- visual helpers (bento cards in the style of meetings 2 and 4) ----------
+def icard(icon, title, text, c, extra='', fs=31, style=''):
+    return (f'<div class="glass fx col" style="flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c{c});{style}">'
+            f'<span style="font-size:76px;line-height:1;">{icon}</span>'
+            f'<span class="fw8" style="font-size:42px;color:var(--c{c});">{r(title)}</span>'
+            f'<p class="ink-t fw5" style="font-size:{fs}px;line-height:1.45;margin:0;">{r(text)}</p>{extra}</div>')
+
+def foot(text, c):
+    return (f'<div class="fw7" style="margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c{c});">{r(text)}</div>')
+
+def row(*cards, gap=28):
+    return f'<div class="fx" style="flex:1;gap:{gap}px;min-height:0;">{"".join(cards)}</div>'
+
+def quote(t, fs=27):
+    return (f'<div style="background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 28px;font-size:{fs}px;line-height:1.5;font-weight:500;">{t}</div>')
+
+def tag(t, good):
+    bg = 'var(--c1)' if good else 'var(--c6)'
+    return f'<span class="chip" style="background:{bg};color:#fff;font-size:24px;">{t}</span>'
+
+def icards_slide(eyebrow, title, sub, cards, takeaway=None):
+    return head(eyebrow, title, sub) + stage(row(*cards)) + (take(takeaway) if takeaway else '')
+
+def agenda_slide():
+    items = [("🧠", "איך Claude חושב", "טוקנים, פרומפטים, ו-Instructions שמכירים אתכם", 1, "תרגול: הראיון ההפוך"),
+             ("🛠️", "איפה עובדים", "Chat, Cowork, Code, ואיזה מודל לבחור", 3, "תרגול: Cowork"),
+             ("📁", "סדר וצוות", "תיקייה לכל פרויקט, ו-Projects משותפים", 5, None),
+             ("⚡", "יכולות", "סקילים, קונקטורים, פלאגינים ו-Chrome", 2, "תרגול: סקיל מצגות"),
+             ("🎯", "השולחן שלכם", "מפצחים יחד משימה אמיתית מהעבודה", 1, "תרגול: Use Cases")]
+    cards = []
+    for i, (ic, t, x, c, ex) in enumerate(items, 1):
+        cards.append(f'<div class="glass fx col" style="flex:1;min-width:0;padding:30px 30px;gap:16px;border-top:7px solid var(--c{c});">'
+                     f'<div class="fx ac jb"><span style="font-size:68px;line-height:1;">{ic}</span><span class="numchip" style="background:var(--c{c});">{i}</span></div>'
+                     f'<span class="fw8" style="font-size:38px;color:var(--ink);margin-top:14px;">{r(t)}</span>'
+                     f'<p class="muted fw5" style="font-size:28px;line-height:1.4;margin:0;">{r(x)}</p>'
+                     + (f'<span class="chip" style="margin-top:auto;background:var(--bg-2);color:var(--c5);font-size:21px;">{r(ex)}</span>' if ex else '') + '</div>')
+    return head("מה הולך לקרות היום", f'שעתיים, חמישה פרקים, {acc("ארבעה תרגולים")}') + stage(row(*cards, gap=22)) + \
+        take('בסוף המפגש כל אחד יוצא עם <span class="hi">תהליך אחד שכבר עובד</span>.')
+
+def tokens_slide2():
+    words = ''.join(f'<span class="chip" style="font-size:36px;padding:14px 26px;background:#fff;color:var(--ink);border:2px solid var(--c4);">{w}</span>' for w in "חלאסרטן מחברת צעירים חולים".split())
+    chips = ''.join(f'<span class="chip" style="font-size:30px;padding:10px 16px;background:var(--c{(i % 5) + 1});color:#fff;">{t}</span>' for i, t in enumerate(TOKENS))
+    left = (f'<div class="glass fx col" style="flex:1.25;min-width:0;padding:34px 40px;gap:22px;border-top:7px solid var(--c1);">'
+            f'<span class="fw8" style="font-size:34px;color:var(--c1);">🧩 איך Claude קורא</span>'
+            f'<span class="muted fw7" style="font-size:25px;">אנחנו רואים 4 מילים:</span><div class="fx wrap" style="gap:14px;">{words}</div>'
+            f'<span class="muted fw7" style="font-size:25px;">Claude רואה 9 טוקנים:</span>'
+            f'<div class="fx wrap" style="gap:10px;padding:20px;border-radius:16px;background:var(--ink);">{chips}</div></div>')
+    bars = [("שטיח", 61, 1), ("ספה", 24, 3), ("כיסא", 9, 5)]
+    b = ''.join(f'<div class="fx ac" style="gap:18px;"><span class="ink-t fw7" style="font-size:28px;width:90px;">{w}</span>'
+                f'<div style="flex:1;height:26px;border-radius:999px;background:var(--bg-2);"><div style="width:{v}%;height:100%;border-radius:999px;background:var(--c{c});"></div></div>'
+                f'<span class="fw8" style="font-size:28px;color:var(--c{c});width:70px;">{v}%</span></div>' for w, v, c in bars)
+    right = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:34px 40px;gap:22px;border-top:7px solid var(--c3);">'
+             f'<span class="fw8" style="font-size:34px;color:var(--c3);">✍️ איך Claude כותב</span>'
+             f'<p class="ink-t fw5" style="font-size:27px;line-height:1.45;margin:0;">מנחש את הטוקן הבא הכי סביר, מוסיף, וחוזר חלילה:</p>'
+             f'{quote("״החתול ישב על ה___״", 30)}<div class="fx col" style="gap:16px;">{b}</div>'
+             f'<span class="muted" style="font-size:21px;">המספרים להמחשה בלבד</span></div>')
+    return head("מושגי יסוד", f'Claude לא קורא מילים. הוא קורא {acc("טוקנים")}') + stage(row(left, right)) + \
+        take('כל טוקן שנכנס וכל טוקן שיוצא <span class="hi">נספר במכסה</span>, וכל מילה בפרומפט מכוונת את הניחוש.')
+
+def badgood_slide():
+    hi = lambda t: f'<span style="color:var(--highlight);font-weight:800;">{r(t)}</span>'
+    bad = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c6);">'
+           f'{tag("✗ פרומפט עמום", False)}{quote(r("״תכתוב לי פוסט לקהילה על מפגש זכויות חדש.״"), 34)}'
+           f'<p class="muted fw6" style="font-size:30px;margin:0;">← טקסט גנרי, רשמי, ומנותק מהשפה של חלאסרטן.</p></div>')
+    good_q = ('״' + hi("אני מנהל/ת הקהילה בחלאסרטן (צעירים חולי סרטן 18-44).") + ' ' + hi("כתוב בעברית ישירה ובגובה העיניים, בלי קלישאות.") + ' '
+              + r("נסח פוסט שמזמין למפגש מיצוי זכויות ביום ג׳, עם 3 סיבות למה שווה להגיע.") + '״')
+    good = (f'<div class="glass fx col" style="flex:1.35;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c1);">'
+            f'{tag("✓ פרומפט מלא", True)}{quote(good_q, 32)}'
+            f'<p class="ink-t fw6" style="font-size:30px;margin:0;">← מדויק בול. אבל את <span style="color:var(--c1);font-weight:800;">החלק המודגש</span> מקלידים בכל פעם מחדש.</p></div>')
+    return head("למה הניסוח משנה הכל", f'אותה בקשה, {acc("שתי תוצאות")}') + stage(row(bad, good)) + \
+        take('את החלק הקבוע כותבים <span class="hi">פעם אחת</span>, ב-<span dir="ltr">Instructions for Claude</span>.')
+
+def interview_slide():
+    steps = [("מדביקים את הפרומפט", "כפתור ההעתקה כאן משמאל."), ("עונים על 10 שאלות", "תפקיד, קהל, סגנון, ומה מעצבן אתכם בתשובות AI."),
+             ("שומרים את הסיכום", "Settings → Profile → Instructions for Claude")]
+    st = ''.join(f'<div class="fx" style="gap:20px;align-items:flex-start;"><span class="numchip" style="background:var(--c{c});">{i}</span>'
+                 f'<div class="fx col" style="gap:6px;"><span class="ink-t fw8" style="font-size:31px;">{r(t)}</span><span class="muted fw5" style="font-size:25px;line-height:1.4;">{r(x)}</span></div></div>'
+                 for i, ((t, x), c) in enumerate(zip(steps, [1, 3, 5]), 1))
+    left = f'<div class="glass fx col" style="flex:.8;min-width:0;padding:36px 38px;gap:34px;justify-content:center;border-top:7px solid var(--c3);">{st}</div>'
+    return PRINT_CSS + head("תרגול: הראיון ההפוך", f'נותנים ל-Claude {acc("לראיין אתכם")}') + \
+        stage(row(left, prompt_box("פרומפט הראיון ההפוך", REVERSE, 29).replace('flex:1;', 'flex:1.25;', 1))) + \
+        take('5 דקות של ראיון חוסכות <span class="hi">שעות של הסברים חוזרים</span>.')
+
+def folders_slide():
+    files = ["final_v2_new(1).docx", "מצגת חדשה (3).pptx", "סיכום-סופי-באמת.docx", "IMG_4471.jpg", "תקציב (עותק).xlsx"]
+    fchips = ''.join(f'<span class="chip" style="background:#fff;border:2px dashed var(--c6);color:var(--muted);font-size:24px;font-weight:600;" dir="ltr">📄 {html.escape(f)}</span>' for f in files)
+    bad = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:34px 40px;gap:22px;border-top:7px solid var(--c6);">'
+           f'{tag("✗ תיקיית הורדות כאוטית", False)}<div class="fx wrap" style="gap:12px;">{fchips}</div>'
+           f'<p class="muted fw6" style="font-size:26px;line-height:1.45;margin:0;margin-top:auto;">Claude סורק קבצים לא קשורים, ואחרי שבועיים אף אחד לא זוכר איפה התוצר.</p></div>')
+    tree = ("📁 Halasartan-Projects/\n  └─ 📁 2026-11-Donors-Event/\n       ├─ 📁 01-Raw-Materials/\n       ├─ 📁 02-Outputs/\n       └─ 📄 CLAUDE.md")
+    legend = [("01-Raw-Materials", "מסמכי מקור ונתונים"), ("02-Outputs", "מצגות, דוחות ותוצרים"), ("CLAUDE.md", "הנחיות הפרויקט")]
+    lg = ''.join(f'<div class="fx ac" style="gap:14px;font-size:25px;"><span class="dot" style="background:var(--c{c});"></span><span class="ink-t fw8" dir="ltr">{a}</span><span class="muted fw5">{r(b)}</span></div>'
+                 for (a, b), c in zip(legend, [1, 3, 5]))
+    good = (f'<div class="glass fx col" style="flex:1.2;min-width:0;padding:34px 40px;gap:22px;border-top:7px solid var(--c1);">'
+            f'{tag("✓ תיקייה ברורה לכל פרויקט", True)}'
+            f'<pre dir="ltr" style="margin:0;background:var(--ink);color:var(--on-dark);border-radius:14px;padding:22px 28px;font-size:26px;line-height:1.5;font-family:ui-monospace,Menlo,Consolas,monospace;text-align:left;">{html.escape(tree)}</pre>'
+            f'<div class="fx col" style="gap:10px;">{lg}</div></div>')
+    return head("סדר וארגון", f'כל פרויקט מקבל {acc("תיקייה משלו")}') + stage(row(bad, good)) + \
+        take('לפני משימה חדשה ב-Claude, <span class="hi">פותחים לה תיקייה עם שם ברור</span>.')
+
+def handson_slide():
+    pts = ["מנקודות גולמיות או מסמך, למצגת הנהלה.", "הלוגו וצבעי העמותה, בעברית מלאה.", "Ctrl+P הופך אותה ל-PDF לתורמים."]
+    p = ''.join(f'<div class="fx" style="gap:16px;align-items:baseline;"><span class="bullet" style="background:var(--c{c});width:14px;height:14px;"></span>'
+                f'<span class="ink-t fw6" style="font-size:28px;line-height:1.4;">{r(t)}</span></div>' for t, c in zip(pts, [1, 3, 5]))
+    left = (f'<div class="glass fx col" style="flex:.8;min-width:0;padding:36px 38px;gap:26px;border-top:7px solid var(--c3);">'
+            f'<span class="fw8" style="font-size:34px;color:var(--c3);">🎨 מה הסקיל יעשה</span>{p}'
+            f'<span class="chip" style="margin-top:auto;background:var(--bg-2);color:var(--c5);font-size:22px;">בונוס אם יש זמן: Claude Design</span></div>')
+    return PRINT_CSS + head("תרגול משותף", f'בונים יחד: {acc("סקיל מצגות")} של חלאסרטן') + \
+        stage(row(left, prompt_box("פרומפט: סקיל המצגות של חלאסרטן", SKILL_PROMPT, 27).replace('flex:1;', 'flex:1.3;', 1))) + \
+        take('מקבלים <span class="hi">מצגת חיה למסך</span> וגם <span class="hi">PDF לוואטסאפ</span>.')
+
+def usecases_slide():
+    ex = [("💰", "גיוס", "Project + סקיל מצגות לתורמים", 1), ("📋", "זכויות", "Haiku סורק עדכונים ומנגיש אותם", 3), ("🗓️", "ישיבות", "Cowork + דשבורד משימות", 5)]
+    exs = ''.join(f'<div class="glass fx ac" style="flex:1;gap:22px;padding:22px 30px;border-inline-start:7px solid var(--c{c});">'
+                  f'<span style="font-size:46px;">{i}</span><div class="fx col" style="gap:4px;"><span class="fw8" style="font-size:30px;color:var(--c{c});">{r(t)}</span>'
+                  f'<span class="ink-t fw5" style="font-size:28px;">{r(x)}</span></div></div>' for i, t, x, c in ex)
+    qs = ["מה גוזל לכם הכי הרבה זמן השבוע?", "איזה הקשר Claude צריך? תיקייה או Project", "איזה כלי ומודל? Haiku, Sonnet, Cowork", "כדאי לארוז את זה לסקיל?"]
+    q = ''.join(f'<div class="fx ac" style="gap:20px;"><span class="numchip" style="background:var(--c{c});">{i}</span><span class="fw6" style="font-size:29px;color:var(--on-dark);line-height:1.35;">{r(t)}</span></div>'
+                for i, (t, c) in enumerate(zip(qs, [1, 2, 3, 4]), 1))
+    right = (f'<div class="inkcard fx col" style="flex:1.2;min-width:0;padding:36px 42px;gap:26px;justify-content:center;">'
+             f'<span class="fw8" style="font-size:34px;color:var(--highlight);">🧭 תבנית פיצוח</span>{q}</div>')
+    left = f'<div class="fx col" style="flex:1;min-width:0;gap:20px;">{exs}</div>'
+    return head("שולחן עגול", f'מפצחים יחד {acc("משימה אמיתית")} שלכם') + stage(row(left, right)) + \
+        take('כל אחד יוצא עם <span class="hi">תהליך אחד שכבר עובד</span> השבוע.')
+
+# ---------- slides ----------
 S = []
 S.append({"type": "cover", "mode": "dark", "eyebrow": "סדנת המשך · הנהלת חלאסרטן",
           "title": "להפוך את Claude\n*לשותף עבודה* שמכיר אתכם",
           "subtitle": "מצ'אט שמתחיל כל פעם מאפס, לסביבת עבודה עם זיכרון, פרויקטים משותפים וסקילים.",
-          "notes": "ברוכים הבאים לסדנת ההמשך של הנהלת חלאסרטן! במפגש הקודם טעמנו מהעולם של AI, והיום אנחנו עולים קומה.\n\nנתחיל מלהבין איך המודל קורא טוקנים ופרומפטים, ונראה איך מתוך ההבנה הזו בונים לקלוד זיכרון קבוע, פרויקטים משותפים וסקילים שחוסכים שעות של עבודה.\n\n12 כלים מעשיים ליישום מיידי."})
-
-# ---- foundations
-S.append({"type": "raw", "html": tokens_slide(),
-          "notes": "כמו שלמדנו במפגש 2: מודל שפה מנבא את הטוקן הבא על סמך הטוקנים שכבר נמצאים בחלון ההקשר שלו.\n\nטוקן הוא אבן הבניין הקטנה ביותר שהמודל מעבד: מילה שלמה, הברה או חלק ממילה. באנגלית מילה היא לרוב טוקן אחד; בעברית כל מילה מתפרקת ל-2 עד 4 טוקנים.\n\nכל טוקן שנכנס (בקשה ומסמכים) וכל טוקן שיוצא (תשובת המודל) נספרים במכסת השיחה."})
+          "notes": "ברוכים הבאים לסדנת ההמשך של הנהלת חלאסרטן! במפגש הקודם טעמנו מהעולם של AI, והיום אנחנו עולים קומה.\n\nנתחיל מלהבין איך המודל קורא טוקנים ופרומפטים, ונראה איך מתוך ההבנה הזו בונים לקלוד זיכרון קבוע, פרויקטים משותפים וסקילים שחוסכים שעות של עבודה."})
+S.append({"type": "raw", "html": agenda_slide(),
+          "notes": "סדר היום בקצרה. חלוקת זמנים מוצעת לשעתיים:\n\nאיך Claude חושב + ראיון הפוך: 30 דקות.\nאיפה עובדים + משימה ל-Cowork: 20 דקות.\nסדר וצוות: 10 דקות.\nיכולות + סקיל מצגות: 35 דקות.\nשולחן עגול: 20 דקות.\n\nלהדגיש: ארבעה תרגולים, לא הרצאה."})
+S.append({"type": "raw", "html": tokens_slide2(),
+          "notes": "כמו שלמדנו במפגש 2: מודל שפה מנבא את הטוקן הבא על סמך הטוקנים שכבר נמצאים בחלון ההקשר שלו.\n\nטוקן הוא אבן הבניין הקטנה ביותר: מילה, הברה או חלק ממילה. בעברית כל מילה מתפרקת ל-2 עד 4 טוקנים.\n\nהצד השמאלי: Claude לא 'יודע' את התשובה, הוא מנחש את ההמשך הכי סביר. לכן כל מילה בפרומפט משנה לאן הניחוש הולך."})
 S.append({"type": "compare", "eyebrow": "חלון ההקשר", "title": "חלון ההקשר הוא *שולחן העבודה* של Claude",
           "subtitle": "כמות הטוקנים ש-Claude רואה וזוכר בשיחה אחת, בבת אחת.",
           "left": {"label": "שולחן עמוס", "title": "אובדן פוקוס", "items": ["5 נושאים באותה שיחה ארוכה", "הטוקנים מתבזבזים", "איכות התשובה צונחת"]},
           "right": {"label": "שולחן נקי", "title": "תשובה חדה", "items": ["רק ההקשר של המשימה", "Claude ממוקד במה שחשוב", "*צ'אט חדש לכל משימה*"]},
           "takeaway": "כלל ברזל: משימה חדשה? *פותחים צ'אט חדש ונקי*.",
-          "notes": "חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל לראות ולזכור בשיחה אחת, כמו שולחן עבודה.\n\nשולחן נקי = תשובה חדה. שולחן עמוס = אובדן פוקוס.\n\nמעבר לשקף הבא: אז איך מכוונים את חיזוי הטוקנים בדיוק למה שאנחנו צריכים? כאן נכנס מבנה הפרומפט."})
+          "notes": "חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל לראות ולזכור בשיחה אחת, כמו שולחן עבודה.\n\nמעבר לשקף הבא: אז איך מכוונים את הניחוש בדיוק למה שאנחנו צריכים? מבנה הפרומפט."})
 S.append({"type": "table", "eyebrow": "הנדסת פרומפטים", "title": "5 מרכיבים של פרומפט טוב. *3 מהם קבועים*",
           "columns": ["מרכיב", "השאלה", "בכל שיחה"],
-          "rows": [["1. תפקיד (Role)", "מי אתם ומה המומחיות?", "*קבוע*"],
-                   ["2. הקשר (Context)", "חלאסרטן וקהל היעד", "*קבוע*"],
-                   ["3. הוראה (Instruction)", "מה המשימה היום?", "משתנה"],
-                   ["4. נתוני קלט (Input)", "המסמך או הנתונים", "משתנה"],
+          "rows": [["1. תפקיד (Role)", "מי אתם ומה המומחיות?", "*קבוע*"], ["2. הקשר (Context)", "חלאסרטן וקהל היעד", "*קבוע*"],
+                   ["3. הוראה (Instruction)", "מה המשימה היום?", "משתנה"], ["4. נתוני קלט (Input)", "המסמך או הנתונים", "משתנה"],
                    ["5. פורמט וטון (Output)", "בגובה העיניים, מבנה מועדף", "*קבוע*"]],
-          "highlight": 2,
-          "takeaway": "את הקבועים כותבים *פעם אחת*, ב-Global Instructions.",
-          "notes": "פרומפט הוא ההוראה שמכוונת את המודל. כשבונים אותו מ-5 מרכיבים ברורים מקבלים תוצאה מעולה.\n\nאבל שימו לב: סעיפים 1 (התפקיד), 2 (ההקשר של חלאסרטן) ו-5 (סגנון הכתיבה) קבועים אצלכם."})
-S.append({"type": "compare", "eyebrow": "למה הניסוח משנה הכל", "title": "אותה בקשה, *שתי תוצאות*",
-          "left": {"label": "פרומפט עמום", "title": "\"תכתוב לי פוסט לקהילה על מפגש זכויות חדש.\"", "items": ["טקסט גנרי ורשמי", "מנותק מהשפה של חלאסרטן"]},
-          "right": {"label": "פרומפט מלא", "title": "תפקיד + הקשר + טון + המשימה", "items": ["\"אני מנהל/ת הקהילה בחלאסרטן…\"", "\"כתוב בגובה העיניים, בלי קלישאות\"", "*מדויק בול*, אבל מתיש להקליד כל פעם"]},
-          "takeaway": "למה להקליד את ההקדמה בכל פעם מחדש? *שומרים אותה פעם אחת*.",
-          "notes": "הפרומפט המלא: \"אני מנהל/ת הקהילה בחלאסרטן (צעירים חולי סרטן 18-44). כתוב בעברית ישירה ובגובה העיניים בלי קלישאות. נסח פוסט שמזמין למפגש מיצוי זכויות ביטוח לאומי ביום ג', עם 3 סיבות למה שווה להגיע.\"\n\nזה הגשר בין הנדסת פרומפטים (ממפגש 2) לבין עבודה חכמה בקלוד: 3 מתוך 5 הרכיבים קבועים לתפקיד שלהם. בשקף הבא נראה איך מקבעים אותם ב-Global Instructions."})
-
-# ---- global instructions
+          "highlight": 2, "takeaway": "את הקבועים כותבים *פעם אחת*, ב-Instructions for Claude.",
+          "notes": "פרומפט הוא ההוראה שמכוונת את המודל. כשבונים אותו מ-5 מרכיבים ברורים מקבלים תוצאה מעולה.\n\nשימו לב: סעיפים 1 (התפקיד), 2 (ההקשר של חלאסרטן) ו-5 (סגנון הכתיבה) קבועים אצלכם."})
+S.append({"type": "raw", "html": badgood_slide(),
+          "notes": "זה הגשר בין הנדסת פרומפטים לבין עבודה חכמה בקלוד: 3 מתוך 5 הרכיבים קבועים לתפקיד שלהם (החלק המודגש). במקום להקליד אותם כל פעם, מקבעים אותם ב-Instructions for Claude."})
 S.append({"type": "raw", "html": roles_slide(),
-          "notes": "לעבור על שלוש העמודות (ניהול קהילה, גיוס משאבים, מנכ\"לות וכספים) כדי שהמשתתפים יראו איך 3 המרכיבים הקבועים (Role + Context + Output) מתורגמים ל-Global Instructions.\n\nמה זה נותן: שומר על השפה הישירה והלא-מתנשאת בלי לבקש בכל פרומפט; גיוס: מצמיד מקור לכל נתון מספרי; כספים: פותח כל ניתוח בשורה התחתונה ומציג טבלאות.\n\nכפתור ההעתקה מעתיק את הבלוק של כל תפקיד. רוצים כזה שמותאם בול אליכם? השקף הבא."})
-S.append({"type": "steps", "eyebrow": "תרגול: הראיון ההפוך", "title": "נותנים ל-Claude *לראיין אתכם*",
-          "steps": [{"title": "מדביקים את פרומפט הראיון", "text": "בשקף הבא, עם כפתור העתקה."},
-                    {"title": "עונים על 10 שאלות", "text": "תפקיד, קהל יעד, סגנון כתיבה, ומה אתם שונאים בתשובות AI."},
-                    {"title": "שומרים את הסיכום", "text": "מדביקים ב-Settings → Profile → Instructions."}],
-          "takeaway": "5 דקות של ראיון חוסכות *שעות של הסברים חוזרים*.",
-          "notes": "במקום לשבור את הראש מול דף לבן, מבקשים מקלוד לשאול אתכם 10 שאלות ולהרכיב עבורכם את ההנחיות הקבועות.\n\nמעכשיו בכל צ'אט חדש קלוד כבר ידבר בדיוק בשפה שלכם."})
-S.append({"type": "raw", "html": prompt_slide("תרגול: הראיון ההפוך", f'הפרומפט: {acc("העתיקו והדביקו")}', None,
-                                              "פרומפט הראיון ההפוך", REVERSE, f'בסוף הראיון: מדביקים את הסיכום ב-<span class="hi" dir="ltr">Settings → Profile</span>', 40),
-          "notes": "אחרי שהם ראו בשקף הקודם איך נראה תוצר מוגמר של Global Instructions, עכשיו כל אחד לוחץ על כפתור ההעתקה, מדביק בקלוד ועונה על 10 השאלות כדי לקבל בלוק מותאם אישית לתפקיד שלו."})
-
-# ---- environments
-S.append({"type": "cards", "eyebrow": "שלוש סביבות עבודה", "title": "יועץ, עובד או בונה: *Chat, Cowork, Code*", "subtitle": "מתי צריך שיחה, מתי צריך שיבצעו בשבילכם, ומתי צריך כלי חדש.",
-          "cards": [{"title": "Chat · היועץ", "text": "סיעור מוחות, חידוד מסרים, ניסוח מכתבים לתורמים והתייעצות מהירה."},
-                    {"title": "Cowork · העובד", "text": "עובד על התיקיות שלכם, מתכנן ומבצע משימה שלמה מתחילה ועד סוף."},
-                    {"title": "Code · הבונה", "text": "בונה כלים, דשבורדים, מצגות וסקילים שלמים, גם מבקשה בשפה פשוטה."}],
-          "takeaway": "ב-Chat הוא עונה. ב-Cowork וב-Code הוא *מחזיר קובץ מוכן*.",
-          "notes": "להדגיש את ההבדל בין Chat (שיחה) לבין Cowork (\"Claude Code בלי קוד\" לאנשי ניהול ותפעול) שבו פשוט מצביעים על תיקייה במחשב ונותנים לקלוד לעבוד.\n\nדוגמה ל-Cowork: \"עבור על כל הקבלות בתיקייה והפק טבלת סיכום\".\n\nבשקף הבא נראה איך בונים פרומפט מנצח ל-Cowork אחרי שכבר הגדרנו Global Instructions."})
+          "notes": "לעבור על שלוש העמודות (ניהול קהילה, גיוס משאבים, מנכ\"לות וכספים) ולהראות איך 3 המרכיבים הקבועים (Role + Context + Output) הופכים להנחיות קבועות.\n\nמה זה נותן: שומר על השפה הישירה והלא-מתנשאת; בגיוס: מצמיד מקור לכל נתון; בכספים: פותח בשורה התחתונה ומציג טבלאות.\n\nרוצים כזה שמותאם בול אליכם? השקף הבא."})
+S.append({"type": "raw", "html": interview_slide(),
+          "notes": "במקום לשבור את הראש מול דף לבן, מבקשים מקלוד לשאול אתכם 10 שאלות ולהרכיב עבורכם את ההנחיות הקבועות.\n\nכל אחד לוחץ על כפתור ההעתקה, מדביק בקלוד ועונה. מעכשיו בכל צ'אט חדש קלוד כבר ידבר בשפה שלכם."})
+S.append({"type": "raw", "html": icards_slide("שלוש סביבות עבודה", f'יועץ, עובד או בונה: {acc("Chat, Cowork, Code")}', None, [
+    icard("💬", "Chat · היועץ", "סיעור מוחות, חידוד מסרים, ניסוח מכתבים לתורמים והתייעצות מהירה.", 1, foot("מתי: צריכים תשובה או עריכה", 1)),
+    icard("🤝", "Cowork · העובד", "עובד על התיקיות שלכם, מתכנן ומבצע משימה שלמה מתחילה ועד סוף.", 3, foot("מתי: משימה רב-שלבית על קבצים", 3)),
+    icard("⚡", "Code · הבונה", "בונה כלים, דשבורדים, מצגות וסקילים, גם מבקשה בשפה פשוטה.", 5, foot("מתי: רוצים כלי חדש", 5))],
+    'ב-Chat הוא עונה. ב-Cowork וב-Code הוא <span class="hi">מחזיר קובץ מוכן</span>.'),
+          "notes": "להדגיש את ההבדל בין Chat (שיחה) לבין Cowork (\"Claude Code בלי קוד\" לאנשי ניהול ותפעול) שבו מצביעים על תיקייה במחשב ונותנים לקלוד לעבוד.\n\nדוגמה ל-Cowork: \"עבור על כל הקבלות בתיקייה והפק טבלת סיכום\"."})
 S.append({"type": "raw", "html": cowork_slide(),
-          "notes": "שימו לב לחיבור: מכיוון שהתפקיד והרקע של חלאסרטן כבר שמורים ב-Global Instructions, ב-Cowork צריך להגדיר רק 3 מרכיבים משתנים: התוצר (Deliverable), חומרי הגלם (Inputs) והדגש הספציפי למשימה (Nuance).\n\nללחוץ על אפשרויות שונות ולהראות איך הפרומפט משתנה בלייב. כפתור ההעתקה מעתיק את הפרומפט המורכב."})
+          "notes": "התפקיד והרקע כבר שמורים ב-Instructions, אז ב-Cowork מגדירים רק 3 מרכיבים: התוצר, חומרי הגלם והדגש.\n\nללחוץ על אפשרויות שונות ולהראות איך הפרומפט משתנה. כפתור ההעתקה מעתיק את הפרומפט המורכב."})
 S.append({"type": "table", "eyebrow": "בחירת המודל", "title": "Haiku, Sonnet או Opus: *מודל לפי משימה*",
           "columns": ["מודל", "האופי", "מתי להשתמש", "מהירות ומכסה"],
-          "rows": [["Haiku", "הסורק המהיר", "סיכום פרוטוקולים, חילוץ נתונים", "מיידי · הכי חסכוני"],
-                   ["*Sonnet*", "*סוס העבודה*", "*ניוזלטרים, דוחות, מצגות*", "*ברירת מחדל ל-80%*"],
-                   ["Opus", "האסטרטג", "תוכנית שנתית, דילמות רגישות", "איטי · מכסה גבוהה"]],
-          "takeaway": "מסמך ארוך? *Haiku קורא אותו* בלי לשרוף את המכסה.",
-          "notes": "כאן הכל מתחבר למה שלמדנו על טוקנים: מסמכים ארוכים שורפים המון טוקנים. אם נסרוק אותם עם Opus המכסה תיגמר מהר מאוד. Haiku קורא מסמכים במהירות שיא ובמינימום עלות.\n\nהתאמת המודל לסוג המשימה חוסכת זמן, מונעת הגבלות מכסה ומדייקת את התוצאה."})
-
-# ---- context & memory
-S.append({"type": "compare", "eyebrow": "סדר וארגון", "title": "כל פרויקט מקבל *תיקייה משלו*",
-          "left": {"label": "איך רוב האנשים עובדים", "title": "תיקיית הורדות כאוטית", "items": ["final_v2_new(1).docx על שולחן העבודה", "Claude סורק קבצים לא קשורים", "אף אחד לא זוכר איפה התוצר"]},
-          "right": {"label": "הרגל מנצח", "title": "2026-11-Annual-Donors-Event", "items": ["01-Raw-Materials: מסמכי מקור", "02-Outputs: מצגות ודוחות", "CLAUDE.md: הנחיות הפרויקט"]},
-          "takeaway": "לפני משימה חדשה ב-Claude, *פותחים לה תיקייה עם שם ברור*.",
-          "notes": "כשעובדים עם סוכני AI, סדר בתיקיות הוא לא עניין טכני. הוא המפתח לכך שנדע איפה כל דבר נשמר.\n\nהמבנה: Halasartan-Projects / 2026-11-Annual-Donors-Event / 01-Raw-Materials, 02-Outputs, CLAUDE.md.\n\nלהראות איך המבנה הפשוט הזה מונע את הבלגן של \"איפה הקובץ שקלוד יצר לי בשבוע שעבר?\" ומאפשר ל-Cowork לעבוד רק בתוך התיקייה של אותו פרויקט."})
-S.append({"type": "cards", "eyebrow": "הזיכרון הארגוני", "title": "Obsidian: *זיכרון אמיתי* על הידע שלנו", "subtitle": "הדבר הכי חשוב בעבודה עם AI הוא ההקשר.",
-          "cards": [{"title": "מה זה?", "text": "מחברת שמחזיקה סיכומים, פרויקטים ונהלים כקבצי טקסט פשוטים במחשב."},
-                    {"title": "איך מחברים?", "text": "זו פשוט תיקייה, אז Claude ניגש אליה דרך Cowork או Connector."},
-                    {"title": "שואלים בשפה טבעית", "text": "\"מה החלטנו ברבעון האחרון על תוכנית המנטורינג?\""}],
-          "takeaway": "המודל הוא המנוע. *ההקשר ב-Obsidian הוא הדלק*.",
-          "notes": "הדבר הכי חשוב בכל עבודה עם AI הוא ה-Context: היכולת לתשאל את הידע שלנו בלי להזין אותו כל פעם מחדש.\n\nקבצי Obsidian מקושרים זה לזה כמו מוח שני. ברגע שהמידע יושב שם בצורה מסודרת, קלוד מכיר את הדאטה שלנו ואפשר לייצר ממנה תובנות בשניות."})
+          "rows": [["⚡ Haiku", "הסורק המהיר", "קריאת מסמכים, סיכום פרוטוקולים", "מיידי · הכי חסכוני"],
+                   ["*🎯 Sonnet*", "*סוס העבודה*", "*ניוזלטרים, דוחות, מצגות*", "*ברירת מחדל ל-80%*"],
+                   ["🧠 Opus", "האסטרטג", "תוכנית שנתית, דילמות רגישות", "איטי · מכסה גבוהה"]],
+          "takeaway": "רוצים ש-Claude יקרא מסמכים? *עדיף Haiku*.",
+          "notes": "הכל מתחבר לטוקנים: מסמכים ארוכים שורפים המון טוקנים. עם Opus המכסה תיגמר מהר. Haiku קורא מסמכים מהר ובמינימום עלות.\n\nBest practice: Haiku לקריאה וסריקה, Sonnet לכתיבה ויצירה, Opus לחשיבה אסטרטגית."})
+S.append({"type": "raw", "html": folders_slide(),
+          "notes": "כשעובדים עם סוכני AI, סדר בתיקיות הוא לא עניין טכני. הוא המפתח לכך שנדע איפה כל דבר נשמר ואיך חוזרים אליו.\n\nהמבנה הזה מונע את \"איפה הקובץ שקלוד יצר לי בשבוע שעבר?\" ומאפשר ל-Cowork לעבוד רק בתוך התיקייה של הפרויקט."})
 S.append({"type": "steps", "eyebrow": "עבודת צוות", "title": "Projects: *סביבת עבודה משותפת* לכל תחום",
           "steps": [{"title": "פותחים Project ומגדירים מטרה", "text": "למשל \"גיוס שותפויות וקרנות\", עם הנחיות רק לפרויקט הזה."},
                     {"title": "מעלים מסמכי ליבה", "text": "דפי עמדה, נתוני אימפקט ובקשות מענקים מוצלחות מהעבר."},
-                    {"title": "משתפים עם הצוות", "text": "כל מי שנכנס נהנה מאותו זיכרון ומאותן הנחיות."}],
+                    {"title": "משתפים עם הצוות", "text": "Share, וכל מי שנכנס נהנה מאותו זיכרון ומאותן הנחיות."}],
           "takeaway": "שפה ארגונית אחידה, *וחפיפה קצרה בהרבה*.",
-          "notes": "להראות בלייב בממשק של קלוד איך לוחצים על Projects, מוסיפים קובץ ל-Project Knowledge ולוחצים על Share כדי שכל ההנהלה תעבוד על אותה תשתית ידע."})
-
-# ---- skills (folded in from the skills mini-deck)
-S.append({"type": "section", "eyebrow": "אוטומציה של מומחיות", "title": "איך בונים\n*סקיל טוב*", "subtitle": "הסיפור מאחורי כלי אחד שבניתי, ומה אפשר ללמוד ממנו.",
-          "notes": "פתיחת החלק על סקילים. לא נדבר על קוד.\n\nהמטרה: שכל אחד ייצא עם הבנה מה זה סקיל, ואיך מתחילים לכתוב אחד בעצמו."})
-S.append({"type": "image", "eyebrow": "מה זה בכלל?", "title": "סקיל = נוהל עבודה ל-Claude",
-          "subtitle": "כמו מסמך קליטה לעובד חדש, או מתכון קבוע של שף.",
+          "notes": "להראות בלייב: Projects → New, Project Knowledge, ואז Share כדי שכל ההנהלה תעבוד על אותה תשתית ידע.\n\nאם עולה שאלה על זיכרון ארוך טווח: Obsidian היא תיקייה של קבצי טקסט שאפשר לחבר ל-Cowork כמוח שני של הארגון."})
+S.append({"type": "image", "eyebrow": "סקילים", "title": "סקיל = *מתכון של שף* ל-Claude",
+          "subtitle": "בלי סקיל מסבירים כל פעם מחדש. עם סקיל, Claude מקבל יכולת קבועה.",
           "src": "assets/onboarding-binder.jpg", "alt": "איור: אדם מגיש לעוזר דיגיטלי קלסר נהלים מסודר עם רשימת בדיקה",
-          "points": ["*מסביר איך עובדים*: מה לשאול, אילו צעדים, ומה נחשב תוצאה טובה.", "*נטען רק כשצריך*, כמו קלסר שנשלף מהמדף.", "*ניתן לשיתוף*: כותבים פעם אחת, וכל הצוות מקבל אותה איכות."],
-          "takeaway": "סקיל הוא *ידע שנכתב פעם אחת* ונעשה בו שימוש שוב ושוב.",
-          "notes": "דימוי מרכזי: עובד חדש ומוכשר שעוד לא מכיר את הארגון. סקיל הוא המסמך שאתם נותנים לו ביום הראשון. או: מתכון שף. קובץ SKILL.md אורז את כל שלבי העבודה, העיצוב ובדיקות האיכות, וקלוד שולף אותו לבד כשהמשימה מתאימה.\n\nלשאול את הקהל: איזה נוהל הייתם רוצים שעובד חדש יכיר מהיום הראשון?"})
-S.append({"type": "image", "eyebrow": "מאיפה זה התחיל", "title": "בעיה אמיתית, לא רעיון טכנולוגי",
-          "src": "assets/one-hour-left.jpg", "alt": "איור: אדם מול מחשב נייד עם מצגת לא גמורה, ושעון קיר שמראה שנשארה שעה",
-          "points": ["הייתי צריך מצגות מעוצבות, מהר, ובעברית.", "כלי העיצוב דרשו קרדיטים, והעברית בעורכי המצגות התהפכה.", "*הסברתי ל-Claude את אותם דברים* בכל פעם מחדש."],
-          "takeaway": "הסימן הכי טוב לסקיל: *משימה שחוזרת על עצמה*.",
-          "notes": "הנקודה החשובה היא השלישית: כשאתם מוצאים את עצמכם מסבירים שוב ושוב את אותו הדבר, זה סקיל שמחכה להיכתב.\n\nלהזמין דוגמאות מהקהל: דוחות חודשיים, מכתבי תודה לתורמים, סיכומי ישיבות."})
-S.append({"type": "steps", "eyebrow": "האנטומיה", "title": "ארבעה דברים שכל סקיל טוב כולל",
-          "steps": [{"title": "מתי להפעיל", "text": "משפט שמתאר באילו בקשות הסקיל רלוונטי."},
-                    {"title": "מה לשאול לפני שמתחילים", "text": "אצלי: מי הקהל, כמה שקופיות, ושם המציג."},
-                    {"title": "איך לעבוד", "text": "הצעדים, הסגנון, והדוגמאות למה שנחשב טוב."},
-                    {"title": "איך לבדוק את עצמו", "text": "רשימת בדיקה שהתוצאה עוברת לפני שהיא מגיעה אליכם."}],
-          "notes": "אפשר לעבור על כל שלב עם הדוגמה של המצגות.\n\nלהדגיש את שלב 2: Claude שואל במקום לנחש. זה ההבדל הכי מורגש למשתמש."})
-S.append({"type": "compare", "eyebrow": "מה למדתי בדרך", "title": "מ\"עובד\" ל\"טוב\"",
-          "left": {"label": "הגרסה הראשונה", "title": "עבד, אבל רק אצלי", "items": ["מותאם לארגון אחד ולעיצוב אחד", "מנחש מה רוצים", "עושה הכל בבת אחת", "מקווה שיצא טוב"]},
-          "right": {"label": "הגרסה שפרסמתי", "title": "עובד לכל אחד", "items": ["צבעים, לוגו ושפה ניתנים לשינוי", "שואל לפני שמתחיל", "מחלק את העבודה לשלבים", "*בודק את עצמו* ומתקן"]},
-          "takeaway": "כל ניסוי על תוכן אמיתי חשף בעיה, ו*כל בעיה הפכה לשיפור*.",
-          "notes": "לספר על הניסויים: לוגו עם רקע שחור, צילום מסך של טלפון שנמתח, עברית שהתהפכה ליד מילה באנגלית. כל אחד מהם הפך לכלל בנוהל.\n\nהמסר: לא צריך לכתוב סקיל מושלם בפעם הראשונה. המצגת הזו עצמה נבנתה עם הסקיל."})
-S.append({"type": "cards", "eyebrow": "לא להמציא את הגלגל", "title": "לפני שבונים, *מחפשים*", "subtitle": "מישהו אולי כבר בנה את הסקיל שאתם צריכים.",
-          "cards": [{"title": "דוגמה מהשטח", "text": "סקיל שאוסף משימות מאקסלים, פתקים ומיילים ובונה דשבורד ניהולי."},
-                    {"title": "Find Skills", "text": "סקיל של Vercel שמחפש בין אלפי סקילים שמישהו כבר בנה ובדק."},
-                    {"title": "מתי לבנות לבד", "text": "כשאין סקיל מתאים, והמשימה חוזרת יותר מפעמיים בחודש."}],
+          "points": ["*המרכיבים*: מה Claude מקבל, ובאיזה סגנון לכתוב.", "*שלבי ההכנה*: מה עושים, ובאיזה סדר.", "*איך נראית מנה מוצלחת*: בדיקה לפני שמגישים."],
           "takeaway": "כל פעולה שחוזרת *יותר מפעמיים בחודש* ראויה לסקיל.",
-          "notes": "להציג את הסקיל לבניית דשבורד ניהול משימות מכל סוגי הדאטאות, להראות איך מתקינים סקיל בתיקייה או בממשק, ולהדגים את find-skills.\n\nפקודת ההתקנה (להעתקה מהמסך שלי, לא לשקף):\nnpx skills add vercel-labs/skills --skill find-skills"})
-S.append({"type": "bullets", "eyebrow": "תרגול משותף", "title": "בונים יחד: *סקיל מצגות* של חלאסרטן",
-          "items": ["מנקודות גולמיות או מסמך, למצגת הנהלה מוכנה.", "הלוגו וצבעי העמותה, בעברית מלאה.", "Ctrl+P הופך אותה ל-PDF לשליחה לתורמים ולשותפים."],
-          "takeaway": "מקבלים *מצגת חיה למסך* וגם *PDF לוואטסאפ*.",
-          "notes": "להדגים איך בונים את הסקיל עם הלוגו של חלאסרטן על בסיס html-presentation, ואז להראות איך הדפסה בדפדפן הופכת את ה-HTML ל-PDF.\n\nבונוס אם נשאר זמן: 3 דקות של Claude Design / Artifacts לתכנון ויזואלי."})
-S.append({"type": "raw", "html": prompt_slide("תרגול משותף", f'הפרומפט ליצירת {acc("הסקיל")}', None,
-                                              "פרומפט: סקיל המצגות של חלאסרטן", SKILL_PROMPT, f'אחרי שנבנה: מבקשים ממנו מצגת, ו-<span dir="ltr">Ctrl+P</span> הופך אותה ל-<span class="hi">PDF נקי</span>.', 36),
-          "notes": "כל אחד מעתיק את הפרומפט, מדביק בקלוד ובונים יחד את הסקיל. אחרי שנבנה: לבקש ממנו מצגת קצרה על נושא מהעבודה, ולראות את התוצאה."})
-
-# ---- connect & act
-S.append({"type": "cards", "eyebrow": "חיבורים, אבטחה ופלאגינים", "title": "לחבר את Claude *בצורה אחראית*", "subtitle": "גישה למערכות העבודה, עם בקרה שלנו.",
-          "cards": [{"title": "Connectors", "text": "Drive, Gmail, יומן, Slack או Notion. Claude שולף את המסמך העדכני בעצמו."},
-                    {"title": "אבטחת מידע", "text": "בלי פרטים מזהים של חברי קהילה. מחברים רק תיקיות רלוונטיות."},
-                    {"title": "Superpowers (רשות)", "text": "פלאגין שגורם ל-Claude לחשוב ולתכנן לפני שהוא מבצע."}],
-          "takeaway": "אנחנו תמיד *הטייס שמאשר* לפני שליחה או שינוי של מידע ארגוני.",
-          "notes": "להראות איפה בתפריט מחברים Connectors (כמו Google Drive).\n\nלהדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן: מידע רפואי/אישי רגיש לא עולה בלי אנונימיזציה; הרשאות מינימליות; פעולות רגישות מאשרים ידנית.\n\nאם הקהל סקרן: 2 דקות על Superpowers (סיעור מוחות → תוכנית → ביצוע ובדיקה עצמית)."})
-S.append({"type": "cards", "eyebrow": "סוכן בתוך הדפדפן", "title": "Claude in Chrome: *Claude בא אל האתר*", "subtitle": "תוסף שרואה את הכרטיסייה הפתוחה ופועל בה.",
-          "cards": [{"title": "התקנה ב-30 שניות", "text": "תוסף רשמי מחנות Chrome, נצמד לסרגל ונפתח בחלונית צד."},
-                    {"title": "מה זה נותן", "text": "סיכום עמודים ארוכים, איסוף נתונים מפורטלים, מילוי טפסים חוזרים."},
-                    {"title": "עבודה בטוחה", "text": "רואים כל צעד שהוא מתכנן, ומאשרים לפני פעולות חשובות."}],
-          "takeaway": "במקום להעתיק מאתרים ל-Claude, *מביאים את Claude לאתר*.",
-          "notes": "להדגים פתיחה של תוסף הכרום על עמוד אינטרנט אמיתי ולהראות איך קלוד קורא את המסך ומבצע פעולה שחוסכת עבודה ידנית.\n\nלהזכיר את מצב ההרשאות (Permissions Mode)."})
-S.append({"type": "compare", "eyebrow": "שולחן עגול", "title": "מפצחים יחד *משימה אמיתית* שלכם",
-          "left": {"label": "דוגמאות מהעמותה", "title": "שילובים של מה שלמדנו", "items": ["גיוס: Project + Obsidian + סקיל מצגות", "זכויות: Haiku סורק עדכונים ומנגיש אותם", "ישיבות: Cowork + דשבורד משימות"]},
-          "right": {"label": "תבנית פיצוח", "title": "ארבע שאלות", "items": ["מה גוזל לכם הכי הרבה זמן השבוע?", "איזה הקשר Claude צריך?", "איזה מודל וכלי?", "כדאי לארוז את זה לסקיל?"]},
-          "takeaway": "כל אחד יוצא עם *תהליך אחד שכבר עובד* השבוע.",
-          "notes": "החלק האינטראקטיבי המרכזי של סוף המפגש: עוברים משתתף-משתתף, שומעים את ה-Use Case, וממפים אותו יחד על המסך: תיקייה, מודל, קונטקסט וסקיל.\n\nתזכורת לכלים: Haiku לקריאה, Sonnet ליצירה, Cowork לביצוע; הקשר מתיקייה, Obsidian או Project."})
+          "notes": "מתכון שף: קובץ SKILL.md אורז את כל שלבי העבודה, הסגנון ובדיקות האיכות. כשמבקשים משימה מוכרת, Claude שולף את המתכון לבד ומבצע ברמה של שף.\n\nאת הסיפור המלא (איך בניתי סקיל ומה למדתי) נותנים בנפרד: skills-example.html."})
+S.append({"type": "image", "eyebrow": "סקיל שבניתי", "title": "מכל המקורות, *לוח משימות אחד*",
+          "src": "assets/skill_morning_board.png", "alt": "צילום מסך: לוח משימות יומי עם עמודות לביצוע, בתהליך והושלם, שנבנה ממיילים, יומן וכלי משימות",
+          "points": ["מבקשים במשפט אחד: *״תתחיל את היום שלי״*.", "קורא מיילים, יומן, אקסלים ופתקים.", "ממיין לפי דחיפות ובונה דשבורד אחד."],
+          "takeaway": "משפט אחד, ותוצאה מלאה, *כי המתכון כבר כתוב*.",
+          "notes": "לספר מאיפה זה בא: צורך לנהל משימות טוב יותר מכל סוגי הדאטות. להראות את הסקיל רץ בלייב.\n\nהנתונים בצילום הם דוגמה."})
+S.append({"type": "raw", "html": icards_slide("לא להמציא את הגלגל", f'מתקינים סקיל, או {acc("מוצאים מוכן")}', None, [
+    icard("📦", "איך מתקינים", "מעלים את קובץ הסקיל בהגדרות של Claude, או שמים אותו בתיקיית הסקילים של הפרויקט.", 1),
+    icard("🔎", "Find Skills", "הסקיל של Vercel מחפש בשבילכם בין אלפי סקילים שמישהו כבר בנה ובדק.", 3, foot("לפני שבונים, מחפשים", 3)),
+    icard("✨", "מתי לבנות לבד", "כשאין סקיל מתאים, והמשימה חוזרת על עצמה שוב ושוב.", 5)],
+    'לפני שבונים סקיל, <span class="hi">בודקים אם מישהו כבר בנה</span>.'),
+          "notes": "להראות איך מתקינים סקיל בממשק (הגדרות → Skills) ובתיקייה.\n\nלהדגים את find-skills. פקודת ההתקנה (מהמסך שלי, לא לשקף):\nnpx skills add vercel-labs/skills --skill find-skills"})
+S.append({"type": "raw", "html": handson_slide(),
+          "notes": "כל אחד מעתיק את הפרומפט, מדביק בקלוד ובונים יחד את הסקיל עם הלוגו של חלאסרטן. אחרי שנבנה: לבקש מצגת קצרה, ו-Ctrl+P ל-PDF.\n\nבונוס אם נשאר זמן: 3 דקות של Claude Design ואיך בונים שם סיסטם דיזיין.\n\nדוגמה מוכנה לתוצר: המצגת הזו, ו-skills-example.html."})
+S.append({"type": "raw", "html": icards_slide("קונקטורים ואבטחת מידע", f'לחבר את Claude {acc("בצורה אחראית")}', None, [
+    icard("🔌", "Connectors", "Drive, Gmail, יומן, Slack או Notion. Claude שולף את המסמך העדכני בעצמו.", 1, foot("מחברים בהגדרות → Connectors", 1)),
+    icard("🛡️", "מידע רגיש", "בלי פרטים מזהים של חברי קהילה. מידע רפואי עולה רק אחרי התממה.", 3),
+    icard("🔑", "הרשאות מינימליות", "מחברים רק תיקיות רלוונטיות, ופעולות רגישות מאשרים ידנית.", 5)],
+    'אנחנו תמיד <span class="hi">הטייס שמאשר</span> לפני שליחה או שינוי של מידע ארגוני.'),
+          "notes": "להראות איפה בתפריט מחברים Connectors (כמו Google Drive) ומה זה חוסך: לא מורידים ומעלים קבצים ידנית.\n\nלהדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן."})
+S.append({"type": "steps", "eyebrow": "פלאגינים · רשות", "title": "Superpowers: Claude *חושב לפני שהוא עושה*",
+          "steps": [{"title": "סיעור מוחות", "text": "שואל ומברר מה בדיוק צריך, במקום לקפוץ לביצוע."},
+                    {"title": "תוכנית", "text": "כותב תוכנית עבודה ומציג אותה לאישור."},
+                    {"title": "ביצוע ובדיקה", "text": "מבצע לפי התוכנית ובודק את עצמו בסוף."}],
+          "takeaway": "פלאגין = *חבילה של סקילים וכלים* שמתקינים בבת אחת.",
+          "notes": "אופציונלי, רק אם הקהל סקרן ויש זמן: 2 דקות להראות איך Superpowers גורם לקלוד לתכנן לפני ביצוע."})
+S.append({"type": "raw", "html": icards_slide("סוכן בתוך הדפדפן", f'Claude in Chrome: {acc("Claude בא אל האתר")}', None, [
+    icard("📥", "התקנה ב-30 שניות", "תוסף רשמי מחנות Chrome, נצמד לסרגל ונפתח בחלונית צד.", 1, foot("עובד על כל אתר פתוח", 1)),
+    icard("🪄", "מה זה נותן", "סיכום עמודים ארוכים, איסוף נתונים מפורטלים, מילוי טפסים חוזרים.", 3),
+    icard("🛡️", "עבודה בטוחה", "רואים כל צעד שהוא מתכנן, ומאשרים לפני פעולות חשובות.", 5, foot("אתם מאשרים, הוא מבצע", 5))],
+    'במקום להעתיק מאתרים ל-Claude, <span class="hi">מביאים את Claude לאתר</span>.'),
+          "notes": "להדגים פתיחה של התוסף על עמוד אמיתי ולהראות איך קלוד קורא את המסך ומבצע פעולה שחוסכת עבודה ידנית.\n\nלהזכיר את מצב ההרשאות."})
+S.append({"type": "raw", "html": usecases_slide(),
+          "notes": "החלק האינטראקטיבי המרכזי: עוברים משתתף-משתתף, שומעים את ה-Use Case, וממפים אותו יחד על המסך: תיקייה, מודל, הקשר וסקיל."})
 S.append({"type": "closing", "eyebrow": "צ'קליסט למחר בבוקר", "title": "5 צעדים קטנים, *לפי הסדר*",
           "points": [{"title": "הראיון ההפוך", "text": "מריצים את 10 השאלות ומעדכנים Instructions."},
                      {"title": "סדר בתיקיות", "text": "תיקייה ברורה לפרויקט המרכזי של השבוע."},
                      {"title": "Haiku למסמכים", "text": "Haiku לסריקה, Sonnet לכתיבה."},
-                     {"title": "Project + Obsidian", "text": "מאגר הקשר ארגוני, ו-Project משותף אחד."},
+                     {"title": "Project משותף", "text": "Project אחד עם הצוות, עם מסמכי הליבה."},
                      {"title": "סקיל ראשון", "text": "סקיל המצגות, ונסיון עם תוסף Chrome."}],
-          "note": "Claude · Cowork · Obsidian · Find Skills · Superpowers · Claude in Chrome · בהצלחה!",
-          "notes": "סיכום אנרגטי! אל תנסו ליישם הכל ביום אחד, מתחילים מחמשת הצעדים לפי הסדר.\n\nלהזכיר שאפשר להדפיס את המצגת ל-PDF (Ctrl+P) כדי שהפרומפטים יישארו זמינים."})
+          "note": "Claude · Cowork · Find Skills · Superpowers · Claude in Chrome · בהצלחה!",
+          "notes": "אל תנסו ליישם הכל ביום אחד, מתחילים מחמשת הצעדים לפי הסדר.\n\nלהזכיר שאפשר להדפיס את המצגת ל-PDF (Ctrl+P) כדי שהפרומפטים יישארו זמינים."})
 
-DROP = {"איך בונים\n*סקיל טוב*", "בעיה אמיתית, לא רעיון טכנולוגי", "ארבעה דברים שכל סקיל טוב כולל", "מ\"עובד\" ל\"טוב\""}
-S = [x for x in S if x.get("title") not in DROP]
-for x in S:
-    if x.get("title") == "סקיל = נוהל עבודה ל-Claude":
-        x["notes"] += "\n\nאת הסיפור המלא (איך בניתי סקיל, מה כל סקיל טוב כולל, ומה למדתי בדרך) נותנים בנפרד: skills-example.html."
-    if x.get("type") == "bullets" and "סקיל מצגות" in x.get("title", ""):
-        x["notes"] += "\n\nדוגמה מוכנה לתוצר של סקיל כזה: המצגת הנפרדת skills-example.html, שנבנתה כולה עם סקיל המצגות."
 json.dump({"meta": meta, "slides": S}, open('meeting-5.json', 'w'), ensure_ascii=False, indent=1)
 print(len(S), 'slides')

@@ -39,12 +39,17 @@
    "eyebrow": "סדנת המשך · הנהלת חלאסרטן",
    "title": "להפוך את Claude\n*לשותף עבודה* שמכיר אתכם",
    "subtitle": "מצ'אט שמתחיל כל פעם מאפס, לסביבת עבודה עם זיכרון, פרויקטים משותפים וסקילים.",
-   "notes": "ברוכים הבאים לסדנת ההמשך של הנהלת חלאסרטן! במפגש הקודם טעמנו מהעולם של AI, והיום אנחנו עולים קומה.\n\nנתחיל מלהבין איך המודל קורא טוקנים ופרומפטים, ונראה איך מתוך ההבנה הזו בונים לקלוד זיכרון קבוע, פרויקטים משותפים וסקילים שחוסכים שעות של עבודה.\n\n12 כלים מעשיים ליישום מיידי."
+   "notes": "ברוכים הבאים לסדנת ההמשך של הנהלת חלאסרטן! במפגש הקודם טעמנו מהעולם של AI, והיום אנחנו עולים קומה.\n\nנתחיל מלהבין איך המודל קורא טוקנים ופרומפטים, ונראה איך מתוך ההבנה הזו בונים לקלוד זיכרון קבוע, פרויקטים משותפים וסקילים שחוסכים שעות של עבודה."
   },
   {
    "type": "raw",
-   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>מושגי יסוד</div><h1 class=\"title\">מודל שפה לא קורא מילים. הוא קורא <span class=\"spec\">טוקנים</span></h1><p class=\"sub\">בעברית כל מילה מתפרקת ל-2 עד 4 טוקנים, באנגלית בערך טוקן למילה.</p></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;padding:44px 64px;justify-content:space-evenly;\"><div class=\"fx col\" style=\"gap:22px;\"><span class=\"muted fw7\" style=\"font-size:28px;\">איך אנחנו קוראים: 4 מילים</span><div class=\"fx wrap\" style=\"gap:16px;\"><span class=\"chip\" style=\"font-size:44px;padding:16px 30px;background:#fff;color:var(--ink);border:2px solid var(--c4);\">חלאסרטן</span><span class=\"chip\" style=\"font-size:44px;padding:16px 30px;background:#fff;color:var(--ink);border:2px solid var(--c4);\">מחברת</span><span class=\"chip\" style=\"font-size:44px;padding:16px 30px;background:#fff;color:var(--ink);border:2px solid var(--c4);\">צעירים</span><span class=\"chip\" style=\"font-size:44px;padding:16px 30px;background:#fff;color:var(--ink);border:2px solid var(--c4);\">חולים</span></div></div><div class=\"fx col\" style=\"gap:22px;\"><span class=\"muted fw7\" style=\"font-size:28px;\">איך Claude קורא: 9 טוקנים</span><div class=\"fx wrap\" style=\"gap:16px;\"><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c1);color:#fff;\">חלא</span><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c2);color:#fff;\">סרט</span><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c3);color:#fff;\">ן</span><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c4);color:#fff;\">מחבר</span><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c5);color:#fff;\">ת</span><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c1);color:#fff;\">צעיר</span><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c2);color:#fff;\">ים</span><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c3);color:#fff;\">חול</span><span class=\"chip\" style=\"font-size:40px;padding:16px 26px;background:var(--c4);color:#fff;\">ים</span></div></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">כל טוקן שנכנס וכל טוקן שיוצא <span class=\"hi\">נספר במכסה</span> שלכם.</div>",
-   "notes": "כמו שלמדנו במפגש 2: מודל שפה מנבא את הטוקן הבא על סמך הטוקנים שכבר נמצאים בחלון ההקשר שלו.\n\nטוקן הוא אבן הבניין הקטנה ביותר שהמודל מעבד: מילה שלמה, הברה או חלק ממילה. באנגלית מילה היא לרוב טוקן אחד; בעברית כל מילה מתפרקת ל-2 עד 4 טוקנים.\n\nכל טוקן שנכנס (בקשה ומסמכים) וכל טוקן שיוצא (תשובת המודל) נספרים במכסת השיחה."
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>מה הולך לקרות היום</div><h1 class=\"title\">שעתיים, חמישה פרקים, <span class=\"spec\">ארבעה תרגולים</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:22px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:30px 30px;gap:16px;border-top:7px solid var(--c1);\"><div class=\"fx ac jb\"><span style=\"font-size:68px;line-height:1;\">🧠</span><span class=\"numchip\" style=\"background:var(--c1);\">1</span></div><span class=\"fw8\" style=\"font-size:38px;color:var(--ink);margin-top:14px;\">איך <span dir=\"ltr\">Claude</span> חושב</span><p class=\"muted fw5\" style=\"font-size:28px;line-height:1.4;margin:0;\">טוקנים, פרומפטים, ו-<span dir=\"ltr\">Instructions</span> שמכירים אתכם</p><span class=\"chip\" style=\"margin-top:auto;background:var(--bg-2);color:var(--c5);font-size:21px;\">תרגול: הראיון ההפוך</span></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:30px 30px;gap:16px;border-top:7px solid var(--c3);\"><div class=\"fx ac jb\"><span style=\"font-size:68px;line-height:1;\">🛠️</span><span class=\"numchip\" style=\"background:var(--c3);\">2</span></div><span class=\"fw8\" style=\"font-size:38px;color:var(--ink);margin-top:14px;\">איפה עובדים</span><p class=\"muted fw5\" style=\"font-size:28px;line-height:1.4;margin:0;\"><span dir=\"ltr\">Chat, Cowork, Code,</span> ואיזה מודל לבחור</p><span class=\"chip\" style=\"margin-top:auto;background:var(--bg-2);color:var(--c5);font-size:21px;\">תרגול: <span dir=\"ltr\">Cowork</span></span></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:30px 30px;gap:16px;border-top:7px solid var(--c5);\"><div class=\"fx ac jb\"><span style=\"font-size:68px;line-height:1;\">📁</span><span class=\"numchip\" style=\"background:var(--c5);\">3</span></div><span class=\"fw8\" style=\"font-size:38px;color:var(--ink);margin-top:14px;\">סדר וצוות</span><p class=\"muted fw5\" style=\"font-size:28px;line-height:1.4;margin:0;\">תיקייה לכל פרויקט, ו-<span dir=\"ltr\">Projects</span> משותפים</p></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:30px 30px;gap:16px;border-top:7px solid var(--c2);\"><div class=\"fx ac jb\"><span style=\"font-size:68px;line-height:1;\">⚡</span><span class=\"numchip\" style=\"background:var(--c2);\">4</span></div><span class=\"fw8\" style=\"font-size:38px;color:var(--ink);margin-top:14px;\">יכולות</span><p class=\"muted fw5\" style=\"font-size:28px;line-height:1.4;margin:0;\">סקילים, קונקטורים, פלאגינים ו-<span dir=\"ltr\">Chrome</span></p><span class=\"chip\" style=\"margin-top:auto;background:var(--bg-2);color:var(--c5);font-size:21px;\">תרגול: סקיל מצגות</span></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:30px 30px;gap:16px;border-top:7px solid var(--c1);\"><div class=\"fx ac jb\"><span style=\"font-size:68px;line-height:1;\">🎯</span><span class=\"numchip\" style=\"background:var(--c1);\">5</span></div><span class=\"fw8\" style=\"font-size:38px;color:var(--ink);margin-top:14px;\">השולחן שלכם</span><p class=\"muted fw5\" style=\"font-size:28px;line-height:1.4;margin:0;\">מפצחים יחד משימה אמיתית מהעבודה</p><span class=\"chip\" style=\"margin-top:auto;background:var(--bg-2);color:var(--c5);font-size:21px;\">תרגול: <span dir=\"ltr\">Use Cases</span></span></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">בסוף המפגש כל אחד יוצא עם <span class=\"hi\">תהליך אחד שכבר עובד</span>.</div>",
+   "notes": "סדר היום בקצרה. חלוקת זמנים מוצעת לשעתיים:\n\nאיך Claude חושב + ראיון הפוך: 30 דקות.\nאיפה עובדים + משימה ל-Cowork: 20 דקות.\nסדר וצוות: 10 דקות.\nיכולות + סקיל מצגות: 35 דקות.\nשולחן עגול: 20 דקות.\n\nלהדגיש: ארבעה תרגולים, לא הרצאה."
+  },
+  {
+   "type": "raw",
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>מושגי יסוד</div><h1 class=\"title\">Claude לא קורא מילים. הוא קורא <span class=\"spec\">טוקנים</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1.25;min-width:0;padding:34px 40px;gap:22px;border-top:7px solid var(--c1);\"><span class=\"fw8\" style=\"font-size:34px;color:var(--c1);\">🧩 איך Claude קורא</span><span class=\"muted fw7\" style=\"font-size:25px;\">אנחנו רואים 4 מילים:</span><div class=\"fx wrap\" style=\"gap:14px;\"><span class=\"chip\" style=\"font-size:36px;padding:14px 26px;background:#fff;color:var(--ink);border:2px solid var(--c4);\">חלאסרטן</span><span class=\"chip\" style=\"font-size:36px;padding:14px 26px;background:#fff;color:var(--ink);border:2px solid var(--c4);\">מחברת</span><span class=\"chip\" style=\"font-size:36px;padding:14px 26px;background:#fff;color:var(--ink);border:2px solid var(--c4);\">צעירים</span><span class=\"chip\" style=\"font-size:36px;padding:14px 26px;background:#fff;color:var(--ink);border:2px solid var(--c4);\">חולים</span></div><span class=\"muted fw7\" style=\"font-size:25px;\">Claude רואה 9 טוקנים:</span><div class=\"fx wrap\" style=\"gap:10px;padding:20px;border-radius:16px;background:var(--ink);\"><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c1);color:#fff;\">חלא</span><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c2);color:#fff;\">סרט</span><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c3);color:#fff;\">ן</span><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c4);color:#fff;\">מחבר</span><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c5);color:#fff;\">ת</span><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c1);color:#fff;\">צעיר</span><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c2);color:#fff;\">ים</span><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c3);color:#fff;\">חול</span><span class=\"chip\" style=\"font-size:30px;padding:10px 16px;background:var(--c4);color:#fff;\">ים</span></div></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:34px 40px;gap:22px;border-top:7px solid var(--c3);\"><span class=\"fw8\" style=\"font-size:34px;color:var(--c3);\">✍️ איך Claude כותב</span><p class=\"ink-t fw5\" style=\"font-size:27px;line-height:1.45;margin:0;\">מנחש את הטוקן הבא הכי סביר, מוסיף, וחוזר חלילה:</p><div style=\"background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 28px;font-size:30px;line-height:1.5;font-weight:500;\">״החתול ישב על ה___״</div><div class=\"fx col\" style=\"gap:16px;\"><div class=\"fx ac\" style=\"gap:18px;\"><span class=\"ink-t fw7\" style=\"font-size:28px;width:90px;\">שטיח</span><div style=\"flex:1;height:26px;border-radius:999px;background:var(--bg-2);\"><div style=\"width:61%;height:100%;border-radius:999px;background:var(--c1);\"></div></div><span class=\"fw8\" style=\"font-size:28px;color:var(--c1);width:70px;\">61%</span></div><div class=\"fx ac\" style=\"gap:18px;\"><span class=\"ink-t fw7\" style=\"font-size:28px;width:90px;\">ספה</span><div style=\"flex:1;height:26px;border-radius:999px;background:var(--bg-2);\"><div style=\"width:24%;height:100%;border-radius:999px;background:var(--c3);\"></div></div><span class=\"fw8\" style=\"font-size:28px;color:var(--c3);width:70px;\">24%</span></div><div class=\"fx ac\" style=\"gap:18px;\"><span class=\"ink-t fw7\" style=\"font-size:28px;width:90px;\">כיסא</span><div style=\"flex:1;height:26px;border-radius:999px;background:var(--bg-2);\"><div style=\"width:9%;height:100%;border-radius:999px;background:var(--c5);\"></div></div><span class=\"fw8\" style=\"font-size:28px;color:var(--c5);width:70px;\">9%</span></div></div><span class=\"muted\" style=\"font-size:21px;\">המספרים להמחשה בלבד</span></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">כל טוקן שנכנס וכל טוקן שיוצא <span class=\"hi\">נספר במכסה</span>, וכל מילה בפרומפט מכוונת את הניחוש.</div>",
+   "notes": "כמו שלמדנו במפגש 2: מודל שפה מנבא את הטוקן הבא על סמך הטוקנים שכבר נמצאים בחלון ההקשר שלו.\n\nטוקן הוא אבן הבניין הקטנה ביותר: מילה, הברה או חלק ממילה. בעברית כל מילה מתפרקת ל-2 עד 4 טוקנים.\n\nהצד השמאלי: Claude לא 'יודע' את התשובה, הוא מנחש את ההמשך הכי סביר. לכן כל מילה בפרומפט משנה לאן הניחוש הולך."
   },
   {
    "type": "compare",
@@ -70,7 +75,7 @@
     ]
    },
    "takeaway": "כלל ברזל: משימה חדשה? *פותחים צ'אט חדש ונקי*.",
-   "notes": "חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל לראות ולזכור בשיחה אחת, כמו שולחן עבודה.\n\nשולחן נקי = תשובה חדה. שולחן עמוס = אובדן פוקוס.\n\nמעבר לשקף הבא: אז איך מכוונים את חיזוי הטוקנים בדיוק למה שאנחנו צריכים? כאן נכנס מבנה הפרומפט."
+   "notes": "חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל לראות ולזכור בשיחה אחת, כמו שולחן עבודה.\n\nמעבר לשקף הבא: אז איך מכוונים את הניחוש בדיוק למה שאנחנו צריכים? מבנה הפרומפט."
   },
   {
    "type": "table",
@@ -109,90 +114,33 @@
     ]
    ],
    "highlight": 2,
-   "takeaway": "את הקבועים כותבים *פעם אחת*, ב-Global Instructions.",
-   "notes": "פרומפט הוא ההוראה שמכוונת את המודל. כשבונים אותו מ-5 מרכיבים ברורים מקבלים תוצאה מעולה.\n\nאבל שימו לב: סעיפים 1 (התפקיד), 2 (ההקשר של חלאסרטן) ו-5 (סגנון הכתיבה) קבועים אצלכם."
+   "takeaway": "את הקבועים כותבים *פעם אחת*, ב-Instructions for Claude.",
+   "notes": "פרומפט הוא ההוראה שמכוונת את המודל. כשבונים אותו מ-5 מרכיבים ברורים מקבלים תוצאה מעולה.\n\nשימו לב: סעיפים 1 (התפקיד), 2 (ההקשר של חלאסרטן) ו-5 (סגנון הכתיבה) קבועים אצלכם."
   },
   {
-   "type": "compare",
-   "eyebrow": "למה הניסוח משנה הכל",
-   "title": "אותה בקשה, *שתי תוצאות*",
-   "left": {
-    "label": "פרומפט עמום",
-    "title": "\"תכתוב לי פוסט לקהילה על מפגש זכויות חדש.\"",
-    "items": [
-     "טקסט גנרי ורשמי",
-     "מנותק מהשפה של חלאסרטן"
-    ]
-   },
-   "right": {
-    "label": "פרומפט מלא",
-    "title": "תפקיד + הקשר + טון + המשימה",
-    "items": [
-     "\"אני מנהל/ת הקהילה בחלאסרטן…\"",
-     "\"כתוב בגובה העיניים, בלי קלישאות\"",
-     "*מדויק בול*, אבל מתיש להקליד כל פעם"
-    ]
-   },
-   "takeaway": "למה להקליד את ההקדמה בכל פעם מחדש? *שומרים אותה פעם אחת*.",
-   "notes": "הפרומפט המלא: \"אני מנהל/ת הקהילה בחלאסרטן (צעירים חולי סרטן 18-44). כתוב בעברית ישירה ובגובה העיניים בלי קלישאות. נסח פוסט שמזמין למפגש מיצוי זכויות ביטוח לאומי ביום ג', עם 3 סיבות למה שווה להגיע.\"\n\nזה הגשר בין הנדסת פרומפטים (ממפגש 2) לבין עבודה חכמה בקלוד: 3 מתוך 5 הרכיבים קבועים לתפקיד שלהם. בשקף הבא נראה איך מקבעים אותם ב-Global Instructions."
+   "type": "raw",
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>למה הניסוח משנה הכל</div><h1 class=\"title\">אותה בקשה, <span class=\"spec\">שתי תוצאות</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c6);\"><span class=\"chip\" style=\"background:var(--c6);color:#fff;font-size:24px;\">✗ פרומפט עמום</span><div style=\"background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 28px;font-size:34px;line-height:1.5;font-weight:500;\">״תכתוב לי פוסט לקהילה על מפגש זכויות חדש.״</div><p class=\"muted fw6\" style=\"font-size:30px;margin:0;\">← טקסט גנרי, רשמי, ומנותק מהשפה של חלאסרטן.</p></div><div class=\"glass fx col\" style=\"flex:1.35;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c1);\"><span class=\"chip\" style=\"background:var(--c1);color:#fff;font-size:24px;\">✓ פרומפט מלא</span><div style=\"background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 28px;font-size:32px;line-height:1.5;font-weight:500;\">״<span style=\"color:var(--highlight);font-weight:800;\">אני מנהל/ת הקהילה בחלאסרטן (צעירים חולי סרטן <span dir=\"ltr\">18-44</span>).</span> <span style=\"color:var(--highlight);font-weight:800;\">כתוב בעברית ישירה ובגובה העיניים, בלי קלישאות.</span> נסח פוסט שמזמין למפגש מיצוי זכויות ביום ג׳, עם <span dir=\"ltr\">3</span> סיבות למה שווה להגיע.״</div><p class=\"ink-t fw6\" style=\"font-size:30px;margin:0;\">← מדויק בול. אבל את <span style=\"color:var(--c1);font-weight:800;\">החלק המודגש</span> מקלידים בכל פעם מחדש.</p></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">את החלק הקבוע כותבים <span class=\"hi\">פעם אחת</span>, ב-<span dir=\"ltr\">Instructions for Claude</span>.</div>",
+   "notes": "זה הגשר בין הנדסת פרומפטים לבין עבודה חכמה בקלוד: 3 מתוך 5 הרכיבים קבועים לתפקיד שלהם (החלק המודגש). במקום להקליד אותם כל פעם, מקבעים אותם ב-Instructions for Claude."
   },
   {
    "type": "raw",
    "html": "<style>@media print{.copy-btn{display:none!important}}</style><div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span><span dir=\"ltr\">Global Instructions</span></div><h1 class=\"title\">הנחיות קבועות לכל תפקיד: <span class=\"spec\">פעם אחת</span> ודי</h1><p class=\"sub\"><span dir=\"ltr\">Settings</span> → <span dir=\"ltr\">Profile</span> → <span dir=\"ltr\">Personal Preferences</span> · מעתיקים את הבלוק של התפקיד שלכם</p></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;padding:30px 34px;gap:18px;min-width:0;border-top:6px solid var(--c1);\"><div class=\"fx ac jb\" style=\"gap:12px;\"><span class=\"ink-t fw8\" style=\"font-size:30px;\">ניהול קהילה ותוכניות</span><button type=\"button\" class=\"chip copy-btn\" style=\"background:var(--c1);color:#fff;border:0;cursor:pointer;font-family:inherit;\" onmouseup=\"this.blur()\" onclick=\"var b=this,t=b.parentNode.parentNode.querySelector('.prompt').innerText;navigator.clipboard.writeText(t).then(function(){b.textContent='הועתק';setTimeout(function(){b.textContent='העתקה'},1600)})\">העתקה</button></div><p class=\"prompt ink-t fw5\" style=\"white-space:pre-wrap;font-size:25px;line-height:1.5;margin:0;\">אני מוביל/ה את תחום הקהילה והתוכניות בעמותת &quot;חלאסרטן&quot; (רשת תמיכה וקהילה לחולי ומחלימי סרטן צעירים בגילאי <span dir=\"ltr\">18-44</span>).\nהצוות שלי מפיק מענים רגשיים, מפגשי קהילה, מדריכי מיצוי זכויות וליווי לחדשים.\nכתוב תמיד בעברית ישירה, אנושית ובגובה העיניים — בלי קלישאות רפואיות מתנשאות ובלי &quot;פילרים&quot;.\nכשאתה מנסח תוכן לקהילה או סיכום תוכנית, פתח בצורך האמיתי של הצעירים לפני הפתרון התפעולי.\nסמן תמיד הנחות שדורשות בדיקה רגישה או אישור צוות מקצועי לפני פרסום.</p></div><div class=\"glass fx col\" style=\"flex:1;padding:30px 34px;gap:18px;min-width:0;border-top:6px solid var(--c3);\"><div class=\"fx ac jb\" style=\"gap:12px;\"><span class=\"ink-t fw8\" style=\"font-size:30px;\">גיוס משאבים וקרנות</span><button type=\"button\" class=\"chip copy-btn\" style=\"background:var(--c1);color:#fff;border:0;cursor:pointer;font-family:inherit;\" onmouseup=\"this.blur()\" onclick=\"var b=this,t=b.parentNode.parentNode.querySelector('.prompt').innerText;navigator.clipboard.writeText(t).then(function(){b.textContent='הועתק';setTimeout(function(){b.textContent='העתקה'},1600)})\">העתקה</button></div><p class=\"prompt ink-t fw5\" style=\"white-space:pre-wrap;font-size:25px;line-height:1.5;margin:0;\">אני מוביל/ה את תחום גיוס המשאבים, השותפויות והקרנות בעמותת &quot;חלאסרטן&quot;.\nאנחנו מגישים בקשות מענקים לקרנות בארץ ובחו&quot;ל, בונים הצעות שותפות לחברות עסקיות ומפיקים דוחות אימפקט לתורמים.\nהתאם את ברירת המחדל שלך לכתיבה מבוססת-נתונים, ממוקדת תוצאות (<span dir=\"ltr\">Impact</span>) ומשכנעת.\nבכל פעם שאתה מציין נתון מספרי או מדד הצלחה, ציין מאיזה מסמך מקור הוא נלקח.\nהדגש תמיד את הערך הייחודי של חלאסרטן בטיפול בצעירים חולי ומחלימי סרטן.</p></div><div class=\"glass fx col\" style=\"flex:1;padding:30px 34px;gap:18px;min-width:0;border-top:6px solid var(--c5);\"><div class=\"fx ac jb\" style=\"gap:12px;\"><span class=\"ink-t fw8\" style=\"font-size:30px;\">מנכ&quot;לות, כספים ותפעול</span><button type=\"button\" class=\"chip copy-btn\" style=\"background:var(--c1);color:#fff;border:0;cursor:pointer;font-family:inherit;\" onmouseup=\"this.blur()\" onclick=\"var b=this,t=b.parentNode.parentNode.querySelector('.prompt').innerText;navigator.clipboard.writeText(t).then(function(){b.textContent='הועתק';setTimeout(function(){b.textContent='העתקה'},1600)})\">העתקה</button></div><p class=\"prompt ink-t fw5\" style=\"white-space:pre-wrap;font-size:25px;line-height:1.5;margin:0;\">אני בצוות הניהול והכספים של עמותת &quot;חלאסרטן&quot; (ע&quot;ר).\nאנחנו מנהלים תקציבי תוכניות, דוחות ביצוע מול תקציב, התקשרויות ספקים ודיווחים לוועד המנהל.\nהתאם את התשובות שלך לתקצירי מנהלים חדים, טבלאות השוואה ברורות ושורה תחתונה כספית בראש המסמך.\nהצף תמיד סיכונים תזרימיים, חריגות תקציביות או סעיפים שחסרה בהם אסמכתא.\nהימנע מהקדמות ארוכות — גש ישר למספרים ולהמלצה הניהולית.</p></div></div></div>",
-   "notes": "לעבור על שלוש העמודות (ניהול קהילה, גיוס משאבים, מנכ\"לות וכספים) כדי שהמשתתפים יראו איך 3 המרכיבים הקבועים (Role + Context + Output) מתורגמים ל-Global Instructions.\n\nמה זה נותן: שומר על השפה הישירה והלא-מתנשאת בלי לבקש בכל פרומפט; גיוס: מצמיד מקור לכל נתון מספרי; כספים: פותח כל ניתוח בשורה התחתונה ומציג טבלאות.\n\nכפתור ההעתקה מעתיק את הבלוק של כל תפקיד. רוצים כזה שמותאם בול אליכם? השקף הבא."
-  },
-  {
-   "type": "steps",
-   "eyebrow": "תרגול: הראיון ההפוך",
-   "title": "נותנים ל-Claude *לראיין אתכם*",
-   "steps": [
-    {
-     "title": "מדביקים את פרומפט הראיון",
-     "text": "בשקף הבא, עם כפתור העתקה."
-    },
-    {
-     "title": "עונים על 10 שאלות",
-     "text": "תפקיד, קהל יעד, סגנון כתיבה, ומה אתם שונאים בתשובות AI."
-    },
-    {
-     "title": "שומרים את הסיכום",
-     "text": "מדביקים ב-Settings → Profile → Instructions."
-    }
-   ],
-   "takeaway": "5 דקות של ראיון חוסכות *שעות של הסברים חוזרים*.",
-   "notes": "במקום לשבור את הראש מול דף לבן, מבקשים מקלוד לשאול אתכם 10 שאלות ולהרכיב עבורכם את ההנחיות הקבועות.\n\nמעכשיו בכל צ'אט חדש קלוד כבר ידבר בדיוק בשפה שלכם."
+   "notes": "לעבור על שלוש העמודות (ניהול קהילה, גיוס משאבים, מנכ\"לות וכספים) ולהראות איך 3 המרכיבים הקבועים (Role + Context + Output) הופכים להנחיות קבועות.\n\nמה זה נותן: שומר על השפה הישירה והלא-מתנשאת; בגיוס: מצמיד מקור לכל נתון; בכספים: פותח בשורה התחתונה ומציג טבלאות.\n\nרוצים כזה שמותאם בול אליכם? השקף הבא."
   },
   {
    "type": "raw",
-   "html": "<style>@media print{.copy-btn{display:none!important}}</style><div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>תרגול: הראיון ההפוך</div><h1 class=\"title\">הפרומפט: <span class=\"spec\">העתיקו והדביקו</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;padding:36px 52px;gap:30px;min-height:0;justify-content:center;\"><div class=\"fx ac jb\"><span class=\"chip\" style=\"background:var(--bg-2);color:var(--c5);\">פרומפט הראיון ההפוך</span><button type=\"button\" class=\"chip copy-btn\" style=\"background:var(--c1);color:#fff;border:0;cursor:pointer;font-family:inherit;\" onmouseup=\"this.blur()\" onclick=\"var b=this,t=b.parentNode.parentNode.querySelector('.prompt').innerText;navigator.clipboard.writeText(t).then(function(){b.textContent='הועתק';setTimeout(function(){b.textContent='העתקה'},1600)})\">העתקה</button></div><p class=\"prompt ink-t fw5\" style=\"white-space:pre-wrap;font-size:40px;line-height:1.5;margin:0;\">אני חבר/ת הנהלה בעמותת &#x27;חלאסרטן&#x27; (קהילה ותמיכה לחולי ומחלימי סרטן צעירים). אני רוצה שתעזור לי לנסח את ה-<span dir=\"ltr\">Personal Instructions</span> שלך כדי שתכיר אותי, את תפקידי ואת סגנון העבודה שלי.\nראיין אותי עכשיו באמצעות <span dir=\"ltr\">10</span> שאלות ממוקדות (שאל אותן בשני סבבים של <span dir=\"ltr\">5</span> שאלות) על תחומי האחריות שלי, סוגי המסמכים שאני כותב/ת, הטון המועדף עליי והדברים שחשוב לי להימנע מהם. בסיום הראיון, כתוב לי בלוק <span dir=\"ltr\">Instructions</span> מוכן להעתקה להגדרות הקבועות שלך.</p></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">בסוף הראיון: מדביקים את הסיכום ב-<span class=\"hi\" dir=\"ltr\">Settings → Profile</span></div>",
-   "notes": "אחרי שהם ראו בשקף הקודם איך נראה תוצר מוגמר של Global Instructions, עכשיו כל אחד לוחץ על כפתור ההעתקה, מדביק בקלוד ועונה על 10 השאלות כדי לקבל בלוק מותאם אישית לתפקיד שלו."
+   "html": "<style>@media print{.copy-btn{display:none!important}}</style><div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>תרגול: הראיון ההפוך</div><h1 class=\"title\">נותנים ל-Claude <span class=\"spec\">לראיין אתכם</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:.8;min-width:0;padding:36px 38px;gap:34px;justify-content:center;border-top:7px solid var(--c3);\"><div class=\"fx\" style=\"gap:20px;align-items:flex-start;\"><span class=\"numchip\" style=\"background:var(--c1);\">1</span><div class=\"fx col\" style=\"gap:6px;\"><span class=\"ink-t fw8\" style=\"font-size:31px;\">מדביקים את הפרומפט</span><span class=\"muted fw5\" style=\"font-size:25px;line-height:1.4;\">כפתור ההעתקה כאן משמאל.</span></div></div><div class=\"fx\" style=\"gap:20px;align-items:flex-start;\"><span class=\"numchip\" style=\"background:var(--c3);\">2</span><div class=\"fx col\" style=\"gap:6px;\"><span class=\"ink-t fw8\" style=\"font-size:31px;\">עונים על <span dir=\"ltr\">10</span> שאלות</span><span class=\"muted fw5\" style=\"font-size:25px;line-height:1.4;\">תפקיד, קהל, סגנון, ומה מעצבן אתכם בתשובות <span dir=\"ltr\">AI.</span></span></div></div><div class=\"fx\" style=\"gap:20px;align-items:flex-start;\"><span class=\"numchip\" style=\"background:var(--c5);\">3</span><div class=\"fx col\" style=\"gap:6px;\"><span class=\"ink-t fw8\" style=\"font-size:31px;\">שומרים את הסיכום</span><span class=\"muted fw5\" style=\"font-size:25px;line-height:1.4;\"><span dir=\"ltr\">Settings</span> → <span dir=\"ltr\">Profile</span> → <span dir=\"ltr\">Instructions for Claude</span></span></div></div></div><div class=\"glass fx col\" style=\"flex:1.25;padding:36px 52px;gap:30px;min-height:0;justify-content:center;\"><div class=\"fx ac jb\"><span class=\"chip\" style=\"background:var(--bg-2);color:var(--c5);\">פרומפט הראיון ההפוך</span><button type=\"button\" class=\"chip copy-btn\" style=\"background:var(--c1);color:#fff;border:0;cursor:pointer;font-family:inherit;\" onmouseup=\"this.blur()\" onclick=\"var b=this,t=b.parentNode.parentNode.querySelector('.prompt').innerText;navigator.clipboard.writeText(t).then(function(){b.textContent='הועתק';setTimeout(function(){b.textContent='העתקה'},1600)})\">העתקה</button></div><p class=\"prompt ink-t fw5\" style=\"white-space:pre-wrap;font-size:29px;line-height:1.5;margin:0;\">אני חבר/ת הנהלה בעמותת &#x27;חלאסרטן&#x27; (קהילה ותמיכה לחולי ומחלימי סרטן צעירים). אני רוצה שתעזור לי לנסח את ה-<span dir=\"ltr\">Personal Instructions</span> שלך כדי שתכיר אותי, את תפקידי ואת סגנון העבודה שלי.\nראיין אותי עכשיו באמצעות <span dir=\"ltr\">10</span> שאלות ממוקדות (שאל אותן בשני סבבים של <span dir=\"ltr\">5</span> שאלות) על תחומי האחריות שלי, סוגי המסמכים שאני כותב/ת, הטון המועדף עליי והדברים שחשוב לי להימנע מהם. בסיום הראיון, כתוב לי בלוק <span dir=\"ltr\">Instructions</span> מוכן להעתקה להגדרות הקבועות שלך.</p></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">5 דקות של ראיון חוסכות <span class=\"hi\">שעות של הסברים חוזרים</span>.</div>",
+   "notes": "במקום לשבור את הראש מול דף לבן, מבקשים מקלוד לשאול אתכם 10 שאלות ולהרכיב עבורכם את ההנחיות הקבועות.\n\nכל אחד לוחץ על כפתור ההעתקה, מדביק בקלוד ועונה. מעכשיו בכל צ'אט חדש קלוד כבר ידבר בשפה שלכם."
   },
   {
-   "type": "cards",
-   "eyebrow": "שלוש סביבות עבודה",
-   "title": "יועץ, עובד או בונה: *Chat, Cowork, Code*",
-   "subtitle": "מתי צריך שיחה, מתי צריך שיבצעו בשבילכם, ומתי צריך כלי חדש.",
-   "cards": [
-    {
-     "title": "Chat · היועץ",
-     "text": "סיעור מוחות, חידוד מסרים, ניסוח מכתבים לתורמים והתייעצות מהירה."
-    },
-    {
-     "title": "Cowork · העובד",
-     "text": "עובד על התיקיות שלכם, מתכנן ומבצע משימה שלמה מתחילה ועד סוף."
-    },
-    {
-     "title": "Code · הבונה",
-     "text": "בונה כלים, דשבורדים, מצגות וסקילים שלמים, גם מבקשה בשפה פשוטה."
-    }
-   ],
-   "takeaway": "ב-Chat הוא עונה. ב-Cowork וב-Code הוא *מחזיר קובץ מוכן*.",
-   "notes": "להדגיש את ההבדל בין Chat (שיחה) לבין Cowork (\"Claude Code בלי קוד\" לאנשי ניהול ותפעול) שבו פשוט מצביעים על תיקייה במחשב ונותנים לקלוד לעבוד.\n\nדוגמה ל-Cowork: \"עבור על כל הקבלות בתיקייה והפק טבלת סיכום\".\n\nבשקף הבא נראה איך בונים פרומפט מנצח ל-Cowork אחרי שכבר הגדרנו Global Instructions."
+   "type": "raw",
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>שלוש סביבות עבודה</div><h1 class=\"title\">יועץ, עובד או בונה: <span class=\"spec\"><span dir=\"ltr\">Chat, Cowork, Code</span></span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c1);\"><span style=\"font-size:76px;line-height:1;\">💬</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c1);\"><span dir=\"ltr\">Chat</span> · היועץ</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">סיעור מוחות, חידוד מסרים, ניסוח מכתבים לתורמים והתייעצות מהירה.</p><div class=\"fw7\" style=\"margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c1);\">מתי: צריכים תשובה או עריכה</div></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c3);\"><span style=\"font-size:76px;line-height:1;\">🤝</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c3);\"><span dir=\"ltr\">Cowork</span> · העובד</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">עובד על התיקיות שלכם, מתכנן ומבצע משימה שלמה מתחילה ועד סוף.</p><div class=\"fw7\" style=\"margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c3);\">מתי: משימה רב-שלבית על קבצים</div></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c5);\"><span style=\"font-size:76px;line-height:1;\">⚡</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c5);\"><span dir=\"ltr\">Code</span> · הבונה</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">בונה כלים, דשבורדים, מצגות וסקילים, גם מבקשה בשפה פשוטה.</p><div class=\"fw7\" style=\"margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c5);\">מתי: רוצים כלי חדש</div></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">ב-Chat הוא עונה. ב-Cowork וב-Code הוא <span class=\"hi\">מחזיר קובץ מוכן</span>.</div>",
+   "notes": "להדגיש את ההבדל בין Chat (שיחה) לבין Cowork (\"Claude Code בלי קוד\" לאנשי ניהול ותפעול) שבו מצביעים על תיקייה במחשב ונותנים לקלוד לעבוד.\n\nדוגמה ל-Cowork: \"עבור על כל הקבלות בתיקייה והפק טבלת סיכום\"."
   },
   {
    "type": "raw",
    "html": "<style>@media print{.copy-btn{display:none!important}}</style><div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span><span dir=\"ltr\">Cowork</span> · תרגול</div><h1 class=\"title\">נוסחת המשימה: תוצר + חומרי גלם + <span class=\"spec\">דגש</span></h1><p class=\"sub\">ה-Role כבר שמור ב-Global Instructions. לחצו על אפשרות בכל שורה.</p></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"glass fx col\" style=\"padding:28px 44px;gap:20px;\"><div class=\"fx ac\" style=\"gap:24px;\"><span class=\"fw8\" style=\"font-size:28px;color:var(--c1);width:210px;flex-shrink:0;\">1. התוצר</span><div class=\"fx wrap\" style=\"gap:12px;\"><button type=\"button\" class=\"chip cw\" data-g=\"d\" data-c=\"1\" data-v=\"רשימה מדורגת עם המלצות והערות\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c1);background:var(--c1);color:#fff;\">רשימה מדורגת עם המלצות והערות</button><button type=\"button\" class=\"chip cw\" data-g=\"d\" data-c=\"1\" data-v=\"מסמך מנהלים של 2 עמודים\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c1);background:#fff;color:var(--ink);\">מסמך מנהלים של <span dir=\"ltr\">2</span> עמודים</button><button type=\"button\" class=\"chip cw\" data-g=\"d\" data-c=\"1\" data-v=\"שקף מסכם לישיבת הוועד המנהל\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c1);background:#fff;color:var(--ink);\">שקף מסכם לישיבת הוועד המנהל</button><button type=\"button\" class=\"chip cw\" data-g=\"d\" data-c=\"1\" data-v=\"טבלת השוואת תוכניות ותקציב\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c1);background:#fff;color:var(--ink);\">טבלת השוואת תוכניות ותקציב</button></div></div><div class=\"fx ac\" style=\"gap:24px;\"><span class=\"fw8\" style=\"font-size:28px;color:var(--c3);width:210px;flex-shrink:0;\">2. חומרי הגלם</span><div class=\"fx wrap\" style=\"gap:12px;\"><button type=\"button\" class=\"chip cw\" data-g=\"i\" data-c=\"3\" data-v=\"תיקיית משובי קהילה ופעילויות רבעון 3\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c3);background:var(--c3);color:#fff;\">תיקיית משובי קהילה ופעילויות רבעון <span dir=\"ltr\">3</span></button><button type=\"button\" class=\"chip cw\" data-g=\"i\" data-c=\"3\" data-v=\"הדוח של הרבעון הקודם כתבנית ייחוס לעיצוב\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c3);background:#fff;color:var(--ink);\">הדוח של הרבעון הקודם כתבנית ייחוס לעיצוב</button><button type=\"button\" class=\"chip cw\" data-g=\"i\" data-c=\"3\" data-v=\"קבצי ה-PDF של בקשות התמיכה והמענקים בלבד\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c3);background:#fff;color:var(--ink);\">קבצי ה-<span dir=\"ltr\">PDF</span> של בקשות התמיכה והמענקים בלבד</button><button type=\"button\" class=\"chip cw\" data-g=\"i\" data-c=\"3\" data-v=\"תיקיית ה-Obsidian של פרויקט המנטורינג\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c3);background:#fff;color:var(--ink);\">תיקיית ה-<span dir=\"ltr\">Obsidian</span> של פרויקט המנטורינג</button></div></div><div class=\"fx ac\" style=\"gap:24px;\"><span class=\"fw8\" style=\"font-size:28px;color:var(--c5);width:210px;flex-shrink:0;\">3. דגש והקשר</span><div class=\"fx wrap\" style=\"gap:12px;\"><button type=\"button\" class=\"chip cw\" data-g=\"n\" data-c=\"5\" data-v=\"קהל היעד הוא הנהלת חלאסרטן בריטריט התכנון השנתי שמחליטה אילו תוכניות להרחיב\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c5);background:var(--c5);color:#fff;\">קהל היעד הוא הנהלת חלאסרטן בריטריט התכנון השנתי שמחליטה אילו תוכניות להרחיב</button><button type=\"button\" class=\"chip cw\" data-g=\"n\" data-c=\"5\" data-v=\"פתח ישר בשורה התחתונה ובהמלצה המעשית המובילה\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c5);background:#fff;color:var(--ink);\">פתח ישר בשורה התחתונה ובהמלצה המעשית המובילה</button><button type=\"button\" class=\"chip cw\" data-g=\"n\" data-c=\"5\" data-v=\"סמן בבירור כל נתון שחסר או שלא ניתן לאמת מתוך הקבצים\" onmouseup=\"this.blur()\" style=\"font-family:inherit;cursor:pointer;font-size:22px;font-weight:700;border:2px solid var(--c5);background:#fff;color:var(--ink);\">סמן בבירור כל נתון שחסר או שלא ניתן לאמת מתוך הקבצים</button></div></div></div><div class=\"inkcard fx col\" style=\"margin-top:24px;padding:28px 44px;gap:14px;flex:1;justify-content:center;\"><div class=\"fx ac jb\"><span class=\"chip\" style=\"background:rgba(255,255,255,.14);color:var(--on-dark);\">הפרומפט ל-Cowork</span><button type=\"button\" class=\"chip copy-btn\" style=\"background:var(--c1);color:#fff;border:0;cursor:pointer;font-family:inherit;\" onmouseup=\"this.blur()\" onclick=\"var b=this,t=b.parentNode.parentNode.querySelector('.prompt').innerText;navigator.clipboard.writeText(t).then(function(){b.textContent='הועתק';setTimeout(function(){b.textContent='העתקה'},1600)})\">העתקה</button></div><p class=\"prompt cw-out fw6\" style=\"font-size:30px;line-height:1.45;margin:0;color:var(--on-dark);\">תכין לי רשימה מדורגת עם המלצות והערות על בסיס תיקיית משובי קהילה ופעילויות רבעון <span dir=\"ltr\">3</span> — קהל היעד הוא הנהלת חלאסרטן בריטריט התכנון השנתי שמחליטה אילו תוכניות להרחיב.</p></div></div><script>(function(){\nvar sel={d:0,i:0,n:0};\nfunction upd(){var v={};document.querySelectorAll('.cw').forEach(function(b){var on=b.dataset.on==='1';\nb.style.background=on?'var(--c'+b.dataset.c+')':'#fff';b.style.color=on?'#fff':'var(--ink)';if(on)v[b.dataset.g]=b.dataset.v;});\ndocument.querySelector('.cw-out').textContent='תכין לי '+v.d+' על בסיס '+v.i+' — '+v.n+'.';}\ndocument.querySelectorAll('.cw').forEach(function(b,i){if(b.previousElementSibling===null)b.dataset.on='1';\nb.addEventListener('click',function(){document.querySelectorAll('.cw[data-g=\"'+b.dataset.g+'\"]').forEach(function(x){x.dataset.on='0'});b.dataset.on='1';upd();});});\nupd();})();</script>",
-   "notes": "שימו לב לחיבור: מכיוון שהתפקיד והרקע של חלאסרטן כבר שמורים ב-Global Instructions, ב-Cowork צריך להגדיר רק 3 מרכיבים משתנים: התוצר (Deliverable), חומרי הגלם (Inputs) והדגש הספציפי למשימה (Nuance).\n\nללחוץ על אפשרויות שונות ולהראות איך הפרומפט משתנה בלייב. כפתור ההעתקה מעתיק את הפרומפט המורכב."
+   "notes": "התפקיד והרקע כבר שמורים ב-Instructions, אז ב-Cowork מגדירים רק 3 מרכיבים: התוצר, חומרי הגלם והדגש.\n\nללחוץ על אפשרויות שונות ולהראות איך הפרומפט משתנה. כפתור ההעתקה מעתיק את הפרומפט המורכב."
   },
   {
    "type": "table",
@@ -206,73 +154,31 @@
    ],
    "rows": [
     [
-     "Haiku",
+     "⚡ Haiku",
      "הסורק המהיר",
-     "סיכום פרוטוקולים, חילוץ נתונים",
+     "קריאת מסמכים, סיכום פרוטוקולים",
      "מיידי · הכי חסכוני"
     ],
     [
-     "*Sonnet*",
+     "*🎯 Sonnet*",
      "*סוס העבודה*",
      "*ניוזלטרים, דוחות, מצגות*",
      "*ברירת מחדל ל-80%*"
     ],
     [
-     "Opus",
+     "🧠 Opus",
      "האסטרטג",
      "תוכנית שנתית, דילמות רגישות",
      "איטי · מכסה גבוהה"
     ]
    ],
-   "takeaway": "מסמך ארוך? *Haiku קורא אותו* בלי לשרוף את המכסה.",
-   "notes": "כאן הכל מתחבר למה שלמדנו על טוקנים: מסמכים ארוכים שורפים המון טוקנים. אם נסרוק אותם עם Opus המכסה תיגמר מהר מאוד. Haiku קורא מסמכים במהירות שיא ובמינימום עלות.\n\nהתאמת המודל לסוג המשימה חוסכת זמן, מונעת הגבלות מכסה ומדייקת את התוצאה."
+   "takeaway": "רוצים ש-Claude יקרא מסמכים? *עדיף Haiku*.",
+   "notes": "הכל מתחבר לטוקנים: מסמכים ארוכים שורפים המון טוקנים. עם Opus המכסה תיגמר מהר. Haiku קורא מסמכים מהר ובמינימום עלות.\n\nBest practice: Haiku לקריאה וסריקה, Sonnet לכתיבה ויצירה, Opus לחשיבה אסטרטגית."
   },
   {
-   "type": "compare",
-   "eyebrow": "סדר וארגון",
-   "title": "כל פרויקט מקבל *תיקייה משלו*",
-   "left": {
-    "label": "איך רוב האנשים עובדים",
-    "title": "תיקיית הורדות כאוטית",
-    "items": [
-     "final_v2_new(1).docx על שולחן העבודה",
-     "Claude סורק קבצים לא קשורים",
-     "אף אחד לא זוכר איפה התוצר"
-    ]
-   },
-   "right": {
-    "label": "הרגל מנצח",
-    "title": "2026-11-Annual-Donors-Event",
-    "items": [
-     "01-Raw-Materials: מסמכי מקור",
-     "02-Outputs: מצגות ודוחות",
-     "CLAUDE.md: הנחיות הפרויקט"
-    ]
-   },
-   "takeaway": "לפני משימה חדשה ב-Claude, *פותחים לה תיקייה עם שם ברור*.",
-   "notes": "כשעובדים עם סוכני AI, סדר בתיקיות הוא לא עניין טכני. הוא המפתח לכך שנדע איפה כל דבר נשמר.\n\nהמבנה: Halasartan-Projects / 2026-11-Annual-Donors-Event / 01-Raw-Materials, 02-Outputs, CLAUDE.md.\n\nלהראות איך המבנה הפשוט הזה מונע את הבלגן של \"איפה הקובץ שקלוד יצר לי בשבוע שעבר?\" ומאפשר ל-Cowork לעבוד רק בתוך התיקייה של אותו פרויקט."
-  },
-  {
-   "type": "cards",
-   "eyebrow": "הזיכרון הארגוני",
-   "title": "Obsidian: *זיכרון אמיתי* על הידע שלנו",
-   "subtitle": "הדבר הכי חשוב בעבודה עם AI הוא ההקשר.",
-   "cards": [
-    {
-     "title": "מה זה?",
-     "text": "מחברת שמחזיקה סיכומים, פרויקטים ונהלים כקבצי טקסט פשוטים במחשב."
-    },
-    {
-     "title": "איך מחברים?",
-     "text": "זו פשוט תיקייה, אז Claude ניגש אליה דרך Cowork או Connector."
-    },
-    {
-     "title": "שואלים בשפה טבעית",
-     "text": "\"מה החלטנו ברבעון האחרון על תוכנית המנטורינג?\""
-    }
-   ],
-   "takeaway": "המודל הוא המנוע. *ההקשר ב-Obsidian הוא הדלק*.",
-   "notes": "הדבר הכי חשוב בכל עבודה עם AI הוא ה-Context: היכולת לתשאל את הידע שלנו בלי להזין אותו כל פעם מחדש.\n\nקבצי Obsidian מקושרים זה לזה כמו מוח שני. ברגע שהמידע יושב שם בצורה מסודרת, קלוד מכיר את הדאטה שלנו ואפשר לייצר ממנה תובנות בשניות."
+   "type": "raw",
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>סדר וארגון</div><h1 class=\"title\">כל פרויקט מקבל <span class=\"spec\">תיקייה משלו</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:34px 40px;gap:22px;border-top:7px solid var(--c6);\"><span class=\"chip\" style=\"background:var(--c6);color:#fff;font-size:24px;\">✗ תיקיית הורדות כאוטית</span><div class=\"fx wrap\" style=\"gap:12px;\"><span class=\"chip\" style=\"background:#fff;border:2px dashed var(--c6);color:var(--muted);font-size:24px;font-weight:600;\" dir=\"ltr\">📄 final_v2_new(1).docx</span><span class=\"chip\" style=\"background:#fff;border:2px dashed var(--c6);color:var(--muted);font-size:24px;font-weight:600;\" dir=\"ltr\">📄 מצגת חדשה (3).pptx</span><span class=\"chip\" style=\"background:#fff;border:2px dashed var(--c6);color:var(--muted);font-size:24px;font-weight:600;\" dir=\"ltr\">📄 סיכום-סופי-באמת.docx</span><span class=\"chip\" style=\"background:#fff;border:2px dashed var(--c6);color:var(--muted);font-size:24px;font-weight:600;\" dir=\"ltr\">📄 IMG_4471.jpg</span><span class=\"chip\" style=\"background:#fff;border:2px dashed var(--c6);color:var(--muted);font-size:24px;font-weight:600;\" dir=\"ltr\">📄 תקציב (עותק).xlsx</span></div><p class=\"muted fw6\" style=\"font-size:26px;line-height:1.45;margin:0;margin-top:auto;\">Claude סורק קבצים לא קשורים, ואחרי שבועיים אף אחד לא זוכר איפה התוצר.</p></div><div class=\"glass fx col\" style=\"flex:1.2;min-width:0;padding:34px 40px;gap:22px;border-top:7px solid var(--c1);\"><span class=\"chip\" style=\"background:var(--c1);color:#fff;font-size:24px;\">✓ תיקייה ברורה לכל פרויקט</span><pre dir=\"ltr\" style=\"margin:0;background:var(--ink);color:var(--on-dark);border-radius:14px;padding:22px 28px;font-size:26px;line-height:1.5;font-family:ui-monospace,Menlo,Consolas,monospace;text-align:left;\">📁 Halasartan-Projects/\n  └─ 📁 2026-11-Donors-Event/\n       ├─ 📁 01-Raw-Materials/\n       ├─ 📁 02-Outputs/\n       └─ 📄 CLAUDE.md</pre><div class=\"fx col\" style=\"gap:10px;\"><div class=\"fx ac\" style=\"gap:14px;font-size:25px;\"><span class=\"dot\" style=\"background:var(--c1);\"></span><span class=\"ink-t fw8\" dir=\"ltr\">01-Raw-Materials</span><span class=\"muted fw5\">מסמכי מקור ונתונים</span></div><div class=\"fx ac\" style=\"gap:14px;font-size:25px;\"><span class=\"dot\" style=\"background:var(--c3);\"></span><span class=\"ink-t fw8\" dir=\"ltr\">02-Outputs</span><span class=\"muted fw5\">מצגות, דוחות ותוצרים</span></div><div class=\"fx ac\" style=\"gap:14px;font-size:25px;\"><span class=\"dot\" style=\"background:var(--c5);\"></span><span class=\"ink-t fw8\" dir=\"ltr\">CLAUDE.md</span><span class=\"muted fw5\">הנחיות הפרויקט</span></div></div></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">לפני משימה חדשה ב-Claude, <span class=\"hi\">פותחים לה תיקייה עם שם ברור</span>.</div>",
+   "notes": "כשעובדים עם סוכני AI, סדר בתיקיות הוא לא עניין טכני. הוא המפתח לכך שנדע איפה כל דבר נשמר ואיך חוזרים אליו.\n\nהמבנה הזה מונע את \"איפה הקובץ שקלוד יצר לי בשבוע שעבר?\" ומאפשר ל-Cowork לעבוד רק בתוך התיקייה של הפרויקט."
   },
   {
    "type": "steps",
@@ -289,135 +195,86 @@
     },
     {
      "title": "משתפים עם הצוות",
-     "text": "כל מי שנכנס נהנה מאותו זיכרון ומאותן הנחיות."
+     "text": "Share, וכל מי שנכנס נהנה מאותו זיכרון ומאותן הנחיות."
     }
    ],
    "takeaway": "שפה ארגונית אחידה, *וחפיפה קצרה בהרבה*.",
-   "notes": "להראות בלייב בממשק של קלוד איך לוחצים על Projects, מוסיפים קובץ ל-Project Knowledge ולוחצים על Share כדי שכל ההנהלה תעבוד על אותה תשתית ידע."
+   "notes": "להראות בלייב: Projects → New, Project Knowledge, ואז Share כדי שכל ההנהלה תעבוד על אותה תשתית ידע.\n\nאם עולה שאלה על זיכרון ארוך טווח: Obsidian היא תיקייה של קבצי טקסט שאפשר לחבר ל-Cowork כמוח שני של הארגון."
   },
   {
    "type": "image",
-   "eyebrow": "מה זה בכלל?",
-   "title": "סקיל = נוהל עבודה ל-Claude",
-   "subtitle": "כמו מסמך קליטה לעובד חדש, או מתכון קבוע של שף.",
+   "eyebrow": "סקילים",
+   "title": "סקיל = *מתכון של שף* ל-Claude",
+   "subtitle": "בלי סקיל מסבירים כל פעם מחדש. עם סקיל, Claude מקבל יכולת קבועה.",
    "src": "assets/onboarding-binder.jpg",
    "alt": "איור: אדם מגיש לעוזר דיגיטלי קלסר נהלים מסודר עם רשימת בדיקה",
    "points": [
-    "*מסביר איך עובדים*: מה לשאול, אילו צעדים, ומה נחשב תוצאה טובה.",
-    "*נטען רק כשצריך*, כמו קלסר שנשלף מהמדף.",
-    "*ניתן לשיתוף*: כותבים פעם אחת, וכל הצוות מקבל אותה איכות."
-   ],
-   "takeaway": "סקיל הוא *ידע שנכתב פעם אחת* ונעשה בו שימוש שוב ושוב.",
-   "notes": "דימוי מרכזי: עובד חדש ומוכשר שעוד לא מכיר את הארגון. סקיל הוא המסמך שאתם נותנים לו ביום הראשון. או: מתכון שף. קובץ SKILL.md אורז את כל שלבי העבודה, העיצוב ובדיקות האיכות, וקלוד שולף אותו לבד כשהמשימה מתאימה.\n\nלשאול את הקהל: איזה נוהל הייתם רוצים שעובד חדש יכיר מהיום הראשון?\n\nאת הסיפור המלא (איך בניתי סקיל, מה כל סקיל טוב כולל, ומה למדתי בדרך) נותנים בנפרד: skills-example.html."
-  },
-  {
-   "type": "cards",
-   "eyebrow": "לא להמציא את הגלגל",
-   "title": "לפני שבונים, *מחפשים*",
-   "subtitle": "מישהו אולי כבר בנה את הסקיל שאתם צריכים.",
-   "cards": [
-    {
-     "title": "דוגמה מהשטח",
-     "text": "סקיל שאוסף משימות מאקסלים, פתקים ומיילים ובונה דשבורד ניהולי."
-    },
-    {
-     "title": "Find Skills",
-     "text": "סקיל של Vercel שמחפש בין אלפי סקילים שמישהו כבר בנה ובדק."
-    },
-    {
-     "title": "מתי לבנות לבד",
-     "text": "כשאין סקיל מתאים, והמשימה חוזרת יותר מפעמיים בחודש."
-    }
+    "*המרכיבים*: מה Claude מקבל, ובאיזה סגנון לכתוב.",
+    "*שלבי ההכנה*: מה עושים, ובאיזה סדר.",
+    "*איך נראית מנה מוצלחת*: בדיקה לפני שמגישים."
    ],
    "takeaway": "כל פעולה שחוזרת *יותר מפעמיים בחודש* ראויה לסקיל.",
-   "notes": "להציג את הסקיל לבניית דשבורד ניהול משימות מכל סוגי הדאטאות, להראות איך מתקינים סקיל בתיקייה או בממשק, ולהדגים את find-skills.\n\nפקודת ההתקנה (להעתקה מהמסך שלי, לא לשקף):\nnpx skills add vercel-labs/skills --skill find-skills"
+   "notes": "מתכון שף: קובץ SKILL.md אורז את כל שלבי העבודה, הסגנון ובדיקות האיכות. כשמבקשים משימה מוכרת, Claude שולף את המתכון לבד ומבצע ברמה של שף.\n\nאת הסיפור המלא (איך בניתי סקיל ומה למדתי) נותנים בנפרד: skills-example.html."
   },
   {
-   "type": "bullets",
-   "eyebrow": "תרגול משותף",
-   "title": "בונים יחד: *סקיל מצגות* של חלאסרטן",
-   "items": [
-    "מנקודות גולמיות או מסמך, למצגת הנהלה מוכנה.",
-    "הלוגו וצבעי העמותה, בעברית מלאה.",
-    "Ctrl+P הופך אותה ל-PDF לשליחה לתורמים ולשותפים."
+   "type": "image",
+   "eyebrow": "סקיל שבניתי",
+   "title": "מכל המקורות, *לוח משימות אחד*",
+   "src": "assets/skill_morning_board.png",
+   "alt": "צילום מסך: לוח משימות יומי עם עמודות לביצוע, בתהליך והושלם, שנבנה ממיילים, יומן וכלי משימות",
+   "points": [
+    "מבקשים במשפט אחד: *״תתחיל את היום שלי״*.",
+    "קורא מיילים, יומן, אקסלים ופתקים.",
+    "ממיין לפי דחיפות ובונה דשבורד אחד."
    ],
-   "takeaway": "מקבלים *מצגת חיה למסך* וגם *PDF לוואטסאפ*.",
-   "notes": "להדגים איך בונים את הסקיל עם הלוגו של חלאסרטן על בסיס html-presentation, ואז להראות איך הדפסה בדפדפן הופכת את ה-HTML ל-PDF.\n\nבונוס אם נשאר זמן: 3 דקות של Claude Design / Artifacts לתכנון ויזואלי.\n\nדוגמה מוכנה לתוצר של סקיל כזה: המצגת הנפרדת skills-example.html, שנבנתה כולה עם סקיל המצגות."
+   "takeaway": "משפט אחד, ותוצאה מלאה, *כי המתכון כבר כתוב*.",
+   "notes": "לספר מאיפה זה בא: צורך לנהל משימות טוב יותר מכל סוגי הדאטות. להראות את הסקיל רץ בלייב.\n\nהנתונים בצילום הם דוגמה."
   },
   {
    "type": "raw",
-   "html": "<style>@media print{.copy-btn{display:none!important}}</style><div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>תרגול משותף</div><h1 class=\"title\">הפרומפט ליצירת <span class=\"spec\">הסקיל</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;padding:36px 52px;gap:30px;min-height:0;justify-content:center;\"><div class=\"fx ac jb\"><span class=\"chip\" style=\"background:var(--bg-2);color:var(--c5);\">פרומפט: סקיל המצגות של חלאסרטן</span><button type=\"button\" class=\"chip copy-btn\" style=\"background:var(--c1);color:#fff;border:0;cursor:pointer;font-family:inherit;\" onmouseup=\"this.blur()\" onclick=\"var b=this,t=b.parentNode.parentNode.querySelector('.prompt').innerText;navigator.clipboard.writeText(t).then(function(){b.textContent='הועתק';setTimeout(function(){b.textContent='העתקה'},1600)})\">העתקה</button></div><p class=\"prompt ink-t fw5\" style=\"white-space:pre-wrap;font-size:36px;line-height:1.5;margin:0;\">בוא ניצור יחד <span dir=\"ltr\">Skill</span> חדש בשם <span dir=\"ltr\">halasartan-presentation</span> עבור הנהלת עמותת &#x27;חלאסרטן&#x27;.\nהסקיל צריך לקבל נקודות תוכן או מסמך גולמי ולהפיק קובץ <span dir=\"ltr\">HTML</span> יחיד של מצגת שקפים בעברית (<span dir=\"ltr\">RTL</span>) הכוללת:\n<span dir=\"ltr\">1.</span> הטמעת הלוגו של חלאסרטן בראש/תחתית השקפים ופלטת צבעים מותאמת לעמותה.\n<span dir=\"ltr\">2.</span> שפה אנושית, ישירה ובגובה העיניים.\n<span dir=\"ltr\">3.</span> ניווט מקלדת מלא והגדרות <span dir=\"ltr\">@media print</span> מובנות כך שניתן להדפיס את המצגת ישירות לקובץ <span dir=\"ltr\">PDF</span> נקי.</p></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">אחרי שנבנה: מבקשים ממנו מצגת, ו-<span dir=\"ltr\">Ctrl+P</span> הופך אותה ל-<span class=\"hi\">PDF נקי</span>.</div>",
-   "notes": "כל אחד מעתיק את הפרומפט, מדביק בקלוד ובונים יחד את הסקיל. אחרי שנבנה: לבקש ממנו מצגת קצרה על נושא מהעבודה, ולראות את התוצאה."
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>לא להמציא את הגלגל</div><h1 class=\"title\">מתקינים סקיל, או <span class=\"spec\">מוצאים מוכן</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c1);\"><span style=\"font-size:76px;line-height:1;\">📦</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c1);\">איך מתקינים</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">מעלים את קובץ הסקיל בהגדרות של <span dir=\"ltr\">Claude,</span> או שמים אותו בתיקיית הסקילים של הפרויקט.</p></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c3);\"><span style=\"font-size:76px;line-height:1;\">🔎</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c3);\"><span dir=\"ltr\">Find Skills</span></span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">הסקיל של <span dir=\"ltr\">Vercel</span> מחפש בשבילכם בין אלפי סקילים שמישהו כבר בנה ובדק.</p><div class=\"fw7\" style=\"margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c3);\">לפני שבונים, מחפשים</div></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c5);\"><span style=\"font-size:76px;line-height:1;\">✨</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c5);\">מתי לבנות לבד</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">כשאין סקיל מתאים, והמשימה חוזרת על עצמה שוב ושוב.</p></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">לפני שבונים סקיל, <span class=\"hi\">בודקים אם מישהו כבר בנה</span>.</div>",
+   "notes": "להראות איך מתקינים סקיל בממשק (הגדרות → Skills) ובתיקייה.\n\nלהדגים את find-skills. פקודת ההתקנה (מהמסך שלי, לא לשקף):\nnpx skills add vercel-labs/skills --skill find-skills"
   },
   {
-   "type": "cards",
-   "eyebrow": "חיבורים, אבטחה ופלאגינים",
-   "title": "לחבר את Claude *בצורה אחראית*",
-   "subtitle": "גישה למערכות העבודה, עם בקרה שלנו.",
-   "cards": [
+   "type": "raw",
+   "html": "<style>@media print{.copy-btn{display:none!important}}</style><div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>תרגול משותף</div><h1 class=\"title\">בונים יחד: <span class=\"spec\">סקיל מצגות</span> של חלאסרטן</h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:.8;min-width:0;padding:36px 38px;gap:26px;border-top:7px solid var(--c3);\"><span class=\"fw8\" style=\"font-size:34px;color:var(--c3);\">🎨 מה הסקיל יעשה</span><div class=\"fx\" style=\"gap:16px;align-items:baseline;\"><span class=\"bullet\" style=\"background:var(--c1);width:14px;height:14px;\"></span><span class=\"ink-t fw6\" style=\"font-size:28px;line-height:1.4;\">מנקודות גולמיות או מסמך, למצגת הנהלה.</span></div><div class=\"fx\" style=\"gap:16px;align-items:baseline;\"><span class=\"bullet\" style=\"background:var(--c3);width:14px;height:14px;\"></span><span class=\"ink-t fw6\" style=\"font-size:28px;line-height:1.4;\">הלוגו וצבעי העמותה, בעברית מלאה.</span></div><div class=\"fx\" style=\"gap:16px;align-items:baseline;\"><span class=\"bullet\" style=\"background:var(--c5);width:14px;height:14px;\"></span><span class=\"ink-t fw6\" style=\"font-size:28px;line-height:1.4;\"><span dir=\"ltr\">Ctrl+P</span> הופך אותה ל-<span dir=\"ltr\">PDF</span> לתורמים.</span></div><span class=\"chip\" style=\"margin-top:auto;background:var(--bg-2);color:var(--c5);font-size:22px;\">בונוס אם יש זמן: Claude Design</span></div><div class=\"glass fx col\" style=\"flex:1.3;padding:36px 52px;gap:30px;min-height:0;justify-content:center;\"><div class=\"fx ac jb\"><span class=\"chip\" style=\"background:var(--bg-2);color:var(--c5);\">פרומפט: סקיל המצגות של חלאסרטן</span><button type=\"button\" class=\"chip copy-btn\" style=\"background:var(--c1);color:#fff;border:0;cursor:pointer;font-family:inherit;\" onmouseup=\"this.blur()\" onclick=\"var b=this,t=b.parentNode.parentNode.querySelector('.prompt').innerText;navigator.clipboard.writeText(t).then(function(){b.textContent='הועתק';setTimeout(function(){b.textContent='העתקה'},1600)})\">העתקה</button></div><p class=\"prompt ink-t fw5\" style=\"white-space:pre-wrap;font-size:27px;line-height:1.5;margin:0;\">בוא ניצור יחד <span dir=\"ltr\">Skill</span> חדש בשם <span dir=\"ltr\">halasartan-presentation</span> עבור הנהלת עמותת &#x27;חלאסרטן&#x27;.\nהסקיל צריך לקבל נקודות תוכן או מסמך גולמי ולהפיק קובץ <span dir=\"ltr\">HTML</span> יחיד של מצגת שקפים בעברית (<span dir=\"ltr\">RTL</span>) הכוללת:\n<span dir=\"ltr\">1.</span> הטמעת הלוגו של חלאסרטן בראש/תחתית השקפים ופלטת צבעים מותאמת לעמותה.\n<span dir=\"ltr\">2.</span> שפה אנושית, ישירה ובגובה העיניים.\n<span dir=\"ltr\">3.</span> ניווט מקלדת מלא והגדרות <span dir=\"ltr\">@media print</span> מובנות כך שניתן להדפיס את המצגת ישירות לקובץ <span dir=\"ltr\">PDF</span> נקי.</p></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">מקבלים <span class=\"hi\">מצגת חיה למסך</span> וגם <span class=\"hi\">PDF לוואטסאפ</span>.</div>",
+   "notes": "כל אחד מעתיק את הפרומפט, מדביק בקלוד ובונים יחד את הסקיל עם הלוגו של חלאסרטן. אחרי שנבנה: לבקש מצגת קצרה, ו-Ctrl+P ל-PDF.\n\nבונוס אם נשאר זמן: 3 דקות של Claude Design ואיך בונים שם סיסטם דיזיין.\n\nדוגמה מוכנה לתוצר: המצגת הזו, ו-skills-example.html."
+  },
+  {
+   "type": "raw",
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>קונקטורים ואבטחת מידע</div><h1 class=\"title\">לחבר את Claude <span class=\"spec\">בצורה אחראית</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c1);\"><span style=\"font-size:76px;line-height:1;\">🔌</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c1);\"><span dir=\"ltr\">Connectors</span></span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\"><span dir=\"ltr\">Drive, Gmail,</span> יומן, <span dir=\"ltr\">Slack</span> או <span dir=\"ltr\">Notion. Claude</span> שולף את המסמך העדכני בעצמו.</p><div class=\"fw7\" style=\"margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c1);\">מחברים בהגדרות → <span dir=\"ltr\">Connectors</span></div></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c3);\"><span style=\"font-size:76px;line-height:1;\">🛡️</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c3);\">מידע רגיש</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">בלי פרטים מזהים של חברי קהילה. מידע רפואי עולה רק אחרי התממה.</p></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c5);\"><span style=\"font-size:76px;line-height:1;\">🔑</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c5);\">הרשאות מינימליות</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">מחברים רק תיקיות רלוונטיות, ופעולות רגישות מאשרים ידנית.</p></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">אנחנו תמיד <span class=\"hi\">הטייס שמאשר</span> לפני שליחה או שינוי של מידע ארגוני.</div>",
+   "notes": "להראות איפה בתפריט מחברים Connectors (כמו Google Drive) ומה זה חוסך: לא מורידים ומעלים קבצים ידנית.\n\nלהדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן."
+  },
+  {
+   "type": "steps",
+   "eyebrow": "פלאגינים · רשות",
+   "title": "Superpowers: Claude *חושב לפני שהוא עושה*",
+   "steps": [
     {
-     "title": "Connectors",
-     "text": "Drive, Gmail, יומן, Slack או Notion. Claude שולף את המסמך העדכני בעצמו."
+     "title": "סיעור מוחות",
+     "text": "שואל ומברר מה בדיוק צריך, במקום לקפוץ לביצוע."
     },
     {
-     "title": "אבטחת מידע",
-     "text": "בלי פרטים מזהים של חברי קהילה. מחברים רק תיקיות רלוונטיות."
+     "title": "תוכנית",
+     "text": "כותב תוכנית עבודה ומציג אותה לאישור."
     },
     {
-     "title": "Superpowers (רשות)",
-     "text": "פלאגין שגורם ל-Claude לחשוב ולתכנן לפני שהוא מבצע."
+     "title": "ביצוע ובדיקה",
+     "text": "מבצע לפי התוכנית ובודק את עצמו בסוף."
     }
    ],
-   "takeaway": "אנחנו תמיד *הטייס שמאשר* לפני שליחה או שינוי של מידע ארגוני.",
-   "notes": "להראות איפה בתפריט מחברים Connectors (כמו Google Drive).\n\nלהדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן: מידע רפואי/אישי רגיש לא עולה בלי אנונימיזציה; הרשאות מינימליות; פעולות רגישות מאשרים ידנית.\n\nאם הקהל סקרן: 2 דקות על Superpowers (סיעור מוחות → תוכנית → ביצוע ובדיקה עצמית)."
+   "takeaway": "פלאגין = *חבילה של סקילים וכלים* שמתקינים בבת אחת.",
+   "notes": "אופציונלי, רק אם הקהל סקרן ויש זמן: 2 דקות להראות איך Superpowers גורם לקלוד לתכנן לפני ביצוע."
   },
   {
-   "type": "cards",
-   "eyebrow": "סוכן בתוך הדפדפן",
-   "title": "Claude in Chrome: *Claude בא אל האתר*",
-   "subtitle": "תוסף שרואה את הכרטיסייה הפתוחה ופועל בה.",
-   "cards": [
-    {
-     "title": "התקנה ב-30 שניות",
-     "text": "תוסף רשמי מחנות Chrome, נצמד לסרגל ונפתח בחלונית צד."
-    },
-    {
-     "title": "מה זה נותן",
-     "text": "סיכום עמודים ארוכים, איסוף נתונים מפורטלים, מילוי טפסים חוזרים."
-    },
-    {
-     "title": "עבודה בטוחה",
-     "text": "רואים כל צעד שהוא מתכנן, ומאשרים לפני פעולות חשובות."
-    }
-   ],
-   "takeaway": "במקום להעתיק מאתרים ל-Claude, *מביאים את Claude לאתר*.",
-   "notes": "להדגים פתיחה של תוסף הכרום על עמוד אינטרנט אמיתי ולהראות איך קלוד קורא את המסך ומבצע פעולה שחוסכת עבודה ידנית.\n\nלהזכיר את מצב ההרשאות (Permissions Mode)."
+   "type": "raw",
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>סוכן בתוך הדפדפן</div><h1 class=\"title\">Claude in Chrome: <span class=\"spec\"><span dir=\"ltr\">Claude</span> בא אל האתר</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c1);\"><span style=\"font-size:76px;line-height:1;\">📥</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c1);\">התקנה ב-<span dir=\"ltr\">30</span> שניות</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">תוסף רשמי מחנות <span dir=\"ltr\">Chrome,</span> נצמד לסרגל ונפתח בחלונית צד.</p><div class=\"fw7\" style=\"margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c1);\">עובד על כל אתר פתוח</div></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c3);\"><span style=\"font-size:76px;line-height:1;\">🪄</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c3);\">מה זה נותן</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">סיכום עמודים ארוכים, איסוף נתונים מפורטלים, מילוי טפסים חוזרים.</p></div><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c5);\"><span style=\"font-size:76px;line-height:1;\">🛡️</span><span class=\"fw8\" style=\"font-size:42px;color:var(--c5);\">עבודה בטוחה</span><p class=\"ink-t fw5\" style=\"font-size:31px;line-height:1.45;margin:0;\">רואים כל צעד שהוא מתכנן, ומאשרים לפני פעולות חשובות.</p><div class=\"fw7\" style=\"margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c5);\">אתם מאשרים, הוא מבצע</div></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">במקום להעתיק מאתרים ל-Claude, <span class=\"hi\">מביאים את Claude לאתר</span>.</div>",
+   "notes": "להדגים פתיחה של התוסף על עמוד אמיתי ולהראות איך קלוד קורא את המסך ומבצע פעולה שחוסכת עבודה ידנית.\n\nלהזכיר את מצב ההרשאות."
   },
   {
-   "type": "compare",
-   "eyebrow": "שולחן עגול",
-   "title": "מפצחים יחד *משימה אמיתית* שלכם",
-   "left": {
-    "label": "דוגמאות מהעמותה",
-    "title": "שילובים של מה שלמדנו",
-    "items": [
-     "גיוס: Project + Obsidian + סקיל מצגות",
-     "זכויות: Haiku סורק עדכונים ומנגיש אותם",
-     "ישיבות: Cowork + דשבורד משימות"
-    ]
-   },
-   "right": {
-    "label": "תבנית פיצוח",
-    "title": "ארבע שאלות",
-    "items": [
-     "מה גוזל לכם הכי הרבה זמן השבוע?",
-     "איזה הקשר Claude צריך?",
-     "איזה מודל וכלי?",
-     "כדאי לארוז את זה לסקיל?"
-    ]
-   },
-   "takeaway": "כל אחד יוצא עם *תהליך אחד שכבר עובד* השבוע.",
-   "notes": "החלק האינטראקטיבי המרכזי של סוף המפגש: עוברים משתתף-משתתף, שומעים את ה-Use Case, וממפים אותו יחד על המסך: תיקייה, מודל, קונטקסט וסקיל.\n\nתזכורת לכלים: Haiku לקריאה, Sonnet ליצירה, Cowork לביצוע; הקשר מתיקייה, Obsidian או Project."
+   "type": "raw",
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>שולחן עגול</div><h1 class=\"title\">מפצחים יחד <span class=\"spec\">משימה אמיתית</span> שלכם</h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"fx col\" style=\"flex:1;min-width:0;gap:20px;\"><div class=\"glass fx ac\" style=\"flex:1;gap:22px;padding:22px 30px;border-inline-start:7px solid var(--c1);\"><span style=\"font-size:46px;\">💰</span><div class=\"fx col\" style=\"gap:4px;\"><span class=\"fw8\" style=\"font-size:30px;color:var(--c1);\">גיוס</span><span class=\"ink-t fw5\" style=\"font-size:28px;\"><span dir=\"ltr\">Project</span> + סקיל מצגות לתורמים</span></div></div><div class=\"glass fx ac\" style=\"flex:1;gap:22px;padding:22px 30px;border-inline-start:7px solid var(--c3);\"><span style=\"font-size:46px;\">📋</span><div class=\"fx col\" style=\"gap:4px;\"><span class=\"fw8\" style=\"font-size:30px;color:var(--c3);\">זכויות</span><span class=\"ink-t fw5\" style=\"font-size:28px;\"><span dir=\"ltr\">Haiku</span> סורק עדכונים ומנגיש אותם</span></div></div><div class=\"glass fx ac\" style=\"flex:1;gap:22px;padding:22px 30px;border-inline-start:7px solid var(--c5);\"><span style=\"font-size:46px;\">🗓️</span><div class=\"fx col\" style=\"gap:4px;\"><span class=\"fw8\" style=\"font-size:30px;color:var(--c5);\">ישיבות</span><span class=\"ink-t fw5\" style=\"font-size:28px;\"><span dir=\"ltr\">Cowork</span> + דשבורד משימות</span></div></div></div><div class=\"inkcard fx col\" style=\"flex:1.2;min-width:0;padding:36px 42px;gap:26px;justify-content:center;\"><span class=\"fw8\" style=\"font-size:34px;color:var(--highlight);\">🧭 תבנית פיצוח</span><div class=\"fx ac\" style=\"gap:20px;\"><span class=\"numchip\" style=\"background:var(--c1);\">1</span><span class=\"fw6\" style=\"font-size:29px;color:var(--on-dark);line-height:1.35;\">מה גוזל לכם הכי הרבה זמן השבוע?</span></div><div class=\"fx ac\" style=\"gap:20px;\"><span class=\"numchip\" style=\"background:var(--c2);\">2</span><span class=\"fw6\" style=\"font-size:29px;color:var(--on-dark);line-height:1.35;\">איזה הקשר <span dir=\"ltr\">Claude</span> צריך? תיקייה או <span dir=\"ltr\">Project</span></span></div><div class=\"fx ac\" style=\"gap:20px;\"><span class=\"numchip\" style=\"background:var(--c3);\">3</span><span class=\"fw6\" style=\"font-size:29px;color:var(--on-dark);line-height:1.35;\">איזה כלי ומודל? <span dir=\"ltr\">Haiku, Sonnet, Cowork</span></span></div><div class=\"fx ac\" style=\"gap:20px;\"><span class=\"numchip\" style=\"background:var(--c4);\">4</span><span class=\"fw6\" style=\"font-size:29px;color:var(--on-dark);line-height:1.35;\">כדאי לארוז את זה לסקיל?</span></div></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">כל אחד יוצא עם <span class=\"hi\">תהליך אחד שכבר עובד</span> השבוע.</div>",
+   "notes": "החלק האינטראקטיבי המרכזי: עוברים משתתף-משתתף, שומעים את ה-Use Case, וממפים אותו יחד על המסך: תיקייה, מודל, הקשר וסקיל."
   },
   {
    "type": "closing",
@@ -437,16 +294,16 @@
      "text": "Haiku לסריקה, Sonnet לכתיבה."
     },
     {
-     "title": "Project + Obsidian",
-     "text": "מאגר הקשר ארגוני, ו-Project משותף אחד."
+     "title": "Project משותף",
+     "text": "Project אחד עם הצוות, עם מסמכי הליבה."
     },
     {
      "title": "סקיל ראשון",
      "text": "סקיל המצגות, ונסיון עם תוסף Chrome."
     }
    ],
-   "note": "Claude · Cowork · Obsidian · Find Skills · Superpowers · Claude in Chrome · בהצלחה!",
-   "notes": "סיכום אנרגטי! אל תנסו ליישם הכל ביום אחד, מתחילים מחמשת הצעדים לפי הסדר.\n\nלהזכיר שאפשר להדפיס את המצגת ל-PDF (Ctrl+P) כדי שהפרומפטים יישארו זמינים."
+   "note": "Claude · Cowork · Find Skills · Superpowers · Claude in Chrome · בהצלחה!",
+   "notes": "אל תנסו ליישם הכל ביום אחד, מתחילים מחמשת הצעדים לפי הסדר.\n\nלהזכיר שאפשר להדפיס את המצגת ל-PDF (Ctrl+P) כדי שהפרומפטים יישארו זמינים."
   }
  ]
 }
