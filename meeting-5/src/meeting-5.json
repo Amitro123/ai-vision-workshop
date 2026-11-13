@@ -78,49 +78,9 @@
    "notes": "חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל לראות ולזכור בשיחה אחת, כמו שולחן עבודה.\n\nמעבר לשקף הבא: אז איך מכוונים את הניחוש בדיוק למה שאנחנו צריכים? מבנה הפרומפט."
   },
   {
-   "type": "table",
-   "eyebrow": "הנדסת פרומפטים",
-   "title": "5 מרכיבים של פרומפט טוב. *3 מהם קבועים*",
-   "columns": [
-    "מרכיב",
-    "השאלה",
-    "בכל שיחה"
-   ],
-   "rows": [
-    [
-     "1. תפקיד (Role)",
-     "מי אתם ומה המומחיות?",
-     "*קבוע*"
-    ],
-    [
-     "2. הקשר (Context)",
-     "חלאסרטן וקהל היעד",
-     "*קבוע*"
-    ],
-    [
-     "3. הוראה (Instruction)",
-     "מה המשימה היום?",
-     "משתנה"
-    ],
-    [
-     "4. נתוני קלט (Input)",
-     "המסמך או הנתונים",
-     "משתנה"
-    ],
-    [
-     "5. פורמט וטון (Output)",
-     "בגובה העיניים, מבנה מועדף",
-     "*קבוע*"
-    ]
-   ],
-   "highlight": 2,
-   "takeaway": "את הקבועים כותבים *פעם אחת*, ב-Instructions for Claude.",
-   "notes": "פרומפט הוא ההוראה שמכוונת את המודל. כשבונים אותו מ-5 מרכיבים ברורים מקבלים תוצאה מעולה.\n\nשימו לב: סעיפים 1 (התפקיד), 2 (ההקשר של חלאסרטן) ו-5 (סגנון הכתיבה) קבועים אצלכם."
-  },
-  {
    "type": "raw",
-   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>למה הניסוח משנה הכל</div><h1 class=\"title\">אותה בקשה, <span class=\"spec\">שתי תוצאות</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:1;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c6);\"><span class=\"chip\" style=\"background:var(--c6);color:#fff;font-size:24px;\">✗ פרומפט עמום</span><div style=\"background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 28px;font-size:34px;line-height:1.5;font-weight:500;\">״תכתוב לי פוסט לקהילה על מפגש זכויות חדש.״</div><p class=\"muted fw6\" style=\"font-size:30px;margin:0;\">← טקסט גנרי, רשמי, ומנותק מהשפה של חלאסרטן.</p></div><div class=\"glass fx col\" style=\"flex:1.35;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c1);\"><span class=\"chip\" style=\"background:var(--c1);color:#fff;font-size:24px;\">✓ פרומפט מלא</span><div style=\"background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 28px;font-size:32px;line-height:1.5;font-weight:500;\">״<span style=\"color:var(--highlight);font-weight:800;\">אני מנהל/ת הקהילה בחלאסרטן (צעירים חולי סרטן <span dir=\"ltr\">18-44</span>).</span> <span style=\"color:var(--highlight);font-weight:800;\">כתוב בעברית ישירה ובגובה העיניים, בלי קלישאות.</span> נסח פוסט שמזמין למפגש מיצוי זכויות ביום ג׳, עם <span dir=\"ltr\">3</span> סיבות למה שווה להגיע.״</div><p class=\"ink-t fw6\" style=\"font-size:30px;margin:0;\">← מדויק בול. אבל את <span style=\"color:var(--c1);font-weight:800;\">החלק המודגש</span> מקלידים בכל פעם מחדש.</p></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">את החלק הקבוע כותבים <span class=\"hi\">פעם אחת</span>, ב-<span dir=\"ltr\">Instructions for Claude</span>.</div>",
-   "notes": "זה הגשר בין הנדסת פרומפטים לבין עבודה חכמה בקלוד: 3 מתוך 5 הרכיבים קבועים לתפקיד שלהם (החלק המודגש). במקום להקליד אותם כל פעם, מקבעים אותם ב-Instructions for Claude."
+   "html": "<div class=\"hd\"><div class=\"eyebrow\"><span class=\"dot\"></span>הנדסת פרומפטים</div><h1 class=\"title\">5 מרכיבים של פרומפט טוב. <span class=\"spec\"><span dir=\"ltr\">3</span> מהם קבועים</span></h1></div><div class=\"f1 fx col\" style=\"margin-top:36px;min-height:0;\"><div class=\"fx\" style=\"flex:1;gap:28px;min-height:0;\"><div class=\"glass fx col\" style=\"flex:.95;min-width:0;padding:30px 34px;gap:18px;justify-content:center;border-top:7px solid var(--c5);\"><span class=\"fw8\" style=\"font-size:32px;color:var(--c5);\">🧱 5 המרכיבים</span><div class=\"fx ac\" style=\"gap:16px;\"><span class=\"numchip\" style=\"background:var(--c1);width:46px;height:46px;font-size:24px;\">1</span><div class=\"fx col\" style=\"flex:1;gap:2px;\"><span class=\"ink-t fw8\" style=\"font-size:28px;\">תפקיד <span class=\"muted fw6\" style=\"font-size:22px;\" dir=\"ltr\">Role</span></span><span class=\"muted fw5\" style=\"font-size:23px;\">מי אתם ומה המומחיות?</span></div><span class=\"chip\" style=\"background:var(--c1);color:#fff;font-size:21px;\">קבוע</span></div><div class=\"fx ac\" style=\"gap:16px;\"><span class=\"numchip\" style=\"background:var(--c1);width:46px;height:46px;font-size:24px;\">2</span><div class=\"fx col\" style=\"flex:1;gap:2px;\"><span class=\"ink-t fw8\" style=\"font-size:28px;\">הקשר <span class=\"muted fw6\" style=\"font-size:22px;\" dir=\"ltr\">Context</span></span><span class=\"muted fw5\" style=\"font-size:23px;\">חלאסרטן וקהל היעד</span></div><span class=\"chip\" style=\"background:var(--c1);color:#fff;font-size:21px;\">קבוע</span></div><div class=\"fx ac\" style=\"gap:16px;\"><span class=\"numchip\" style=\"background:var(--c6);width:46px;height:46px;font-size:24px;\">3</span><div class=\"fx col\" style=\"flex:1;gap:2px;\"><span class=\"ink-t fw8\" style=\"font-size:28px;\">הוראה <span class=\"muted fw6\" style=\"font-size:22px;\" dir=\"ltr\">Instruction</span></span><span class=\"muted fw5\" style=\"font-size:23px;\">מה המשימה היום?</span></div><span class=\"chip\" style=\"background:#fff;color:var(--c6);border:2px solid var(--c6);font-size:21px;\">משתנה</span></div><div class=\"fx ac\" style=\"gap:16px;\"><span class=\"numchip\" style=\"background:var(--c6);width:46px;height:46px;font-size:24px;\">4</span><div class=\"fx col\" style=\"flex:1;gap:2px;\"><span class=\"ink-t fw8\" style=\"font-size:28px;\">נתוני קלט <span class=\"muted fw6\" style=\"font-size:22px;\" dir=\"ltr\">Input</span></span><span class=\"muted fw5\" style=\"font-size:23px;\">המסמך או הנתונים</span></div><span class=\"chip\" style=\"background:#fff;color:var(--c6);border:2px solid var(--c6);font-size:21px;\">משתנה</span></div><div class=\"fx ac\" style=\"gap:16px;\"><span class=\"numchip\" style=\"background:var(--c1);width:46px;height:46px;font-size:24px;\">5</span><div class=\"fx col\" style=\"flex:1;gap:2px;\"><span class=\"ink-t fw8\" style=\"font-size:28px;\">פורמט וטון <span class=\"muted fw6\" style=\"font-size:22px;\" dir=\"ltr\">Output</span></span><span class=\"muted fw5\" style=\"font-size:23px;\">בגובה העיניים, מבנה מועדף</span></div><span class=\"chip\" style=\"background:var(--c1);color:#fff;font-size:21px;\">קבוע</span></div></div><div class=\"fx col\" style=\"flex:1.35;min-width:0;gap:20px;\"><div class=\"glass fx col\" style=\"flex:.8;min-height:0;padding:24px 32px;gap:14px;justify-content:center;border-top:7px solid var(--c6);\"><div class=\"fx ac\" style=\"gap:18px;\"><span class=\"chip\" style=\"background:var(--c6);color:#fff;font-size:24px;\">✗ פרומפט עמום</span><span class=\"muted fw6\" style=\"font-size:24px;\">← טקסט גנרי ומנותק</span></div><div style=\"background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 28px;font-size:27px;line-height:1.5;font-weight:500;\">״תכתוב לי פוסט לקהילה על מפגש זכויות חדש.״</div></div><div class=\"glass fx col\" style=\"flex:1.2;min-height:0;padding:24px 32px;gap:14px;justify-content:center;border-top:7px solid var(--c1);\"><div class=\"fx ac\" style=\"gap:18px;\"><span class=\"chip\" style=\"background:var(--c1);color:#fff;font-size:24px;\">✓ פרומפט מלא</span><span class=\"ink-t fw6\" style=\"font-size:24px;\">← מדויק בול</span></div><div style=\"background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 28px;font-size:26px;line-height:1.5;font-weight:500;\">״<span style=\"color:var(--highlight);font-weight:800;\">אני מנהל/ת הקהילה בחלאסרטן (צעירים חולי סרטן <span dir=\"ltr\">18-44</span>).</span> <span style=\"color:var(--highlight);font-weight:800;\">כתוב בעברית ישירה ובגובה העיניים, בלי קלישאות.</span> נסח פוסט שמזמין למפגש מיצוי זכויות ביום ג׳, עם <span dir=\"ltr\">3</span> סיבות למה שווה להגיע.״</div><p class=\"ink-t fw6\" style=\"font-size:24px;margin:0;\">את <span style=\"color:var(--c1);font-weight:800;\">החלק המודגש</span> (מרכיבים 1, 2, 5) מקלידים בכל פעם מחדש.</p></div></div></div></div><div class=\"take\" style=\"margin-top:32px;font-size:30px;\">את הקבועים כותבים <span class=\"hi\">פעם אחת</span>, ב-<span dir=\"ltr\">Instructions for Claude</span>.</div>",
+   "notes": "פרומפט הוא ההוראה שמכוונת את המודל. כשבונים אותו מ-5 מרכיבים ברורים מקבלים תוצאה מעולה.\n\nלהשוות את שתי הדוגמאות: העמום נותן טקסט גנרי; המלא מדויק, אבל החלק המודגש (תפקיד, הקשר, סגנון) קבוע לתפקיד שלכם ומקלידים אותו כל פעם מחדש.\n\nזה הגשר ל-Instructions for Claude: את הקבועים שומרים פעם אחת."
   },
   {
    "type": "raw",
