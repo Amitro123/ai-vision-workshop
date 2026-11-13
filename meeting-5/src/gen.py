@@ -207,13 +207,13 @@ def prompt_merged_slide():
     comps = [("תפקיד", "Role", "מי אתם ומה המומחיות?", True), ("הקשר", "Context", "חלאסרטן וקהל היעד", True),
              ("הוראה", "Instruction", "מה המשימה היום?", False), ("נתוני קלט", "Input", "המסמך או הנתונים", False),
              ("פורמט וטון", "Output", "בגובה העיניים, מבנה מועדף", True)]
-    rows = ''.join(f'<div class="fx ac" style="gap:16px;"><span class="numchip" style="background:var(--c{1 if fx else 6});width:46px;height:46px;font-size:24px;">{i}</span>'
+    rows = ''.join(f'<div class="fx ac" style="gap:16px;"><span class="numchip" style="background:var(--c{1 if fx else 6});width:44px;height:44px;font-size:23px;">{i}</span>'
                    f'<div class="fx col" style="flex:1;gap:2px;"><span class="ink-t fw8" style="font-size:28px;">{r(n)} <span class="muted fw6" style="font-size:22px;" dir="ltr">{e}</span></span>'
                    f'<span class="muted fw5" style="font-size:23px;">{r(q)}</span></div>'
                    + (f'<span class="chip" style="background:var(--c1);color:#fff;font-size:21px;">קבוע</span>' if fx else
                       f'<span class="chip" style="background:#fff;color:var(--c6);border:2px solid var(--c6);font-size:21px;">משתנה</span>') + '</div>'
                    for i, (n, e, q, fx) in enumerate(comps, 1))
-    comp = (f'<div class="glass fx col" style="flex:.95;min-width:0;padding:30px 34px;gap:18px;justify-content:center;border-top:7px solid var(--c5);">'
+    comp = (f'<div class="glass fx col" style="flex:.95;min-width:0;padding:26px 34px;gap:10px;justify-content:center;border-top:7px solid var(--c5);">'
             f'<span class="fw8" style="font-size:32px;color:var(--c5);">🧱 5 המרכיבים</span>{rows}</div>')
     hi = lambda t: f'<span style="color:var(--highlight);font-weight:800;">{r(t)}</span>'
     bad = (f'<div class="glass fx col" style="flex:.8;min-height:0;padding:24px 32px;gap:14px;justify-content:center;border-top:7px solid var(--c6);">'
@@ -224,10 +224,10 @@ def prompt_merged_slide():
     good = (f'<div class="glass fx col" style="flex:1.2;min-height:0;padding:24px 32px;gap:14px;justify-content:center;border-top:7px solid var(--c1);">'
             f'<div class="fx ac" style="gap:18px;">{tag("✓ פרומפט מלא", True)}<span class="ink-t fw6" style="font-size:24px;">← מדויק בול</span></div>'
             f'{quote(good_q, 26)}'
-            f'<p class="ink-t fw6" style="font-size:24px;margin:0;">את <span style="color:var(--c1);font-weight:800;">החלק המודגש</span> (מרכיבים 1, 2, 5) מקלידים בכל פעם מחדש.</p></div>')
+            f'<p class="ink-t fw6" style="font-size:24px;margin:0;"><span style="color:var(--c1);font-weight:800;">החלק המודגש</span> הוא ההקשר: מי כותב, למי, ובאיזה טון.</p></div>')
     ex = f'<div class="fx col" style="flex:1.35;min-width:0;gap:20px;">{bad}{good}</div>'
-    return head("הנדסת פרומפטים", f'5 מרכיבים של פרומפט טוב. {acc("3 מהם קבועים")}') + stage(row(comp, ex)) + \
-        take('את הקבועים כותבים <span class="hi">פעם אחת</span>, ב-<span dir="ltr">Instructions for Claude</span>.')
+    return head("הנדסת פרומפטים", f'פרומפט טוב = {acc("הקשר מדויק")}', "זה לא קסם טכני. זה כמו לתת הנחיה לעובד חדש.") + stage(row(comp, ex)) + \
+        take('פרומפט טוב = תקשורת טובה: ככל שההקשר מדויק יותר, <span class="hi">התוצאה טובה יותר</span>.')
 
 def badgood_slide():
     hi = lambda t: f'<span style="color:var(--highlight);font-weight:800;">{r(t)}</span>'
@@ -312,7 +312,7 @@ S.append({"type": "compare", "eyebrow": "חלון ההקשר", "title": "חלו�
           "takeaway": "כלל ברזל: משימה חדשה? *פותחים צ'אט חדש ונקי*.",
           "notes": "חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל לראות ולזכור בשיחה אחת, כמו שולחן עבודה.\n\nמעבר לשקף הבא: אז איך מכוונים את הניחוש בדיוק למה שאנחנו צריכים? מבנה הפרומפט."})
 S.append({"type": "raw", "html": prompt_merged_slide(),
-          "notes": "פרומפט הוא ההוראה שמכוונת את המודל. כשבונים אותו מ-5 מרכיבים ברורים מקבלים תוצאה מעולה.\n\nלהשוות את שתי הדוגמאות: העמום נותן טקסט גנרי; המלא מדויק, אבל החלק המודגש (תפקיד, הקשר, סגנון) קבוע לתפקיד שלכם ומקלידים אותו כל פעם מחדש.\n\nזה הגשר ל-Instructions for Claude: את הקבועים שומרים פעם אחת."})
+          "notes": "פרומפט = ההוראות שאנחנו נותנים ל-AI. פרומפט טוב = תקשורת טובה: זה לא קסם טכני, זה בדיוק כמו לתת הנחיה לעובד חדש. ככל שנהיה ברורים ומכוונים יותר, נקבל תוצאה טובה יותר.\n\nלהשוות את שתי הדוגמאות: העמום נותן טקסט גנרי; המלא נותן ל-Claude הקשר מדויק (מי כותב, למי, באיזה טון ומה המשימה) ולכן התוצאה מדויקת.\n\nגשר לשקף הבא: שלושה מהמרכיבים (תפקיד, הקשר, סגנון) כמעט לא משתנים אצלכם. אותם אפשר לשמור פעם אחת ב-Instructions for Claude, ולהשקיע את הפרומפט במה שמשתנה."})
 S.append({"type": "raw", "html": roles_slide(),
           "notes": "לעבור על שלוש העמודות (ניהול קהילה, גיוס משאבים, מנכ\"לות וכספים) ולהראות איך 3 המרכיבים הקבועים (Role + Context + Output) הופכים להנחיות קבועות.\n\nמה זה נותן: שומר על השפה הישירה והלא-מתנשאת; בגיוס: מצמיד מקור לכל נתון; בכספים: פותח בשורה התחתונה ומציג טבלאות.\n\nרוצים כזה שמותאם בול אליכם? השקף הבא."})
 S.append({"type": "raw", "html": interview_slide(),
