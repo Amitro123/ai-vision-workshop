@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>סדנת המשך להנהלת חלאסרטן - עבודה חכמה עם Claude | עמית רוזן</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-bg-deep: #0c0a0e;
+      --color-bg: #141118;
+      --color-surface: rgba(31, 24, 38, 0.80);
+      --color-border: rgba(220, 76, 132, 0.24);
+      --color-border-glow: rgba(230, 30, 110, 0.58);
+      --color-text-main: #ffffff;
+      --color-text-secondary: #f1e4ec;
+      --color-text-muted: #bda6b3;
+      --color-accent-cyan: #ec4899;
+      --color-accent-pink: #dc4c84;
+      --color-accent-hotpink: #e61e6e;
+      --color-accent-purple: #f472b6;
+      --color-accent-emerald: #34d399;
+      --color-accent-amber: #fb7185;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Heebo', sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text-main);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+
+    .slide {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      padding: 2.25rem 3.5rem 5rem 3.5rem;
+      position: relative;
+      z-index: 10;
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+      animation: slideFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes slideFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .glass-card {
+      background: var(--color-surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--color-border);
+      border-radius: 1.15rem;
+      padding: 1.25rem;
+      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.45);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-border-glow);
+      box-shadow: 0 16px 40px -8px rgba(56, 189, 248, 0.16);
+    }
+
+    .gradient-text-cyan-pink {
+      background: linear-gradient(135deg, #ff3b8b 0%, #dc4c84 48%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.95rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(220, 76, 132, 0.18);
+      color: #ff6eab;
+      border: 1px solid rgba(220, 76, 132, 0.45);
+    }
+
+    .takeaway-banner {
+      background: linear-gradient(90deg, rgba(220, 76, 132, 0.20) 0%, rgba(24, 24, 32, 0.85) 100%);
+      border-right: 4px solid #e61e6e;
+      border-radius: 0.875rem;
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Persistent Halasartan Logo Badge on Every Slide */
+    .slide-brand-logo {
+      position: absolute;
+      top: 1.15rem;
+      left: 1.75rem;
+      z-index: 30;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.28rem 0.55rem;
+      border-radius: 0.75rem;
+      background: rgba(220, 76, 132, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 8px 20px -6px rgba(220, 76, 132, 0.55);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .slide-brand-logo:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 26px -4px rgba(230, 30, 110, 0.75);
+    }
+
+    .slide-brand-logo img {
+      height: 36px;
+      width: auto;
+      display: block;
+      border-radius: 0.35rem;
+    }
+
+    .hero-logo-showcase {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem 1.15rem;
+      border-radius: 1.1rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(220, 76, 132, 0.45);
+      box-shadow: 0 12px 32px -8px rgba(220, 76, 132, 0.38);
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-logo-showcase img {
+      height: 62px;
+      width: auto;
+      border-radius: 0.55rem;
+      display: block;
+    }
+
+    /* Token Pill Badges (from meeting-2 style) */
+    .token-pill {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 0.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 0.15rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    a.ext-link {
+      color: #38bdf8;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    a.ext-link:hover {
+      color: #ec4899;
+    }
+
+    /* Segmented Pill Bar for Global Instructions Roles */
+    .role-tabs-container {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      padding: 0.35rem;
+      border-radius: 9999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+    }
+
+    .role-tab-btn {
+      padding: 0.45rem 1.15rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #94a3b8;
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .role-tab-btn:hover {
+      color: #f8fafc;
+    }
+
+    .role-tab-btn.active {
+      background: rgba(30, 41, 59, 0.95);
+      color: #ff6eab;
+      border-color: rgba(220, 76, 132, 0.65);
+      box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .what-this-gets-card {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.16) 0%, rgba(5, 150, 105, 0.08) 100%);
+      border: 1.5px solid rgba(52, 211, 153, 0.45);
+      border-radius: 1.15rem;
+      padding: 1.4rem;
+      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Interactive Cowork Prompt Builder Styling */
+    .cowork-builder-frame {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1.5px dashed rgba(52, 211, 153, 0.55);
+      border-radius: 1.25rem;
+      padding: 1.15rem;
+    }
+
+    .cowork-row {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 0.9rem;
+      padding: 0.75rem 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .cowork-row-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #94a3b8;
+      min-width: 120px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .builder-chip {
+      padding: 0.42rem 0.95rem;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      background: rgba(30, 41, 59, 0.9);
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .builder-chip:hover {
+      border-color: #60a5fa;
+      color: #f8fafc;
+      transform: translateY(-1px);
+    }
+
+    .builder-chip.selected {
+      background: rgba(220, 76, 132, 0.28);
+      color: #ffb3d1;
+      border-color: #ec4899;
+      font-weight: 700;
+      box-shadow: 0 0 0 1px rgba(236, 72, 153, 0.4), 0 4px 14px -3px rgba(220, 76, 132, 0.45);
+    }
+
+    .prompt-underline-segment {
+      color: #ff85b8;
+      font-weight: 700;
+      border-bottom: 2px solid #ec4899;
+      padding-bottom: 1px;
+      transition: all 0.2s ease;
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        padding: 1.5rem 1rem 5.5rem 1rem;
+        align-items: flex-start;
+      }
+      .cowork-row-label {
+        min-width: 100%;
+        margin-bottom: 0.25rem;
+      }
+    }
+
+    @media print {
+      body {
+        overflow: visible !important;
+        height: auto !important;
+        background: #0f172a !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .slide {
+        display: flex !important;
+        page-break-after: always;
+        break-after: page;
+        height: 100vh !important;
+        width: 100vw !important;
+      }
+      #deck-controls, #progress-container, #presenter-drawer {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="relative select-none">
+  <!-- Ambient Halasartan Brand Background Blobs -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#dc4c84]/20 blur-3xl"></div>
+    <div class="absolute top-1/3 -left-32 w-96 h-96 rounded-full bg-[#e61e6e]/15 blur-3xl"></div>
+    <div class="absolute -bottom-32 right-1/4 w-96 h-96 rounded-full bg-rose-500/15 blur-3xl"></div>
+  </div>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-container" class="fixed top-0 right-0 left-0 h-1.5 bg-zinc-900/90 z-50">
+    <div id="progress-bar" class="h-full bg-gradient-to-l from-[#e61e6e] via-[#dc4c84] to-pink-300 transition-all duration-300" style="width: 5.88%;"></div>
+  </div>
+
+  <!-- Main Slides Container -->
+  <main id="slides-container">
+
+    <!-- SLIDE 1: Hero / Opening -->
+    <section class="slide active" data-slide="1">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner flex flex-col items-center justify-center text-center max-w-5xl mx-auto">
+        <div class="hero-logo-showcase">
+          <img src="data:image/webp;base64,UklGRioPAABXRUJQVlA4IB4PAADQQgCdASrcAGQAPmEokUUkIqIXWn4cQAYEsgHYDti1sQT5QPmztT9+/GXsi8dYuPYJ+V+675r/431Y/oT2BP1n6SHmE/YP9oPdv/y/7je4v9gPYA/qX9R9Y3/q+xh/b/Ud/l//B9Ob2Vv7h/3PStrN3Sv7o9x+a5Ey7h/4Hr4/q/BX1e+oR7S/1e+4gC+t3gDao/hbzTfS3wQaBnjLaY3r/2FTsgAhn9EESxa4iu9l24bh1ROoGge5zXbLZ8fFkG9jWTveeDhFpfAKeBtm0vGW0GoVwlOf5lNLlNI2N4LCwl9r03068185DNVvE2zwfo18tbFA5vi1sAhZljn+wHuyX9tRXNfz+18KpEoAn8UWuNpJxyZSzEjdlCiNDDICMmyJfBcNcXQRyN6nsQ76krHsL1kvL0u/sFdVpEWfLVgmb1t1F4EqPj3rpacUZ8WFJNiqFkVlFgZbFp8EouV6g/F5xZBfuEzfhsdMuHeNh49UNKlj/BzyQG8vKkTXTHDIuau2zgflbh5QrGWwZLZNrRimXZe/zDfB9QlcPQU3+413nIrAk8oZl1+5ffNLeCzPNpNvV3v1eHFSAme4XTiwTTIR4dLvAP/2dniNTtlA46kAspV2p+uUqr7TclvWOsjzUm5PxEQxIKZPu3JBJ6biI37a05O3vV66Crpipk/p1xHFi+Var2VyQw9rJazogBaiO97OQXyrbByG/uCrXZ6EbRAA5KuvqU2D5LihXUJ/K0c6zcRpsxH7bI/j0O3//tiD+XT/CfNHfCdkBt/iX98+VJoUYijTaxgOqIeP9kLLi78XdclBH3hbz/uwRI/tRMwaw/YFTdMrAu+j6EoUaTLKo+KMyQTAjMRcEM9u6la4Q63/WG68KavFrmSW0DpLQDcwpKHZv+CvhfRMe66CNTy3umh7tghm3SNAERlbIFepO3gaGj3rlvSEYa8H7fJdPi0y17ZZ2Ly7jKawrvw1+rlkGkt1HHbGlwwuhRvlf09auITsJa0G/c5gq1QyReHTX4rEYWMGxQkJV1tkDnl7g+djok47dver9G+S3aI47jot6d3m1ykj6iBe3pgMGbHg2sMsM8dmPobMoj7IM2/NocnjW8s+oEGRBVe0mE+zsnbE4wdXB9OekQyzITx9HfaAvIv037uzR0fE+8DZOEFZroMEczZIQl7p0mAz5pX9fmYcxH2IImzvkC3BHN+XvhDKVnMR0GgZaqRMWDBpsMlkj3/Yh/w9BuC5ZAXaCRTsoiRETIIu/F0B4E3GWqFFeSEE/ZVtlWNDr/98lItgNwtBJFv+E4QJe7glWhhWr0RX2nNA9meusSfmb9UpnWeH4haQ7S9DJRK9fvRdo1r5h4skvFPiN7MVEViCFKOqREJgIfViICn6sQJ8Z5pTJKhs7ZaddujxKsuBxIjyBqKknntG0OI9yBpmoC4VMkVH3bFRcMpj5CYCxHfywH9EqwzX7TjwxNsrGLd9aPUoSeiuq3CYKh7AWrFZ+ufos33eGTCIfcU7LE3Ls+C7FXLmXf2j1sebpu+EpyLEZCIYusJvmuiGIwGhwATq9vfMg5ZGd4eb50JYYjcxIpv2vlYL6Gp0vpfc/GzUmvYJ7sJ8Evd20p5rKYLh35AuAylegwOcSvV1JuNWstNDj+V6Fsr8wRTqYAbOWavCzNbjV+L2dsH3UEgVMDMCohNK9QXoXvkBytG7Wt2DZ5e7ApHkW0/w1eUKa4UYsrziLwlxv4LNd2VD7QePPGZxM3suZr6wWhjSBCxphFbJVG95QsuA6ZwqKQTTbCSsikLsU4zNOlKHvK4+6xjY0MDgg+1bTCKd2OPHnnmbz4dIGmIefk73eQPP8eG5/6dgen69m3JszRCTQn/HVBnAJJbpF9J3gk0QrH1vZ6Ty8QLCc5zlOdzEoeb+TaVNbXx20hY+cIj4x2fcGspfvPNqYdzIVaxg37T0ub0Ny5WkYCC5tzJ9m2bpSSVI3WbcbO6+8b139BxTRzD+5prehVifZ5mPNHneDpjYLjBvAgG76ySHlL1ejPud40XRBJ/7PLXkEYLgzb4Jocp2Wh8KP3oubPWoqJ0I5qlusgQlbjBCSQ4qQON1VlsofGXXShL+r12fbp39o0QVSlfn9TjKi8KMSk8IVvC8hzOeMQzkNl1bDryHhmGA+jHhaZFITdZJoO8EQJFDbcK7kTUPMiu4IgGFPyVJOoEOh8nH6jLmGipumLHO/tfAYTC7+umqBfsRLvDaqMZ2axv6z3jYP0JbQWHYHAlHH47DtVV6tTnxMas4fNs7fwmVa+yZeTWlOih20UuLoCDwuz1kYqmwDvpcZ9jI/L/xeXExn2eoGsr7CjMzHYPObdapr5yFGKQGYHWWIWXo7JsDvXMrYp3nDTZUCxsIrkHMeOlGdoAkJaZCRKpqBanUvHvWRRyYYu5yfFcmkXiU+EN8uIqfFMgiosW+D4N3rstNc46iBvFpFJvjZ1DGpa3XuMXXCLLKqcADn0ikNie/PtHZwyv2KmSTCJiHZqC1bfetB1qM2qai+PBGFGKeMJ5Kd5MwvdCChZMjUSOiipJ1LkqR+u3WHrm32pvWMk/hL/kX0ri2yEIZyeBgznZmePPbBHwJ3tUJ9mZou9fRDqFyc2bT98ZcU7o3jZp3h0DjFqIYFTPcNJ/KMNNjCDCEMl6yyLbfOx3Sj4F/XqOaWEPCagFmh2SCP8+Mc+WMzTi8+4F75hD6FTZG51pfEpOR57CXXr99dMHFTBj9R67mmWXf7H1E+zSuelXYeLNamv8+ml/57xKyIOmBUq6R33hseP98VM82DVLjVZg2fyksahj7rPD6Km0rKBZ1dmFZIHeD6O0doK0qRbCWouxWS29krYyg1OzfQmRFA8ZHyjuY5pDEFXrCF9FrGMeo8ioNy6eFJ5ipij4ow7txfPKh8kPVfYtOmqLheIKcVZ7dD5aoNEUpH9mYqKYRDaaGasPdktNIXvLavVkx7OoKcH6eJSQ4eQQruJQcgAKZePIzryi8idE3hhKUJ+2OBBlGeyinmN5ZQWBqzubkfo2KjqdMXczyunfz06mvoxXgUaq6Vz/uABYkS/ACXw5Dw1K4XwLtR2H0NZcUC8QxGVarapfzH40rzZ4b/uWNqOSSy/VFrWyzBVJYhcgd+EPX7lypGi4/k2g6n4uc0YfFN1i7LkvmGHBMUUs3aJFAj7QMD0sOYiCuO+zAGAttzKBXDEycnbeD2RIzxbCHVgHoKEKv+GjZDXx/RhpxavlbhWdYc+w7OJozwSuDAYH58Yya7g5jNdc42OribaVfJ4fBk6B3AQ/cTrXgW741FC7YirZi1tHS8Z9r7nbT2fPd0owFk5TYjNg/lLY30YiOqGeC+CdHODbzYN+KxGR1Tm2H4yvg8hUvMf0+xwxWWloVe+ruC+8bWxk1Mt7V78i2Bj7uohl132n2LHc45kg1zowetN0gjecsemwdUX+aVV4EA/esppsaVnKnOrl+gkjqqYuJEHMgkUV7zKbgZ6J0gwRWwWs4P8dv5FNjLUzrYvVhZGfqmdKF/ZV1IdHq01Mtys5J0uiq48TMZZjfU4MtlItuMbbKU5XhMxIOXhqd89vr8bxj1/GTYw3yZr+N8T84Jcr7+Nvra+CH5SzDxGUykKvLrwvzjZIz/AvGqZ5z5+Eriri6KUMFWf3wjKWozgE8NcLM10leAVggW1zKM7opIxNZ2AbPkiGie3rezpk9ich6MZNJGFtT5r+hlWYp2b/n7owk+aXJB+W1ITGFhKovX6jc5hbEuQtdu0d/vNyQXCZjETutMZ5dPjS5N0H1Zd+IZiYMgKhJThFu0lqEz6eZOz8cGlOVBpeiHHHL+kt8a+Weu2C3YKMozjFwEfjlAMk1kb43Fb1pgxloJqq22OU0u+2SJ86aMOtqThfTqE3IGBTkg/3hrsOgHS/NAO5nwOjNHcTEdY7eE4NroQzAAz7zqRDmvy1JbWZ2MzV5ZkOs9nzo5uy5S6aOr1NKk5ex/RkK23PxvwRGbByNJtG2Y7Nvy0CzvLpb5akqZEEBCVIX+V9xWhyswuu803p+sihrvhkJSv9fjJrM3tvczb+qOgLKhiN3VlMsPh5Nv/y56PpQFEJGpGSbR8faW7pKakRDe4LcRwzDG9XdSNj4Kgxlvw7Q3/Xfc/YccGiGALjmZfs6cUAPfTJ3zfRY3XfO0AT+LyC/4+sx+WqXdfqsjMNSZB3fr3FIZeRhPJJzTVLBqkHiybJ+ZOHgdVKfgq8Pt6tLpi8Ks5V9UCS1kFHIHnmNZaica8M/e5lOiuzV0osACUkpiZS1JNF0Azk521JeF6dt/vOO9Cky4tWmHbWslOG3LcYWXBDSyvyLKzoU3gj5uZTpDC+pFfFWGFnBiXVCJSsamXkNr01pY/5Nb8ypeDUuQOrgKP95z72Cnzu333ERQWHSoeYXBHAMD62rbUDYYDmiDAF5mjRvWzPmOVWGHNaXt13H/TrNPEgP8ljlTx5BzLDn7/Sgo96elcrXWVdhmPE0LxzNScS0tPqHy2uRFxclnFnl8lfiVJ7J4WWYLO25vHKzZiO5YuyHC8a2CZqkhsI/5lwOPF1JATuJktqAw+lmvJ2zDZhFq9+pBQuIDc6GstxVsC7p744LmEQNW1SbXBk0k5TkYPBFk39FIKVxWJBFlr/h64I91gX4djSA2VEuVyfvc43KQqtW4Y+PCH3Ao/nk2ZXckBGDiMQjuqi/84kPdyAcBkOf2+1XxBk4naRzt54jutMNOpCSUZtkR3NCF8rNT1Aya5aSVFRvyKMBjgOLOudEWVdHm64GrNjtRqaDVsv2vUQcjd2c3nwAXzckwvxd5ZLje2/EybBfN/5RfWbNrUWKdmg5AVHzIZpYnjWuVmHPnuDtu9J1J+vD4Jnsi/9bBIyVlNh5q8eW7cOR4Cmhga/U2SWMQ2qAu/lcKVhdpzFaCwp7DQPcfC2MEHvashiFf3XUfLOlkoCVHRenEvoVigl7o9q9ze34bYSa0YXct/E/qT793+ivF/+8fASDRA2JIJc+evVucdruC7IyTSqFKCAlfAECXPC/DG53B/lY2cLtJXPRroGWwbNcJV8QulqhQPxi81IAXsWHwACPUhPTpIoqCdIEH+LUKP6lrcnxlN/oaiaPexwVGIwb0nwCmx3BMrzJkWXpkOkXXqLynqlIaOAAAAA=" alt="לוגו חלאסרטן ורוד" />
+          <img src="data:image/webp;base64,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" alt="לוגו חלאסרטן בהיר" />
+        </div>
+        <span class="badge-pill mb-4">✨ סדנת המשך מעשית להנהלת חלאסרטן • בגובה העיניים</span>
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight">
+          להפוך את <span class="gradient-text-cyan-pink">Claude</span> לשותף עבודה שמכיר אתכם באמת
+        </h1>
+        <p class="text-lg md:text-2xl text-slate-300 max-w-3xl mb-10 leading-relaxed">
+          איך עוברים מצ'אט שמתחיל כל פעם מאפס לסביבת עבודה חכמה עם זיכרון ארגוני, פרויקטים משותפים, סקילים מותאמים וסוכנים שעובדים בשביל <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="ext-link">חלאסרטן</a>.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl text-sm text-slate-200">
+          <div class="glass-card py-3.5 px-4 flex items-center justify-center gap-2.5">
+            <span class="text-xl">🎙️</span>
+            <span>מנחה: <strong>עמית רוזן</strong></span>
+          </div>
+          <div class="glass-card py-3.5 px-4 flex items-center justify-center gap-2.5">
+            <span class="text-xl">🎗️</span>
+            <span>מותאם לצוות הנהלת <strong>חלאסרטן</strong></span>
+          </div>
+          <div class="glass-card py-3.5 px-4 flex items-center justify-center gap-2.5">
+            <span class="text-xl">⚡</span>
+            <span>12 כלים מעשיים ליישום מיידי</span>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        ברוכים הבאים לסדנת ההמשך של הנהלת חלאסרטן! במפגש הקודם טעמנו מהעולם של AI, והיום אנחנו עולים קומה: נתחיל מלהבין איך המודל קורא טוקנים ופרומפטים, ונראה איך מתוך ההבנה הזו אנחנו בונים לקלוד זיכרון קבוע, פרויקטים משותפים וסקילים שחוסכים שעות של עבודה.
+      </aside>
+    </section>
+
+    <!-- SLIDE 2: Topic 1a - Tokens & Context Window (Aligned with meeting-2 Slide 6 & 7) -->
+    <section class="slide" data-slide="2">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-4">
+        <div>
+          <span class="badge-pill mb-2">🧩 מושגי יסוד בעולם ה-AI • טוקנים וחלון הקשר</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">איך מודל שפה (LLM) באמת "קורא" וזוכר אותנו?</h2>
+          <p class="text-base md:text-lg text-slate-300">מודל שפה לא קורא מילים שלמות כמונו - הוא מפרק את הטקסט ל<strong>טוקנים (Tokens)</strong> ומנבא את הטוקן הבא בתוך <strong>חלון הקשר (Context Window)</strong></p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 my-auto items-stretch">
+          <!-- Right Card: What is a Token + Visual Breakdown (meeting-2 style) -->
+          <div class="md:col-span-7 glass-card border-sky-400/35 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-xl font-bold text-sky-300">1. מהו טוקן (Token)?</h3>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-300">יחידת המידע הבסיסית</span>
+              </div>
+              <p class="text-sm text-slate-300 leading-relaxed mb-3">
+                טוקן הוא אבן הבניין הקטנה ביותר שהמודל מעבד: מילה שלמה, הברה או חלק ממילה. בעוד שבאנגלית מילה היא לרוב טוקן אחד, <strong>בעברית כל מילה מתפרקת ל-2 עד 4 טוקנים</strong>:
+              </p>
+
+              <!-- Visual Tokenization Box (from meeting-2) -->
+              <div class="p-3.5 rounded-xl bg-slate-950/85 border border-slate-800 mb-3">
+                <div class="text-xs text-slate-400 mb-2">איך אנחנו רואים משפט (4 מילים):</div>
+                <div class="text-base font-bold text-slate-100 mb-3">"חלאסרטן מחברת צעירים חולים"</div>
+                <div class="text-xs text-slate-400 mb-2">איך קלוד רואה ומפרק אותו (10 טוקנים):</div>
+                <div class="flex flex-wrap items-center gap-1">
+                  <span class="token-pill bg-sky-500/25 text-sky-200 border-sky-400/40">חלא</span>
+                  <span class="token-pill bg-pink-500/25 text-pink-200 border-pink-400/40">סרט</span>
+                  <span class="token-pill bg-purple-500/25 text-purple-200 border-purple-400/40">ן</span>
+                  <span class="token-pill bg-emerald-500/25 text-emerald-200 border-emerald-400/40">מחבר</span>
+                  <span class="token-pill bg-amber-500/25 text-amber-200 border-amber-400/40">ת</span>
+                  <span class="token-pill bg-sky-500/25 text-sky-200 border-sky-400/40">צעיר</span>
+                  <span class="token-pill bg-pink-500/25 text-pink-200 border-pink-400/40">ים</span>
+                  <span class="token-pill bg-purple-500/25 text-purple-200 border-purple-400/40">חול</span>
+                  <span class="token-pill bg-emerald-500/25 text-emerald-200 border-emerald-400/40">ים</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400">
+              * כל טוקן שנכנס (בקשה ומסמכים) וכל טוקן שיוצא (תשובת המודל) נספרים במכסת השיחה שלנו.
+            </p>
+          </div>
+
+          <!-- Left Card: Context Window ("The Active Memory") -->
+          <div class="md:col-span-5 glass-card border-purple-400/35 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-xl font-bold text-purple-300">2. חלון הקשר (Context Window)</h3>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-purple-500/15 text-purple-300">הזיכרון הפעיל</span>
+              </div>
+              <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל "לראות ולזכור" בשיחה אחת בבת אחת (כמו שולחן עבודה).
+              </p>
+              <ul class="space-y-2.5 text-sm text-slate-200">
+                <li class="p-2.5 rounded-lg bg-slate-900/70 border border-slate-800 flex items-start gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span>
+                  <span><strong>שולחן נקי = תשובה חדה:</strong> כשנותנים רק את ההקשר המדויק למשימה, קלוד ממוקד ב-100%.</span>
+                </li>
+                <li class="p-2.5 rounded-lg bg-slate-900/70 border border-slate-800 flex items-start gap-2">
+                  <span class="text-red-400 font-bold">✗</span>
+                  <span><strong>שולחן עמוס = אובדן פוקוס:</strong> כשמערבבים 5 נושאים שונים באותה שיחה ארוכה, הטוקנים מתבזבזים והאיכות צונחת.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-3 p-2.5 rounded-lg bg-purple-500/10 border border-purple-500/25 text-xs text-purple-200">
+              💡 <strong>כלל ברזל:</strong> משימה חדשה? פותחים צ'אט חדש ונקי!
+            </div>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🔗</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>אז איך מכוונים את חיזוי הטוקנים של קלוד בדיוק למה שאנחנו צריכים?</strong> כאן נכנס לתמונה מבנה ה<strong>פרומפט (Prompt)</strong> ←
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        כמו שלמדנו במפגש 2: מודל שפה מנבא את הטוקן הבא על סמך הטוקנים שכבר נמצאים בחלון ההקשר שלו. לכן כל מילה שאנחנו מכניסים לחלון ההקשר קובעת לאיזה כיוון המודל יילך. בשקף הבא נראה ממה מורכב פרומפט מנצח.
+      </aside>
+    </section>
+
+    <!-- SLIDE 3: Topic 1b - What is a Prompt + Why Wording Matters + The Bridge to Global Instructions (Aligned with meeting-2 Slides 8 & 9) -->
+    <section class="slide" data-slide="3">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-4">
+        <div>
+          <span class="badge-pill mb-2">✍️ הנדסת פרומפטים • למה הניסוח משנה הכל?</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">5 מרכיבי הפרומפט האפקטיבי — והבעיה שכולנו נתקלים בה</h2>
+          <p class="text-base md:text-lg text-slate-300">פרומפט הוא ההוראה שמכוונת את המודל. כשבונים אותו מ-5 מרכיבים ברורים מקבלים תוצאה מעולה — אבל תראו מה חוזר על עצמו בכל פעם:</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 my-auto items-stretch">
+          <!-- Right Column: The 5 Components of an Effective Prompt (from meeting-2 Slide 8) -->
+          <div class="md:col-span-6 glass-card border-sky-400/35 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-sky-300 mb-3">5 אבני הבניין של פרומפט מנצח:</h3>
+              <div class="space-y-2 text-sm">
+                <div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-400/40 flex items-center justify-between">
+                  <div><strong class="text-amber-300">1. תפקיד (Role):</strong> <span class="text-slate-200">מי אתה ומה המומחיות שלך?</span></div>
+                  <span class="text-[11px] px-2 py-0.5 rounded bg-amber-500/25 text-amber-200 font-bold">קבוע אצלכם!</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-400/40 flex items-center justify-between">
+                  <div><strong class="text-amber-300">2. הקשר (Context):</strong> <span class="text-slate-200">רקע על חלאסרטן וקהל היעד</span></div>
+                  <span class="text-[11px] px-2 py-0.5 rounded bg-amber-500/25 text-amber-200 font-bold">קבוע אצלכם!</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-900/75 border border-slate-700/80 flex items-center justify-between">
+                  <div><strong class="text-sky-300">3. הוראה ברורה (Instruction):</strong> <span class="text-slate-200">מה המשימה הספציפית היום?</span></div>
+                  <span class="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-400">משתנה בכל שיחה</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-900/75 border border-slate-700/80 flex items-center justify-between">
+                  <div><strong class="text-sky-300">4. נתוני קלט (Input Data):</strong> <span class="text-slate-200">המסמך או הנתונים שעליהם עובדים</span></div>
+                  <span class="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-400">משתנה בכל שיחה</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-400/40 flex items-center justify-between">
+                  <div><strong class="text-amber-300">5. פורמט וטון פלט (Output):</strong> <span class="text-slate-200">שפה בגובה העיניים, מבנה מועדף</span></div>
+                  <span class="text-[11px] px-2 py-0.5 rounded bg-amber-500/25 text-amber-200 font-bold">קבוע אצלכם!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Left Column: Vague vs Focused Prompt (from meeting-2 Slide 9) + The Aha Moment -->
+          <div class="md:col-span-6 flex flex-col justify-between gap-3">
+            <div class="glass-card border-red-500/30 p-3.5">
+              <div class="text-xs font-bold text-red-400 mb-1">❌ פרומפט עמום (כשמתעצלים לכתוב הקשר):</div>
+              <p class="text-sm text-slate-300 italic mb-1">"תכתוב לי פוסט לקהילה על מפגש זכויות חדש."</p>
+              <p class="text-xs text-slate-400">← <strong>התוצאה:</strong> טקסט גנרי, רשמי ומנותק מהשפה של חלאסרטן.</p>
+            </div>
+
+            <div class="glass-card border-emerald-400/40 p-3.5">
+              <div class="text-xs font-bold text-emerald-400 mb-1">✅ פרומפט ממוקד ומלא (כולל Role + Context + Output):</div>
+              <p class="text-xs text-slate-200 leading-relaxed mb-1">
+                "<span class="text-amber-300">אני מנהל/ת הקהילה בחלאסרטן (צעירים חולי סרטן 18-44). כתוב בעברית ישירה ובגובה העיניים בלי קלישאות.</span> נסח פוסט שמזמין למפגש מיצוי זכויות ביטוח לאומי ביום ג', עם 3 סיבות למה שווה להגיע."
+              </p>
+              <p class="text-xs text-emerald-300">← <strong>התוצאה:</strong> מדויק בול! אבל מתיש להקליד את ההקדמה הצהובה בכל פעם מחדש...</p>
+            </div>
+
+            <div class="glass-card bg-amber-500/10 border-amber-400/50 p-3.5">
+              <div class="text-sm font-bold text-amber-300 mb-1">💡 האסימון שנופל: למה להקליד את הצהוב כל פעם מחדש?!</div>
+              <p class="text-xs text-slate-200 leading-relaxed">
+                סעיפים <strong>1 (התפקיד שלכם)</strong>, <strong>2 (ההקשר של חלאסרטן)</strong> ו-<strong>5 (סגנון הכתיבה)</strong> קבועים אצלכם! אם נשמור אותם פעם אחת ב-<strong>Global Instructions</strong> של קלוד — הם יתווספו אוטומטית מאחורי הקלעים לכל שיחה!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🚀</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>המעבר לשקף הבא:</strong> בואו נראה איך לוקחים את המרכיבים הקבועים של הפרומפט (הצהובים) והופכים אותם ל-<strong>Global Instructions</strong> של הנהלת חלאסרטן ←
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        זה בדיוק הגשר בין הנדסת פרומפטים (ממפגש 2) לבין עבודה חכמה בקלוד: אנחנו מראים להם שפרומפט טוב דורש 5 רכיבים, אבל 3 מתוכם (Role, Context, Output Style) הם קבועים לתפקיד שלהם בחלאסרטן! לכן במקום להקליד אותם כל פעם מחדש, בשקף הבא נראה איך מקבעים אותם ב-Global Instructions.
+      </aside>
+    </section>
+
+    <!-- SLIDE 4: Topic 2a - INTERACTIVE GLOBAL INSTRUCTIONS BY HALASARTAN ROLE -->
+    <section class="slide" data-slide="4">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="badge-pill mb-1.5">2️⃣ GLOBAL INSTRUCTIONS • מקבעים את ה-Role וה-Context פעם אחת</span>
+            <h2 class="text-2xl md:text-4xl font-extrabold">איך נראות הנחיות קבועות לתפקידי הנהלה בחלאסרטן?</h2>
+          </div>
+
+          <!-- Role Switcher Tabs (matching uploaded screenshot) -->
+          <div class="role-tabs-container" role="tablist">
+            <button type="button" class="role-tab-btn active" data-role="community">
+              ניהול קהילה ותוכניות
+            </button>
+            <button type="button" class="role-tab-btn" data-role="fundraising">
+              גיוס משאבים וקרנות
+            </button>
+            <button type="button" class="role-tab-btn" data-role="finance">
+              מנכ"לות, כספים ותפעול
+            </button>
+          </div>
+        </div>
+
+        <!-- Two-Column Layout: Instructions for Claude (Right in RTL) + What This Gets You (Left in RTL) -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 my-auto items-stretch">
+          <!-- Instructions Box -->
+          <div class="md:col-span-7 glass-card bg-slate-950/90 border-slate-700/80 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="text-lg font-bold text-white">Instructions for Claude</h3>
+                <button type="button" class="copy-prompt-btn text-xs px-3 py-1 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 transition cursor-pointer">
+                  📋 העתק דוגמה
+                </button>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">
+                קלוד מצמיד את ההנחיות האלו אוטומטית לראש חלון ההקשר שלכם בכל שיחה ובכל משימה ב-Cowork:
+              </p>
+              <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-700/70">
+                <pre id="global-inst-text" class="prompt-text whitespace-pre-wrap text-sm md:text-base text-slate-100 leading-relaxed font-sans">אני מוביל/ה את תחום הקהילה והתוכניות בעמותת "חלאסרטן" (רשת תמיכה וקהילה לחולי ומחלימי סרטן צעירים בגילאי 18-44).
+הצוות שלי מפיק מענים רגשיים, מפגשי קהילה, מדריכי מיצוי זכויות וליווי לחדשים.
+כתוב תמיד בעברית ישירה, אנושית ובגובה העיניים — בלי קלישאות רפואיות מתנשאות ובלי "פילרים".
+כשאתה מנסח תוכן לקהילה או סיכום תוכנית, פתח בצורך האמיתי של הצעירים לפני הפתרון התפעולי.
+סמן תמיד הנחות שדורשות בדיקה רגישה או אישור צוות מקצועי לפני פרסום.</pre>
+              </div>
+            </div>
+            <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
+              <span>📍 מיקום בהגדרות: <strong>Settings → Profile → Personal Preferences</strong></span>
+              <span id="global-inst-role-badge" class="text-sky-300 font-semibold">תפקיד פעיל: ניהול קהילה ותוכניות</span>
+            </div>
+          </div>
+
+          <!-- Green "WHAT THIS GETS YOU" Box -->
+          <div class="md:col-span-5 what-this-gets-card flex flex-col justify-between">
+            <div>
+              <div class="text-xs font-extrabold tracking-wider text-emerald-300 uppercase mb-1">
+                WHAT THIS GETS YOU
+              </div>
+              <h3 class="text-xl font-extrabold text-white mb-4">מה ההגדרה הזו נותנת לכם בפועל?</h3>
+              <ul id="global-inst-benefits" class="space-y-4 text-sm md:text-base text-slate-100 leading-relaxed">
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-black text-lg leading-none mt-1">•</span>
+                  <span>שומר אוטומטית על השפה הישירה והלא-מתנשאת של חלאסרטן בלי שתצטרכו לבקש בכל פרומפט.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-black text-lg leading-none mt-1">•</span>
+                  <span>ממקד כל מסמך או תוכנית קודם כל בכאב ובצורך של חברי הקהילה הצעירים.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-black text-lg leading-none mt-1">•</span>
+                  <span>מציף מראש נקודות רגישות שדורשות בדיקה לפני שהחומר יוצא לקהילה.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-6 pt-3 border-t border-emerald-500/25 text-xs text-emerald-200 flex items-center justify-between">
+              <span>רוצים לבנות כזה שמותאם בול אליכם?</span>
+              <span class="font-bold">ראו שקף הבא (10 השאלות) ←</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להקליק בין שלושת הטאבים (ניהול קהילה, גיוס משאבים, מנכ"לות וכספים) כדי שהמשתתפים יראו בעיניים איך 3 המרכיבים הקבועים מהשקף הקודם (Role + Context + Output) מתורגמים ל-Global Instructions שחוסכים להם חצי מהכתיבה בכל פרומפט.
+      </aside>
+    </section>
+
+    <!-- SLIDE 5: Topic 2b - The 10-Question Reverse Interview Exercise -->
+    <section class="slide" data-slide="5">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">2️⃣ תרגול מעשי: שיטת "הראיון ההפוך"</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">איך כותבים Instructions מושלמים? נותנים לקלוד לראיין אתכם!</h2>
+          <p class="text-base md:text-lg text-slate-300">במקום לשבור את הראש מול דף לבן - מבקשים מקלוד לשאול אתכם 10 שאלות ולהרכיב עבורכם את ההנחיות הקבועות</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 my-auto">
+          <div class="md:col-span-5 glass-card flex flex-col justify-between border-pink-400/30">
+            <div>
+              <span class="text-xs font-bold text-pink-400 uppercase">איך זה עובד ב-3 צעדים?</span>
+              <h3 class="text-xl font-bold mt-1 mb-3">בונים תעודת זהות אישית</h3>
+              <ol class="space-y-3 text-sm text-slate-200 list-decimal list-inside leading-relaxed">
+                <li>מדביקים לקלוד את פרומפט הראיון שמשמאל.</li>
+                <li>עונים בחופשיות על <strong>10 השאלות</strong> שהוא שואל (תפקיד, קהל יעד, סגנון כתיבה, מה אתם שונאים בתשובות AI).</li>
+                <li>מעתיקים את סיכום ההנחיות שקלוד ניסח ומדביקים ב-<strong>Settings -> Profile / Instructions</strong>.</li>
+              </ol>
+            </div>
+            <div class="mt-4 p-3 rounded-lg bg-pink-500/10 border border-pink-500/20 text-xs text-pink-200">
+              ✨ מעכשיו בכל צ'אט חדש קלוד כבר ידבר בדיוק בשפה שלכם!
+            </div>
+          </div>
+
+          <div class="md:col-span-7 glass-card bg-slate-950/90 border-sky-400/40 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
+              <span class="text-xs font-semibold text-sky-400">פרומפט "הראיון ההפוך" (לחצו להעתקה לתרגול חי)</span>
+              <button type="button" class="copy-prompt-btn text-xs px-3 py-1 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 transition cursor-pointer">
+                📋 העתק פרומפט
+              </button>
+            </div>
+            <pre class="prompt-text whitespace-pre-wrap text-sm text-slate-100 leading-relaxed font-sans">"אני חבר/ת הנהלה בעמותת 'חלאסרטן' (קהילה ותמיכה לחולי ומחלימי סרטן צעירים). אני רוצה שתעזור לי לנסח את ה-Personal Instructions שלך כדי שתכיר אותי, את תפקידי ואת סגנון העבודה שלי.
+ראיין אותי עכשיו באמצעות 10 שאלות ממוקדות (שאל אותן בשני סבבים של 5 שאלות) על תחומי האחריות שלי, סוגי המסמכים שאני כותב/ת, הטון המועדף עליי והדברים שחשוב לי להימנע מהם. בסיום הראיון, כתוב לי בלוק Instructions מוכן להעתקה להגדרות הקבועות שלך."</pre>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🎯</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>בשורה התחתונה:</strong> 5 דקות של ראיון חד-פעמי חוסכות לכם שעות של הסברים חוזרים לאורך כל השנה.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        אחרי שהם ראו בשקף הקודם איך נראה תוצר מוגמר של Global Instructions, עכשיו כל אחד לוחץ על כפתור ההעתקה, מדביק בקלוד ועונה על 10 השאלות כדי לקבל בלוק מותאם אישית לתפקיד שלו.
+      </aside>
+    </section>
+
+    <!-- SLIDE 6: Topic 3a - Chat vs Cowork vs Code -->
+    <section class="slide" data-slide="6">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,UklGRioPAABXRUJQVlA4IB4PAADQQgCdASrcAGQAPmEokUUkIqIXWn4cQAYEsgHYDti1sQT5QPmztT9+/GXsi8dYuPYJ+V+675r/431Y/oT2BP1n6SHmE/YP9oPdv/y/7je4v9gPYA/qX9R9Y3/q+xh/b/Ud/l//B9Ob2Vv7h/3PStrN3Sv7o9x+a5Ey7h/4Hr4/q/BX1e+oR7S/1e+4gC+t3gDao/hbzTfS3wQaBnjLaY3r/2FTsgAhn9EESxa4iu9l24bh1ROoGge5zXbLZ8fFkG9jWTveeDhFpfAKeBtm0vGW0GoVwlOf5lNLlNI2N4LCwl9r03068185DNVvE2zwfo18tbFA5vi1sAhZljn+wHuyX9tRXNfz+18KpEoAn8UWuNpJxyZSzEjdlCiNDDICMmyJfBcNcXQRyN6nsQ76krHsL1kvL0u/sFdVpEWfLVgmb1t1F4EqPj3rpacUZ8WFJNiqFkVlFgZbFp8EouV6g/F5xZBfuEzfhsdMuHeNh49UNKlj/BzyQG8vKkTXTHDIuau2zgflbh5QrGWwZLZNrRimXZe/zDfB9QlcPQU3+413nIrAk8oZl1+5ffNLeCzPNpNvV3v1eHFSAme4XTiwTTIR4dLvAP/2dniNTtlA46kAspV2p+uUqr7TclvWOsjzUm5PxEQxIKZPu3JBJ6biI37a05O3vV66Crpipk/p1xHFi+Var2VyQw9rJazogBaiO97OQXyrbByG/uCrXZ6EbRAA5KuvqU2D5LihXUJ/K0c6zcRpsxH7bI/j0O3//tiD+XT/CfNHfCdkBt/iX98+VJoUYijTaxgOqIeP9kLLi78XdclBH3hbz/uwRI/tRMwaw/YFTdMrAu+j6EoUaTLKo+KMyQTAjMRcEM9u6la4Q63/WG68KavFrmSW0DpLQDcwpKHZv+CvhfRMe66CNTy3umh7tghm3SNAERlbIFepO3gaGj3rlvSEYa8H7fJdPi0y17ZZ2Ly7jKawrvw1+rlkGkt1HHbGlwwuhRvlf09auITsJa0G/c5gq1QyReHTX4rEYWMGxQkJV1tkDnl7g+djok47dver9G+S3aI47jot6d3m1ykj6iBe3pgMGbHg2sMsM8dmPobMoj7IM2/NocnjW8s+oEGRBVe0mE+zsnbE4wdXB9OekQyzITx9HfaAvIv037uzR0fE+8DZOEFZroMEczZIQl7p0mAz5pX9fmYcxH2IImzvkC3BHN+XvhDKVnMR0GgZaqRMWDBpsMlkj3/Yh/w9BuC5ZAXaCRTsoiRETIIu/F0B4E3GWqFFeSEE/ZVtlWNDr/98lItgNwtBJFv+E4QJe7glWhhWr0RX2nNA9meusSfmb9UpnWeH4haQ7S9DJRK9fvRdo1r5h4skvFPiN7MVEViCFKOqREJgIfViICn6sQJ8Z5pTJKhs7ZaddujxKsuBxIjyBqKknntG0OI9yBpmoC4VMkVH3bFRcMpj5CYCxHfywH9EqwzX7TjwxNsrGLd9aPUoSeiuq3CYKh7AWrFZ+ufos33eGTCIfcU7LE3Ls+C7FXLmXf2j1sebpu+EpyLEZCIYusJvmuiGIwGhwATq9vfMg5ZGd4eb50JYYjcxIpv2vlYL6Gp0vpfc/GzUmvYJ7sJ8Evd20p5rKYLh35AuAylegwOcSvV1JuNWstNDj+V6Fsr8wRTqYAbOWavCzNbjV+L2dsH3UEgVMDMCohNK9QXoXvkBytG7Wt2DZ5e7ApHkW0/w1eUKa4UYsrziLwlxv4LNd2VD7QePPGZxM3suZr6wWhjSBCxphFbJVG95QsuA6ZwqKQTTbCSsikLsU4zNOlKHvK4+6xjY0MDgg+1bTCKd2OPHnnmbz4dIGmIefk73eQPP8eG5/6dgen69m3JszRCTQn/HVBnAJJbpF9J3gk0QrH1vZ6Ty8QLCc5zlOdzEoeb+TaVNbXx20hY+cIj4x2fcGspfvPNqYdzIVaxg37T0ub0Ny5WkYCC5tzJ9m2bpSSVI3WbcbO6+8b139BxTRzD+5prehVifZ5mPNHneDpjYLjBvAgG76ySHlL1ejPud40XRBJ/7PLXkEYLgzb4Jocp2Wh8KP3oubPWoqJ0I5qlusgQlbjBCSQ4qQON1VlsofGXXShL+r12fbp39o0QVSlfn9TjKi8KMSk8IVvC8hzOeMQzkNl1bDryHhmGA+jHhaZFITdZJoO8EQJFDbcK7kTUPMiu4IgGFPyVJOoEOh8nH6jLmGipumLHO/tfAYTC7+umqBfsRLvDaqMZ2axv6z3jYP0JbQWHYHAlHH47DtVV6tTnxMas4fNs7fwmVa+yZeTWlOih20UuLoCDwuz1kYqmwDvpcZ9jI/L/xeXExn2eoGsr7CjMzHYPObdapr5yFGKQGYHWWIWXo7JsDvXMrYp3nDTZUCxsIrkHMeOlGdoAkJaZCRKpqBanUvHvWRRyYYu5yfFcmkXiU+EN8uIqfFMgiosW+D4N3rstNc46iBvFpFJvjZ1DGpa3XuMXXCLLKqcADn0ikNie/PtHZwyv2KmSTCJiHZqC1bfetB1qM2qai+PBGFGKeMJ5Kd5MwvdCChZMjUSOiipJ1LkqR+u3WHrm32pvWMk/hL/kX0ri2yEIZyeBgznZmePPbBHwJ3tUJ9mZou9fRDqFyc2bT98ZcU7o3jZp3h0DjFqIYFTPcNJ/KMNNjCDCEMl6yyLbfOx3Sj4F/XqOaWEPCagFmh2SCP8+Mc+WMzTi8+4F75hD6FTZG51pfEpOR57CXXr99dMHFTBj9R67mmWXf7H1E+zSuelXYeLNamv8+ml/57xKyIOmBUq6R33hseP98VM82DVLjVZg2fyksahj7rPD6Km0rKBZ1dmFZIHeD6O0doK0qRbCWouxWS29krYyg1OzfQmRFA8ZHyjuY5pDEFXrCF9FrGMeo8ioNy6eFJ5ipij4ow7txfPKh8kPVfYtOmqLheIKcVZ7dD5aoNEUpH9mYqKYRDaaGasPdktNIXvLavVkx7OoKcH6eJSQ4eQQruJQcgAKZePIzryi8idE3hhKUJ+2OBBlGeyinmN5ZQWBqzubkfo2KjqdMXczyunfz06mvoxXgUaq6Vz/uABYkS/ACXw5Dw1K4XwLtR2H0NZcUC8QxGVarapfzH40rzZ4b/uWNqOSSy/VFrWyzBVJYhcgd+EPX7lypGi4/k2g6n4uc0YfFN1i7LkvmGHBMUUs3aJFAj7QMD0sOYiCuO+zAGAttzKBXDEycnbeD2RIzxbCHVgHoKEKv+GjZDXx/RhpxavlbhWdYc+w7OJozwSuDAYH58Yya7g5jNdc42OribaVfJ4fBk6B3AQ/cTrXgW741FC7YirZi1tHS8Z9r7nbT2fPd0owFk5TYjNg/lLY30YiOqGeC+CdHODbzYN+KxGR1Tm2H4yvg8hUvMf0+xwxWWloVe+ruC+8bWxk1Mt7V78i2Bj7uohl132n2LHc45kg1zowetN0gjecsemwdUX+aVV4EA/esppsaVnKnOrl+gkjqqYuJEHMgkUV7zKbgZ6J0gwRWwWs4P8dv5FNjLUzrYvVhZGfqmdKF/ZV1IdHq01Mtys5J0uiq48TMZZjfU4MtlItuMbbKU5XhMxIOXhqd89vr8bxj1/GTYw3yZr+N8T84Jcr7+Nvra+CH5SzDxGUykKvLrwvzjZIz/AvGqZ5z5+Eriri6KUMFWf3wjKWozgE8NcLM10leAVggW1zKM7opIxNZ2AbPkiGie3rezpk9ich6MZNJGFtT5r+hlWYp2b/n7owk+aXJB+W1ITGFhKovX6jc5hbEuQtdu0d/vNyQXCZjETutMZ5dPjS5N0H1Zd+IZiYMgKhJThFu0lqEz6eZOz8cGlOVBpeiHHHL+kt8a+Weu2C3YKMozjFwEfjlAMk1kb43Fb1pgxloJqq22OU0u+2SJ86aMOtqThfTqE3IGBTkg/3hrsOgHS/NAO5nwOjNHcTEdY7eE4NroQzAAz7zqRDmvy1JbWZ2MzV5ZkOs9nzo5uy5S6aOr1NKk5ex/RkK23PxvwRGbByNJtG2Y7Nvy0CzvLpb5akqZEEBCVIX+V9xWhyswuu803p+sihrvhkJSv9fjJrM3tvczb+qOgLKhiN3VlMsPh5Nv/y56PpQFEJGpGSbR8faW7pKakRDe4LcRwzDG9XdSNj4Kgxlvw7Q3/Xfc/YccGiGALjmZfs6cUAPfTJ3zfRY3XfO0AT+LyC/4+sx+WqXdfqsjMNSZB3fr3FIZeRhPJJzTVLBqkHiybJ+ZOHgdVKfgq8Pt6tLpi8Ks5V9UCS1kFHIHnmNZaica8M/e5lOiuzV0osACUkpiZS1JNF0Azk521JeF6dt/vOO9Cky4tWmHbWslOG3LcYWXBDSyvyLKzoU3gj5uZTpDC+pFfFWGFnBiXVCJSsamXkNr01pY/5Nb8ypeDUuQOrgKP95z72Cnzu333ERQWHSoeYXBHAMD62rbUDYYDmiDAF5mjRvWzPmOVWGHNaXt13H/TrNPEgP8ljlTx5BzLDn7/Sgo96elcrXWVdhmPE0LxzNScS0tPqHy2uRFxclnFnl8lfiVJ7J4WWYLO25vHKzZiO5YuyHC8a2CZqkhsI/5lwOPF1JATuJktqAw+lmvJ2zDZhFq9+pBQuIDc6GstxVsC7p744LmEQNW1SbXBk0k5TkYPBFk39FIKVxWJBFlr/h64I91gX4djSA2VEuVyfvc43KQqtW4Y+PCH3Ao/nk2ZXckBGDiMQjuqi/84kPdyAcBkOf2+1XxBk4naRzt54jutMNOpCSUZtkR3NCF8rNT1Aya5aSVFRvyKMBjgOLOudEWVdHm64GrNjtRqaDVsv2vUQcjd2c3nwAXzckwvxd5ZLje2/EybBfN/5RfWbNrUWKdmg5AVHzIZpYnjWuVmHPnuDtu9J1J+vD4Jnsi/9bBIyVlNh5q8eW7cOR4Cmhga/U2SWMQ2qAu/lcKVhdpzFaCwp7DQPcfC2MEHvashiFf3XUfLOlkoCVHRenEvoVigl7o9q9ze34bYSa0YXct/E/qT793+ivF/+8fASDRA2JIJc+evVucdruC7IyTSqFKCAlfAECXPC/DG53B/lY2cLtJXPRroGWwbNcJV8QulqhQPxi81IAXsWHwACPUhPTpIoqCdIEH+LUKP6lrcnxlN/oaiaPexwVGIwb0nwCmx3BMrzJkWXpkOkXXqLynqlIaOAAAAA=" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">3️⃣ שלוש סביבות העבודה</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">הבדלי הכובעים: Chat מול Cowork מול Code</h2>
+          <p class="text-base md:text-lg text-slate-300">מתי אנחנו רוצים יועץ לשיחה, מתי עובד שמבצע משימות בתיקיות, ומתי מהנדס שבונה לנו כלים?</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          <div class="glass-card flex flex-col justify-between border-sky-400/30">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-3xl">💬</span>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-300 font-bold">היועץ החושב</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 text-sky-300"><a href="https://claude.com/" target="_blank" rel="noopener noreferrer" class="ext-link">Claude Chat</a></h3>
+              <p class="text-sm text-slate-300 leading-relaxed mb-3">
+                ממשק השיחה המוכר בדפדפן או בנייד. מיועד לסיעור מוחות, חידוד מסרים, ניסוח מכתבים לתורמים וניתוח מהיר של רעיונות.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-700/60 text-xs text-slate-400">
+              <strong>מתי לבחור:</strong> כשצריכים תשובה, עריכה או התייעצות מהירה.
+            </div>
+          </div>
+
+          <div class="glass-card flex flex-col justify-between border-purple-400/40">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-3xl">🤝</span>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 font-bold">העובד האוטונומי</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 text-purple-300"><a href="https://claude.com/product/cowork" target="_blank" rel="noopener noreferrer" class="ext-link">Claude Cowork</a></h3>
+              <p class="text-sm text-slate-300 leading-relaxed mb-3">
+                סוכן שפועל ישירות על תיקיות המחשב והכלים שלכם. נותנים לו יעד שלם (למשל: "עבור על כל הקבלות בתיקייה והפק טבלת סיכום"), והוא מתכנן ומבצע לבד.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-700/60 text-xs text-slate-400">
+              <strong>מתי לבחור:</strong> למשימות מרובות-שלבים על קבצים ותיקיות.
+            </div>
+          </div>
+
+          <div class="glass-card flex flex-col justify-between border-pink-400/30">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-3xl">⚡</span>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-pink-500/20 text-pink-300 font-bold">הבונה והמפתח</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 text-pink-300"><a href="https://claude.com/product/claude-code" target="_blank" rel="noopener noreferrer" class="ext-link">Claude Code</a></h3>
+              <p class="text-sm text-slate-300 leading-relaxed mb-3">
+                המנוע ההנדסי שבונה אוטומציות, דשבורדים, מצגות HTML וסקילים שלמים. גם אנשים לא טכניים יכולים לבקש ממנו לבנות כלי שלם בשפה פשוטה!
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-700/60 text-xs text-slate-400">
+              <strong>מתי לבחור:</strong> כשרוצים לבנות כלי, דשבורד או סקיל חדש.
+            </div>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🚀</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>המעבר הגדול:</strong> ב-Chat קלוד <em>עונה</em> לכם; ב-Cowork וב-Code קלוד <em>מבצע את העבודה</em> ומחזיר קובץ מוכן.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להדגיש את ההבדל בין Chat (שיחה) לבין Cowork ("Claude Code בלי קוד" לאנשי ניהול ותפעול) שבו פשוט מצביעים על תיקייה במחשב ונותנים לקלוד לעבוד. בשקף הבא נראה בדיוק איך בונים פרומפט מנצח ל-Cowork אחרי שכבר הגדרנו Global Instructions!
+      </aside>
+    </section>
+
+    <!-- SLIDE 7: Topic 3b - INTERACTIVE COWORK PROMPT BUILDER (DELIVERABLE + INPUTS + NUANCE) -->
+    <section class="slide" data-slide="7">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,UklGRioPAABXRUJQVlA4IB4PAADQQgCdASrcAGQAPmEokUUkIqIXWn4cQAYEsgHYDti1sQT5QPmztT9+/GXsi8dYuPYJ+V+675r/431Y/oT2BP1n6SHmE/YP9oPdv/y/7je4v9gPYA/qX9R9Y3/q+xh/b/Ud/l//B9Ob2Vv7h/3PStrN3Sv7o9x+a5Ey7h/4Hr4/q/BX1e+oR7S/1e+4gC+t3gDao/hbzTfS3wQaBnjLaY3r/2FTsgAhn9EESxa4iu9l24bh1ROoGge5zXbLZ8fFkG9jWTveeDhFpfAKeBtm0vGW0GoVwlOf5lNLlNI2N4LCwl9r03068185DNVvE2zwfo18tbFA5vi1sAhZljn+wHuyX9tRXNfz+18KpEoAn8UWuNpJxyZSzEjdlCiNDDICMmyJfBcNcXQRyN6nsQ76krHsL1kvL0u/sFdVpEWfLVgmb1t1F4EqPj3rpacUZ8WFJNiqFkVlFgZbFp8EouV6g/F5xZBfuEzfhsdMuHeNh49UNKlj/BzyQG8vKkTXTHDIuau2zgflbh5QrGWwZLZNrRimXZe/zDfB9QlcPQU3+413nIrAk8oZl1+5ffNLeCzPNpNvV3v1eHFSAme4XTiwTTIR4dLvAP/2dniNTtlA46kAspV2p+uUqr7TclvWOsjzUm5PxEQxIKZPu3JBJ6biI37a05O3vV66Crpipk/p1xHFi+Var2VyQw9rJazogBaiO97OQXyrbByG/uCrXZ6EbRAA5KuvqU2D5LihXUJ/K0c6zcRpsxH7bI/j0O3//tiD+XT/CfNHfCdkBt/iX98+VJoUYijTaxgOqIeP9kLLi78XdclBH3hbz/uwRI/tRMwaw/YFTdMrAu+j6EoUaTLKo+KMyQTAjMRcEM9u6la4Q63/WG68KavFrmSW0DpLQDcwpKHZv+CvhfRMe66CNTy3umh7tghm3SNAERlbIFepO3gaGj3rlvSEYa8H7fJdPi0y17ZZ2Ly7jKawrvw1+rlkGkt1HHbGlwwuhRvlf09auITsJa0G/c5gq1QyReHTX4rEYWMGxQkJV1tkDnl7g+djok47dver9G+S3aI47jot6d3m1ykj6iBe3pgMGbHg2sMsM8dmPobMoj7IM2/NocnjW8s+oEGRBVe0mE+zsnbE4wdXB9OekQyzITx9HfaAvIv037uzR0fE+8DZOEFZroMEczZIQl7p0mAz5pX9fmYcxH2IImzvkC3BHN+XvhDKVnMR0GgZaqRMWDBpsMlkj3/Yh/w9BuC5ZAXaCRTsoiRETIIu/F0B4E3GWqFFeSEE/ZVtlWNDr/98lItgNwtBJFv+E4QJe7glWhhWr0RX2nNA9meusSfmb9UpnWeH4haQ7S9DJRK9fvRdo1r5h4skvFPiN7MVEViCFKOqREJgIfViICn6sQJ8Z5pTJKhs7ZaddujxKsuBxIjyBqKknntG0OI9yBpmoC4VMkVH3bFRcMpj5CYCxHfywH9EqwzX7TjwxNsrGLd9aPUoSeiuq3CYKh7AWrFZ+ufos33eGTCIfcU7LE3Ls+C7FXLmXf2j1sebpu+EpyLEZCIYusJvmuiGIwGhwATq9vfMg5ZGd4eb50JYYjcxIpv2vlYL6Gp0vpfc/GzUmvYJ7sJ8Evd20p5rKYLh35AuAylegwOcSvV1JuNWstNDj+V6Fsr8wRTqYAbOWavCzNbjV+L2dsH3UEgVMDMCohNK9QXoXvkBytG7Wt2DZ5e7ApHkW0/w1eUKa4UYsrziLwlxv4LNd2VD7QePPGZxM3suZr6wWhjSBCxphFbJVG95QsuA6ZwqKQTTbCSsikLsU4zNOlKHvK4+6xjY0MDgg+1bTCKd2OPHnnmbz4dIGmIefk73eQPP8eG5/6dgen69m3JszRCTQn/HVBnAJJbpF9J3gk0QrH1vZ6Ty8QLCc5zlOdzEoeb+TaVNbXx20hY+cIj4x2fcGspfvPNqYdzIVaxg37T0ub0Ny5WkYCC5tzJ9m2bpSSVI3WbcbO6+8b139BxTRzD+5prehVifZ5mPNHneDpjYLjBvAgG76ySHlL1ejPud40XRBJ/7PLXkEYLgzb4Jocp2Wh8KP3oubPWoqJ0I5qlusgQlbjBCSQ4qQON1VlsofGXXShL+r12fbp39o0QVSlfn9TjKi8KMSk8IVvC8hzOeMQzkNl1bDryHhmGA+jHhaZFITdZJoO8EQJFDbcK7kTUPMiu4IgGFPyVJOoEOh8nH6jLmGipumLHO/tfAYTC7+umqBfsRLvDaqMZ2axv6z3jYP0JbQWHYHAlHH47DtVV6tTnxMas4fNs7fwmVa+yZeTWlOih20UuLoCDwuz1kYqmwDvpcZ9jI/L/xeXExn2eoGsr7CjMzHYPObdapr5yFGKQGYHWWIWXo7JsDvXMrYp3nDTZUCxsIrkHMeOlGdoAkJaZCRKpqBanUvHvWRRyYYu5yfFcmkXiU+EN8uIqfFMgiosW+D4N3rstNc46iBvFpFJvjZ1DGpa3XuMXXCLLKqcADn0ikNie/PtHZwyv2KmSTCJiHZqC1bfetB1qM2qai+PBGFGKeMJ5Kd5MwvdCChZMjUSOiipJ1LkqR+u3WHrm32pvWMk/hL/kX0ri2yEIZyeBgznZmePPbBHwJ3tUJ9mZou9fRDqFyc2bT98ZcU7o3jZp3h0DjFqIYFTPcNJ/KMNNjCDCEMl6yyLbfOx3Sj4F/XqOaWEPCagFmh2SCP8+Mc+WMzTi8+4F75hD6FTZG51pfEpOR57CXXr99dMHFTBj9R67mmWXf7H1E+zSuelXYeLNamv8+ml/57xKyIOmBUq6R33hseP98VM82DVLjVZg2fyksahj7rPD6Km0rKBZ1dmFZIHeD6O0doK0qRbCWouxWS29krYyg1OzfQmRFA8ZHyjuY5pDEFXrCF9FrGMeo8ioNy6eFJ5ipij4ow7txfPKh8kPVfYtOmqLheIKcVZ7dD5aoNEUpH9mYqKYRDaaGasPdktNIXvLavVkx7OoKcH6eJSQ4eQQruJQcgAKZePIzryi8idE3hhKUJ+2OBBlGeyinmN5ZQWBqzubkfo2KjqdMXczyunfz06mvoxXgUaq6Vz/uABYkS/ACXw5Dw1K4XwLtR2H0NZcUC8QxGVarapfzH40rzZ4b/uWNqOSSy/VFrWyzBVJYhcgd+EPX7lypGi4/k2g6n4uc0YfFN1i7LkvmGHBMUUs3aJFAj7QMD0sOYiCuO+zAGAttzKBXDEycnbeD2RIzxbCHVgHoKEKv+GjZDXx/RhpxavlbhWdYc+w7OJozwSuDAYH58Yya7g5jNdc42OribaVfJ4fBk6B3AQ/cTrXgW741FC7YirZi1tHS8Z9r7nbT2fPd0owFk5TYjNg/lLY30YiOqGeC+CdHODbzYN+KxGR1Tm2H4yvg8hUvMf0+xwxWWloVe+ruC+8bWxk1Mt7V78i2Bj7uohl132n2LHc45kg1zowetN0gjecsemwdUX+aVV4EA/esppsaVnKnOrl+gkjqqYuJEHMgkUV7zKbgZ6J0gwRWwWs4P8dv5FNjLUzrYvVhZGfqmdKF/ZV1IdHq01Mtys5J0uiq48TMZZjfU4MtlItuMbbKU5XhMxIOXhqd89vr8bxj1/GTYw3yZr+N8T84Jcr7+Nvra+CH5SzDxGUykKvLrwvzjZIz/AvGqZ5z5+Eriri6KUMFWf3wjKWozgE8NcLM10leAVggW1zKM7opIxNZ2AbPkiGie3rezpk9ich6MZNJGFtT5r+hlWYp2b/n7owk+aXJB+W1ITGFhKovX6jc5hbEuQtdu0d/vNyQXCZjETutMZ5dPjS5N0H1Zd+IZiYMgKhJThFu0lqEz6eZOz8cGlOVBpeiHHHL+kt8a+Weu2C3YKMozjFwEfjlAMk1kb43Fb1pgxloJqq22OU0u+2SJ86aMOtqThfTqE3IGBTkg/3hrsOgHS/NAO5nwOjNHcTEdY7eE4NroQzAAz7zqRDmvy1JbWZ2MzV5ZkOs9nzo5uy5S6aOr1NKk5ex/RkK23PxvwRGbByNJtG2Y7Nvy0CzvLpb5akqZEEBCVIX+V9xWhyswuu803p+sihrvhkJSv9fjJrM3tvczb+qOgLKhiN3VlMsPh5Nv/y56PpQFEJGpGSbR8faW7pKakRDe4LcRwzDG9XdSNj4Kgxlvw7Q3/Xfc/YccGiGALjmZfs6cUAPfTJ3zfRY3XfO0AT+LyC/4+sx+WqXdfqsjMNSZB3fr3FIZeRhPJJzTVLBqkHiybJ+ZOHgdVKfgq8Pt6tLpi8Ks5V9UCS1kFHIHnmNZaica8M/e5lOiuzV0osACUkpiZS1JNF0Azk521JeF6dt/vOO9Cky4tWmHbWslOG3LcYWXBDSyvyLKzoU3gj5uZTpDC+pFfFWGFnBiXVCJSsamXkNr01pY/5Nb8ypeDUuQOrgKP95z72Cnzu333ERQWHSoeYXBHAMD62rbUDYYDmiDAF5mjRvWzPmOVWGHNaXt13H/TrNPEgP8ljlTx5BzLDn7/Sgo96elcrXWVdhmPE0LxzNScS0tPqHy2uRFxclnFnl8lfiVJ7J4WWYLO25vHKzZiO5YuyHC8a2CZqkhsI/5lwOPF1JATuJktqAw+lmvJ2zDZhFq9+pBQuIDc6GstxVsC7p744LmEQNW1SbXBk0k5TkYPBFk39FIKVxWJBFlr/h64I91gX4djSA2VEuVyfvc43KQqtW4Y+PCH3Ao/nk2ZXckBGDiMQjuqi/84kPdyAcBkOf2+1XxBk4naRzt54jutMNOpCSUZtkR3NCF8rNT1Aya5aSVFRvyKMBjgOLOudEWVdHm64GrNjtRqaDVsv2vUQcjd2c3nwAXzckwvxd5ZLje2/EybBfN/5RfWbNrUWKdmg5AVHzIZpYnjWuVmHPnuDtu9J1J+vD4Jnsi/9bBIyVlNh5q8eW7cOR4Cmhga/U2SWMQ2qAu/lcKVhdpzFaCwp7DQPcfC2MEHvashiFf3XUfLOlkoCVHRenEvoVigl7o9q9ze34bYSa0YXct/E/qT793+ivF/+8fASDRA2JIJc+evVucdruC7IyTSqFKCAlfAECXPC/DG53B/lY2cLtJXPRroGWwbNcJV8QulqhQPxi81IAXsWHwACPUhPTpIoqCdIEH+LUKP6lrcnxlN/oaiaPexwVGIwb0nwCmx3BMrzJkWXpkOkXXqLynqlIaOAAAAA=" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-4">
+        <div class="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <span class="badge-pill mb-1.5">🛠️ נוסחת הקסם לעבודה עם Cowork (אינטראקטיבי)</span>
+            <h2 class="text-2xl md:text-4xl font-extrabold">בנו את הפרומפט: תוצר + חומרי גלם + ניואנס ניהולי</h2>
+          </div>
+          <span class="text-xs text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
+            👆 לחצו על התגיות כדי להרכיב משימות שונות בלייב
+          </span>
+        </div>
+
+        <!-- BUILD THE PROMPT Interactive Box -->
+        <div class="cowork-builder-frame space-y-2.5 my-auto">
+          <div class="text-xs font-extrabold tracking-widest text-emerald-300 uppercase px-1 flex items-center justify-between">
+            <span>BUILD THE PROMPT • הרכבת משימה ל-Cowork</span>
+            <span class="text-[11px] font-normal text-slate-400">אחרי שה-Role כבר שמור ב-Global Instructions, נשארו רק 3 מרכיבים למשימה!</span>
+          </div>
+
+          <!-- Row 1: DELIVERABLE -->
+          <div class="cowork-row">
+            <div class="cowork-row-label">
+              <span class="text-emerald-400">1. התוצר</span>
+              <span class="text-[10px] text-slate-400 font-mono">DELIVERABLE</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" class="builder-chip selected" data-group="deliverable" data-value="רשימה מדורגת עם המלצות והערות">
+                רשימה מדורגת עם המלצות והערות
+              </button>
+              <button type="button" class="builder-chip" data-group="deliverable" data-value="מסמך מנהלים של 2 עמודים">
+                מסמך מנהלים של 2 עמודים
+              </button>
+              <button type="button" class="builder-chip" data-group="deliverable" data-value="שקף מסכם לישיבת הוועד המנהל">
+                שקף מסכם לישיבת הוועד המנהל
+              </button>
+              <button type="button" class="builder-chip" data-group="deliverable" data-value="טבלת השוואת תוכניות ותקציב">
+                טבלת השוואת תוכניות ותקציב
+              </button>
+            </div>
+          </div>
+
+          <!-- Row 2: INPUTS -->
+          <div class="cowork-row">
+            <div class="cowork-row-label">
+              <span class="text-sky-400">2. חומרי הגלם</span>
+              <span class="text-[10px] text-slate-400 font-mono">INPUTS</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" class="builder-chip selected" data-group="inputs" data-value="תיקיית משובי קהילה ופעילויות רבעון 3">
+                תיקיית משובי קהילה ופעילויות רבעון 3
+              </button>
+              <button type="button" class="builder-chip" data-group="inputs" data-value="הדוח של הרבעון הקודם כתבנית ייחוס לעיצוב">
+                הדוח של הרבעון הקודם כתבנית ייחוס לעיצוב
+              </button>
+              <button type="button" class="builder-chip" data-group="inputs" data-value="קבצי ה-PDF של בקשות התמיכה והמענקים בלבד">
+                קבצי ה-PDF של בקשות התמיכה והמענקים בלבד
+              </button>
+              <button type="button" class="builder-chip" data-group="inputs" data-value="תיקיית ה-Obsidian של פרויקט המנטורינג">
+                תיקיית ה-Obsidian של פרויקט המנטורינג
+              </button>
+            </div>
+          </div>
+
+          <!-- Row 3: NUANCE -->
+          <div class="cowork-row">
+            <div class="cowork-row-label">
+              <span class="text-purple-400">3. דגש והקשר</span>
+              <span class="text-[10px] text-slate-400 font-mono">NUANCE</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" class="builder-chip selected" data-group="nuance" data-value="קהל היעד הוא הנהלת חלאסרטן בריטריט התכנון השנתי שמחליטה אילו תוכניות להרחיב">
+                עבור הנהלת חלאסרטן בריטריט התכנון השנתי — כדי להחליט אילו תוכניות להרחיב
+              </button>
+              <button type="button" class="builder-chip" data-group="nuance" data-value="פתח ישר בשורה התחתונה ובהמלצה המעשית המובילה">
+                פתח ישר בשורה התחתונה ובהמלצה המעשית המובילה
+              </button>
+              <button type="button" class="builder-chip" data-group="nuance" data-value="סמן בבירור כל נתון שחסר או שלא ניתן לאמת מתוך הקבצים">
+                סמן בבירור כל נתון שחסר או שלא ניתן לאמת מתוך הקבצים
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assembled Prompt Composer Preview Box -->
+        <div class="glass-card bg-slate-950/95 border-slate-700/90 p-4 shadow-2xl">
+          <p id="assembled-cowork-prompt" class="prompt-text text-base md:text-lg text-slate-100 leading-relaxed mb-4">
+            "תכין לי <span id="preview-deliverable" class="prompt-underline-segment">רשימה מדורגת עם המלצות והערות</span> על בסיס <span id="preview-inputs" class="prompt-underline-segment">תיקיית משובי קהילה ופעילויות רבעון 3</span> — <span id="preview-nuance" class="prompt-underline-segment">קהל היעד הוא הנהלת חלאסרטן בריטריט התכנון השנתי שמחליטה אילו תוכניות להרחיב</span>."
+          </p>
+          <div class="flex flex-wrap items-center justify-between pt-2.5 border-t border-slate-800/90 text-xs text-slate-400 gap-2">
+            <div class="flex items-center gap-3">
+              <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center font-bold text-sm">+</span>
+              <span class="px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 font-semibold border border-purple-500/30">Cowork ▾</span>
+              <span class="text-slate-400">📁 גישה לתיקייה מקומית מופעלת</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <button type="button" class="copy-prompt-btn px-3 py-1 rounded-md bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 font-semibold transition cursor-pointer">
+                📋 העתק פרומפט מורכב
+              </button>
+              <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300 font-mono">Sonnet 4.6 ▾</span>
+              <span class="text-base">🎙️</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        שימו לב לחיבור הפדגוגי: מכיוון שהתפקיד והרקע של חלאסרטן כבר שמורים ב-Global Instructions (שקפים 4-5), כשאנחנו באים ל-Cowork אנחנו צריכים להגדיר רק את 3 המרכיבים המשתנים: התוצר (Deliverable), חומרי הגלם (Inputs) והדגש הספציפי למשימה (Nuance).
+      </aside>
+    </section>
+
+    <!-- SLIDE 8: Topic 4 - Choosing the Right Model (Haiku, Sonnet, Opus) -->
+    <section class="slide" data-slide="8">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,UklGRioPAABXRUJQVlA4IB4PAADQQgCdASrcAGQAPmEokUUkIqIXWn4cQAYEsgHYDti1sQT5QPmztT9+/GXsi8dYuPYJ+V+675r/431Y/oT2BP1n6SHmE/YP9oPdv/y/7je4v9gPYA/qX9R9Y3/q+xh/b/Ud/l//B9Ob2Vv7h/3PStrN3Sv7o9x+a5Ey7h/4Hr4/q/BX1e+oR7S/1e+4gC+t3gDao/hbzTfS3wQaBnjLaY3r/2FTsgAhn9EESxa4iu9l24bh1ROoGge5zXbLZ8fFkG9jWTveeDhFpfAKeBtm0vGW0GoVwlOf5lNLlNI2N4LCwl9r03068185DNVvE2zwfo18tbFA5vi1sAhZljn+wHuyX9tRXNfz+18KpEoAn8UWuNpJxyZSzEjdlCiNDDICMmyJfBcNcXQRyN6nsQ76krHsL1kvL0u/sFdVpEWfLVgmb1t1F4EqPj3rpacUZ8WFJNiqFkVlFgZbFp8EouV6g/F5xZBfuEzfhsdMuHeNh49UNKlj/BzyQG8vKkTXTHDIuau2zgflbh5QrGWwZLZNrRimXZe/zDfB9QlcPQU3+413nIrAk8oZl1+5ffNLeCzPNpNvV3v1eHFSAme4XTiwTTIR4dLvAP/2dniNTtlA46kAspV2p+uUqr7TclvWOsjzUm5PxEQxIKZPu3JBJ6biI37a05O3vV66Crpipk/p1xHFi+Var2VyQw9rJazogBaiO97OQXyrbByG/uCrXZ6EbRAA5KuvqU2D5LihXUJ/K0c6zcRpsxH7bI/j0O3//tiD+XT/CfNHfCdkBt/iX98+VJoUYijTaxgOqIeP9kLLi78XdclBH3hbz/uwRI/tRMwaw/YFTdMrAu+j6EoUaTLKo+KMyQTAjMRcEM9u6la4Q63/WG68KavFrmSW0DpLQDcwpKHZv+CvhfRMe66CNTy3umh7tghm3SNAERlbIFepO3gaGj3rlvSEYa8H7fJdPi0y17ZZ2Ly7jKawrvw1+rlkGkt1HHbGlwwuhRvlf09auITsJa0G/c5gq1QyReHTX4rEYWMGxQkJV1tkDnl7g+djok47dver9G+S3aI47jot6d3m1ykj6iBe3pgMGbHg2sMsM8dmPobMoj7IM2/NocnjW8s+oEGRBVe0mE+zsnbE4wdXB9OekQyzITx9HfaAvIv037uzR0fE+8DZOEFZroMEczZIQl7p0mAz5pX9fmYcxH2IImzvkC3BHN+XvhDKVnMR0GgZaqRMWDBpsMlkj3/Yh/w9BuC5ZAXaCRTsoiRETIIu/F0B4E3GWqFFeSEE/ZVtlWNDr/98lItgNwtBJFv+E4QJe7glWhhWr0RX2nNA9meusSfmb9UpnWeH4haQ7S9DJRK9fvRdo1r5h4skvFPiN7MVEViCFKOqREJgIfViICn6sQJ8Z5pTJKhs7ZaddujxKsuBxIjyBqKknntG0OI9yBpmoC4VMkVH3bFRcMpj5CYCxHfywH9EqwzX7TjwxNsrGLd9aPUoSeiuq3CYKh7AWrFZ+ufos33eGTCIfcU7LE3Ls+C7FXLmXf2j1sebpu+EpyLEZCIYusJvmuiGIwGhwATq9vfMg5ZGd4eb50JYYjcxIpv2vlYL6Gp0vpfc/GzUmvYJ7sJ8Evd20p5rKYLh35AuAylegwOcSvV1JuNWstNDj+V6Fsr8wRTqYAbOWavCzNbjV+L2dsH3UEgVMDMCohNK9QXoXvkBytG7Wt2DZ5e7ApHkW0/w1eUKa4UYsrziLwlxv4LNd2VD7QePPGZxM3suZr6wWhjSBCxphFbJVG95QsuA6ZwqKQTTbCSsikLsU4zNOlKHvK4+6xjY0MDgg+1bTCKd2OPHnnmbz4dIGmIefk73eQPP8eG5/6dgen69m3JszRCTQn/HVBnAJJbpF9J3gk0QrH1vZ6Ty8QLCc5zlOdzEoeb+TaVNbXx20hY+cIj4x2fcGspfvPNqYdzIVaxg37T0ub0Ny5WkYCC5tzJ9m2bpSSVI3WbcbO6+8b139BxTRzD+5prehVifZ5mPNHneDpjYLjBvAgG76ySHlL1ejPud40XRBJ/7PLXkEYLgzb4Jocp2Wh8KP3oubPWoqJ0I5qlusgQlbjBCSQ4qQON1VlsofGXXShL+r12fbp39o0QVSlfn9TjKi8KMSk8IVvC8hzOeMQzkNl1bDryHhmGA+jHhaZFITdZJoO8EQJFDbcK7kTUPMiu4IgGFPyVJOoEOh8nH6jLmGipumLHO/tfAYTC7+umqBfsRLvDaqMZ2axv6z3jYP0JbQWHYHAlHH47DtVV6tTnxMas4fNs7fwmVa+yZeTWlOih20UuLoCDwuz1kYqmwDvpcZ9jI/L/xeXExn2eoGsr7CjMzHYPObdapr5yFGKQGYHWWIWXo7JsDvXMrYp3nDTZUCxsIrkHMeOlGdoAkJaZCRKpqBanUvHvWRRyYYu5yfFcmkXiU+EN8uIqfFMgiosW+D4N3rstNc46iBvFpFJvjZ1DGpa3XuMXXCLLKqcADn0ikNie/PtHZwyv2KmSTCJiHZqC1bfetB1qM2qai+PBGFGKeMJ5Kd5MwvdCChZMjUSOiipJ1LkqR+u3WHrm32pvWMk/hL/kX0ri2yEIZyeBgznZmePPbBHwJ3tUJ9mZou9fRDqFyc2bT98ZcU7o3jZp3h0DjFqIYFTPcNJ/KMNNjCDCEMl6yyLbfOx3Sj4F/XqOaWEPCagFmh2SCP8+Mc+WMzTi8+4F75hD6FTZG51pfEpOR57CXXr99dMHFTBj9R67mmWXf7H1E+zSuelXYeLNamv8+ml/57xKyIOmBUq6R33hseP98VM82DVLjVZg2fyksahj7rPD6Km0rKBZ1dmFZIHeD6O0doK0qRbCWouxWS29krYyg1OzfQmRFA8ZHyjuY5pDEFXrCF9FrGMeo8ioNy6eFJ5ipij4ow7txfPKh8kPVfYtOmqLheIKcVZ7dD5aoNEUpH9mYqKYRDaaGasPdktNIXvLavVkx7OoKcH6eJSQ4eQQruJQcgAKZePIzryi8idE3hhKUJ+2OBBlGeyinmN5ZQWBqzubkfo2KjqdMXczyunfz06mvoxXgUaq6Vz/uABYkS/ACXw5Dw1K4XwLtR2H0NZcUC8QxGVarapfzH40rzZ4b/uWNqOSSy/VFrWyzBVJYhcgd+EPX7lypGi4/k2g6n4uc0YfFN1i7LkvmGHBMUUs3aJFAj7QMD0sOYiCuO+zAGAttzKBXDEycnbeD2RIzxbCHVgHoKEKv+GjZDXx/RhpxavlbhWdYc+w7OJozwSuDAYH58Yya7g5jNdc42OribaVfJ4fBk6B3AQ/cTrXgW741FC7YirZi1tHS8Z9r7nbT2fPd0owFk5TYjNg/lLY30YiOqGeC+CdHODbzYN+KxGR1Tm2H4yvg8hUvMf0+xwxWWloVe+ruC+8bWxk1Mt7V78i2Bj7uohl132n2LHc45kg1zowetN0gjecsemwdUX+aVV4EA/esppsaVnKnOrl+gkjqqYuJEHMgkUV7zKbgZ6J0gwRWwWs4P8dv5FNjLUzrYvVhZGfqmdKF/ZV1IdHq01Mtys5J0uiq48TMZZjfU4MtlItuMbbKU5XhMxIOXhqd89vr8bxj1/GTYw3yZr+N8T84Jcr7+Nvra+CH5SzDxGUykKvLrwvzjZIz/AvGqZ5z5+Eriri6KUMFWf3wjKWozgE8NcLM10leAVggW1zKM7opIxNZ2AbPkiGie3rezpk9ich6MZNJGFtT5r+hlWYp2b/n7owk+aXJB+W1ITGFhKovX6jc5hbEuQtdu0d/vNyQXCZjETutMZ5dPjS5N0H1Zd+IZiYMgKhJThFu0lqEz6eZOz8cGlOVBpeiHHHL+kt8a+Weu2C3YKMozjFwEfjlAMk1kb43Fb1pgxloJqq22OU0u+2SJ86aMOtqThfTqE3IGBTkg/3hrsOgHS/NAO5nwOjNHcTEdY7eE4NroQzAAz7zqRDmvy1JbWZ2MzV5ZkOs9nzo5uy5S6aOr1NKk5ex/RkK23PxvwRGbByNJtG2Y7Nvy0CzvLpb5akqZEEBCVIX+V9xWhyswuu803p+sihrvhkJSv9fjJrM3tvczb+qOgLKhiN3VlMsPh5Nv/y56PpQFEJGpGSbR8faW7pKakRDe4LcRwzDG9XdSNj4Kgxlvw7Q3/Xfc/YccGiGALjmZfs6cUAPfTJ3zfRY3XfO0AT+LyC/4+sx+WqXdfqsjMNSZB3fr3FIZeRhPJJzTVLBqkHiybJ+ZOHgdVKfgq8Pt6tLpi8Ks5V9UCS1kFHIHnmNZaica8M/e5lOiuzV0osACUkpiZS1JNF0Azk521JeF6dt/vOO9Cky4tWmHbWslOG3LcYWXBDSyvyLKzoU3gj5uZTpDC+pFfFWGFnBiXVCJSsamXkNr01pY/5Nb8ypeDUuQOrgKP95z72Cnzu333ERQWHSoeYXBHAMD62rbUDYYDmiDAF5mjRvWzPmOVWGHNaXt13H/TrNPEgP8ljlTx5BzLDn7/Sgo96elcrXWVdhmPE0LxzNScS0tPqHy2uRFxclnFnl8lfiVJ7J4WWYLO25vHKzZiO5YuyHC8a2CZqkhsI/5lwOPF1JATuJktqAw+lmvJ2zDZhFq9+pBQuIDc6GstxVsC7p744LmEQNW1SbXBk0k5TkYPBFk39FIKVxWJBFlr/h64I91gX4djSA2VEuVyfvc43KQqtW4Y+PCH3Ao/nk2ZXckBGDiMQjuqi/84kPdyAcBkOf2+1XxBk4naRzt54jutMNOpCSUZtkR3NCF8rNT1Aya5aSVFRvyKMBjgOLOudEWVdHm64GrNjtRqaDVsv2vUQcjd2c3nwAXzckwvxd5ZLje2/EybBfN/5RfWbNrUWKdmg5AVHzIZpYnjWuVmHPnuDtu9J1J+vD4Jnsi/9bBIyVlNh5q8eW7cOR4Cmhga/U2SWMQ2qAu/lcKVhdpzFaCwp7DQPcfC2MEHvashiFf3XUfLOlkoCVHRenEvoVigl7o9q9ze34bYSa0YXct/E/qT793+ivF/+8fASDRA2JIJc+evVucdruC7IyTSqFKCAlfAECXPC/DG53B/lY2cLtJXPRroGWwbNcJV8QulqhQPxi81IAXsWHwACPUhPTpIoqCdIEH+LUKP6lrcnxlN/oaiaPexwVGIwb0nwCmx3BMrzJkWXpkOkXXqLynqlIaOAAAAA=" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">4️⃣ בחירת המודל הנכון</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">משפחת המודלים: מתי עובדים עם Haiku, Sonnet או Opus?</h2>
+          <p class="text-base md:text-lg text-slate-300">התאמת <a href="https://platform.claude.com/docs/en/models/overview" target="_blank" rel="noopener noreferrer" class="ext-link">המודל של Claude</a> לסוג המשימה חוסכת זמן, מונעת הגבלות מכסה ומדייקת את התוצאה</p>
+        </div>
+
+        <div class="glass-card overflow-x-auto my-auto p-0">
+          <table class="w-full text-right border-collapse">
+            <thead>
+              <tr class="border-b border-slate-700/80 bg-slate-800/80 text-sky-300 text-sm">
+                <th class="p-4 font-bold">המודל</th>
+                <th class="p-4 font-bold">האופי והחוזקה שלו</th>
+                <th class="p-4 font-bold">Best Practice להנהלת חלאסרטן</th>
+                <th class="p-4 font-bold">מהירות ומכסת טוקנים</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-sm text-slate-200">
+              <tr class="hover:bg-slate-800/40 bg-emerald-500/5">
+                <td class="p-4 font-bold text-emerald-300 text-base">⚡ Claude Haiku</td>
+                <td class="p-4">הסורק המהיר, החד והחסכוני ביותר</td>
+                <td class="p-4 font-semibold text-white">קריאת מסמכים ארוכים, סיכום פרוטוקולים, חילוץ נתונים מקבצים ומיון ראשוני</td>
+                <td class="p-4 text-emerald-300">מיידי • זול פי כמה בטוקנים</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="p-4 font-bold text-sky-300 text-base">🎯 Claude Sonnet</td>
+                <td class="p-4">סוס העבודה היומיומי המאזן חוכמה ומהירות</td>
+                <td class="p-4">כתיבת ניוזלטרים ודוחות, הכנת מצגות, ניתוח נתונים שוטף ובניית דשבורדים</td>
+                <td class="p-4 text-sky-300">מהיר • ברירת המחדל ל-80% מהעבודה</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="p-4 font-bold text-purple-300 text-base">🧠 <a href="https://www.anthropic.com/claude/opus" target="_blank" rel="noopener noreferrer" class="ext-link">Claude Opus</a></td>
+                <td class="p-4">האסטרטג העמוק לפיצוח בעיות מורכבות</td>
+                <td class="p-4">בניית תוכנית אסטרטגית שנתית, פיצוח דילמות ניהוליות רגישות או תכנון מערכתי</td>
+                <td class="p-4 text-amber-300">איטי יותר • צורך מכסה גבוהה</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">⚡</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>טיפ זהב:</strong> רוצים שקלוד יקרא ויתחקר מסמכים גדולים בלי לשרוף את מכסת הטוקנים שלמדנו עליה? עברו ל-<strong>Haiku</strong>!
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        כאן הכל מתחבר למה שלמדנו בשקף 2 על טוקנים: מסמכים ארוכים שורפים המון טוקנים. אם נסרוק אותם עם Opus המכסה תיגמר מהר מאוד. לעומת זאת, Haiku קורא מסמכים במהירות שיא ובמינימום עלות טוקנים!
+      </aside>
+    </section>
+
+    <!-- SLIDE 9: Topic 5 - Project Folder Hygiene -->
+    <section class="slide" data-slide="9">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">5️⃣ סדר וארגון בעבודה</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">כל פרויקט מקבל תיקייה משלו עם שם ברור</h2>
+          <p class="text-base md:text-lg text-slate-300">כשעובדים עם סוכני AI, סדר בתיקיות הוא לא "עניין טכני" - הוא המפתח לכך שנדע איפה כל דבר נשמר ואיך לחזור אליו</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
+          <div class="glass-card border-red-500/30">
+            <div class="text-xs font-bold uppercase text-red-400 mb-2">איך רוב האנשים עובדים (ונתקעים)</div>
+            <h3 class="text-xl font-bold mb-3">❌ תיקיית "הורדות" כאוטית</h3>
+            <ul class="space-y-2.5 text-sm text-slate-300">
+              <li>• קבצים בשם <code class="text-red-300">final_v2_new(1).docx</code> זרוקים על שולחן העבודה.</li>
+              <li>• קלוד סורק קבצים לא קשורים ומתבלבל בהקשר.</li>
+              <li>• שבועיים אחר כך אף אחד לא זוכר איפה נשמר התוצר הסופי.</li>
+            </ul>
+          </div>
+
+          <div class="glass-card border-emerald-400/40">
+            <div class="text-xs font-bold uppercase text-emerald-400 mb-2">הרגל עבודה מנצח להנהלה</div>
+            <h3 class="text-xl font-bold mb-3">✅ תיקייה ייעודית וברורה לכל פרויקט</h3>
+            <div class="bg-slate-950/80 p-3.5 rounded-lg border border-slate-800 text-xs font-mono text-sky-300 leading-relaxed mb-3" dir="ltr">
+              📁 Halasartan-Projects/<br/>
+              &nbsp;&nbsp;└── 📁 2026-11-Annual-Donors-Event/<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 01-Raw-Materials/ (מסמכי מקור ונתונים)<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📁 02-Outputs/ (מצגות, דוחות ותוצרים)<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📄 CLAUDE.md / context.md (הנחיות הפרויקט)
+            </div>
+            <p class="text-xs text-slate-300">כך קלוד רואה <strong>רק</strong> את מה שרלוונטי לפרויקט, וכל תוצר נשמר בדיוק במקום שלו.</p>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">📂</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>כלל אצבע:</strong> לפני שפותחים את קלוד על משימה חדשה - פותחים לה תיקייה עם שם ברור במחשב או בדרייב.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להראות איך המבנה הפשוט הזה מונע את הבלגן של "איפה הקובץ שקלוד יצר לי בשבוע שעבר?" ומאפשר ל-Cowork לעבוד בצורה ממוקדת ובטוחה רק בתוך התיקייה של אותו פרויקט.
+      </aside>
+    </section>
+
+    <!-- SLIDE 10: Topic 6 - Obsidian as Memory & Context Engine -->
+    <section class="slide" data-slide="10">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">6️⃣ הזיכרון הארגוני החכם</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">Obsidian + Claude: לתת לקלוד זיכרון אמיתי על הדאטה שלנו</h2>
+          <p class="text-base md:text-lg text-slate-300">הדבר הכי חשוב בכל עבודה עם AI הוא ה-<strong>Context (ההקשר)</strong>: היכולת לתשאל את הידע שלנו בלי להזין אותו כל פעם מחדש</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          <div class="glass-card border-purple-400/30">
+            <div class="text-3xl mb-3">💎</div>
+            <h3 class="text-xl font-bold mb-2 text-purple-300">מה זה <a href="https://obsidian.md/" target="_blank" rel="noopener noreferrer" class="ext-link">Obsidian</a>?</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              מחברת חכמה ששומרת את כל הסיכומים, הפרויקטים והנהלים שלכם כקבצי טקסט פשוטים ומהירים בתיקייה על המחשב שלכם - מקושרים זה לזה כמו מוח שני.
+            </p>
+          </div>
+
+          <div class="glass-card border-sky-400/30">
+            <div class="text-3xl mb-3">🔗</div>
+            <h3 class="text-xl font-bold mb-2 text-sky-300">איך מחברים לקלוד?</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              מכיוון ש-Obsidian היא פשוט תיקייה של קבצים מסודרים, מחברים את קלוד (דרך Cowork או Connector) ישירות לכספת ה-Obsidian שלנו.
+            </p>
+          </div>
+
+          <div class="glass-card border-emerald-400/30">
+            <div class="text-3xl mb-3">🔍</div>
+            <h3 class="text-xl font-bold mb-2 text-emerald-300">לתשאל את הדאטה בשפה טבעית</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              שואלים את קלוד: <em>"מה החלטנו בישיבות ההנהלה ברבעון האחרון לגבי תוכנית המנטורינג?"</em> - והוא שולף תשובה מדויקת מתוך הזיכרון שלנו!
+            </p>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🧠</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>בשורה התחתונה:</strong> מודל AI הוא המנוע, אבל <strong>הקונטקסט ב-Obsidian הוא הדלק</strong> שהופך אותו למומחה של חלאסרטן.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להדגיש ש-Context הוא הדבר הכי חשוב בכל התהליך. ברגע שהמידע שלנו יושב ב-Obsidian בצורה מסודרת, קלוד מכיר את הדאטה שלנו ואנחנו יכולים לתשאל אותה ולייצר ממנה תובנות בשניות.
+      </aside>
+    </section>
+
+    <!-- SLIDE 11: Topic 7 - Claude Projects & Team Collaboration -->
+    <section class="slide" data-slide="11">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">7️⃣ עבודת צוות חכמה</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">Projects בקלוד: להפוך פרויקט לסביבת עבודה משותפת</h2>
+          <p class="text-base md:text-lg text-slate-300">איך בונים מרחב ידע ייעודי לכל תחום בחלאסרטן ומשתפים אותו עם שאר חברי ההנהלה והצוות</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          <div class="glass-card">
+            <div class="w-10 h-10 rounded-lg bg-sky-500/20 text-sky-300 font-bold flex items-center justify-center mb-3">1</div>
+            <h3 class="text-lg font-bold mb-2 text-sky-300">פתיחת Project והגדרת מטרה</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              פותחים Project חדש (למשל: <strong>"גיוס שותפויות וקרנות"</strong>) ומגדירים לו Custom Instructions ספציפיים רק לפרויקט הזה.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center mb-3">2</div>
+            <h3 class="text-lg font-bold mb-2 text-purple-300">העלאת מסמכי ליבה (Project Knowledge)</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              מצרפים לספריית הפרויקט את דפי העמדה של חלאסרטן, נתוני האימפקט של העמותה ודוגמאות לבקשות מענקים מוצלחות מהעבר.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold flex items-center justify-center mb-3">3</div>
+            <h3 class="text-lg font-bold mb-2 text-emerald-300">שיתוף עם הצוות וההנהלה</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              משתפים את ה-Project עם חברי הצוות בלחיצת כפתור. כל מי שנכנס לפרויקט נהנה מאותו זיכרון ומאותן הנחיות בלי להגדיר דבר מחדש!
+            </p>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🤝</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>מה זה נותן לנו?</strong> אחידות מלאה בשפה הארגונית וחיסכון אדיר בזמן חפיפה בין אנשי הצוות.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להראות בלייב בממשק של קלוד איך לוחצים על Projects, מוסיפים קובץ ל-Project Knowledge ולוחצים על Share כדי שכל ההנהלה תעבוד על אותה תשתית ידע.
+      </aside>
+    </section>
+
+    <!-- SLIDE 12: Topic 8a - Skills ("The Chef's Recipe") & Vercel Find-Skills -->
+    <section class="slide" data-slide="12">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">8️⃣ אוטומציה של מומחיות</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">Skills: כמו "מתכון קבוע ליצירת ארוחת שף"</h2>
+          <p class="text-base md:text-lg text-slate-300">בלי סקיל אנחנו חוזרים על אותן הוראות כל פעם מחדש; עם סקיל אנחנו מעניקים לאייג'נט יכולת קבועה לבצע משימות מורכבות</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          <div class="glass-card border-amber-400/30">
+            <div class="text-2xl mb-2">👨‍🍳</div>
+            <h3 class="text-lg font-bold mb-2 text-amber-300">למה "מתכון שף"?</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              קובץ <code class="text-amber-200">SKILL.md</code> אורז את כל שלבי העבודה, העיצוב ובדיקות האיכות. ברגע שמבקשים משימה מוכרת, קלוד שולף את המתכון לבד ומבצע ברמה של שף.
+            </p>
+          </div>
+
+          <div class="glass-card border-sky-400/30">
+            <div class="text-2xl mb-2">📊</div>
+            <h3 class="text-lg font-bold mb-2 text-sky-300">דוגמה מהשטח: סקיל דשבורד משימות</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              מתוך צורך לנהל משימות טוב יותר, בניתי סקיל שלוקח מידע מכל סוגי הדאטאות (אקסלים, פתקים, מיילים) ובונה אוטומטית דשבורד ניהולי אינטראקטיבי.
+            </p>
+          </div>
+
+          <div class="glass-card border-purple-400/30">
+            <div class="text-2xl mb-2">🔎</div>
+            <h3 class="text-lg font-bold mb-2 text-purple-300">לא להמציא את הגלגל: <a href="https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md" target="_blank" rel="noopener noreferrer" class="ext-link">Find Skills</a></h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-2">
+              לפני שבונים לבד, הסקיל הרשמי של Vercel מחפש עבורכם אלפי סקילים קיימים שמישהו כבר בנה ובדק:
+            </p>
+            <code class="block bg-slate-950 p-2 rounded text-xs text-emerald-300 font-mono" dir="ltr">npx skills add vercel-labs/skills --skill find-skills</code>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">✨</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>הכלל:</strong> כל פעולה שאתם עושים יותר מפעמיים בחודש - ראויה להפוך ל-Skill קבוע.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להציג את הסקיל שיצרתי לבניית דשבורד ניהול משימות מכל סוגי הדאטאות, להראות איך מתקינים סקיל בתיקייה או בממשק, ולהדגים את find-skills של Vercel שמוצא סקילים מוכנים בקהילה.
+      </aside>
+    </section>
+
+    <!-- SLIDE 13: Topic 8b - Hands-On Building the Halasartan Presentation Skill + Claude Design -->
+    <section class="slide" data-slide="13">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">🛠️ תרגול מעשי משותף</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">בונים יחד: סקיל מצגות ממותג עם הלוגו של חלאסרטן</h2>
+          <p class="text-base md:text-lg text-slate-300">ניצור עכשיו סקיל משותף שמייצר מצגות HTML מעוצבות עם הלוגו והשפה של <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="ext-link">חלאסרטן</a> ומוכן לייצוא מהיר ל-PDF</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 my-auto">
+          <div class="md:col-span-5 glass-card flex flex-col justify-between border-emerald-400/30">
+            <div>
+              <span class="text-xs font-bold text-emerald-400 uppercase">מה הסקיל המשותף יעשה?</span>
+              <h3 class="text-xl font-bold mt-1 mb-3">מנקודות גולמיות למצגת הנהלה</h3>
+              <ul class="space-y-2.5 text-sm text-slate-200">
+                <li>✅ מטמיע אוטומטית את הלוגו וצבעי המותג של חלאסרטן.</li>
+                <li>✅ בונה מצגת HTML אינטראקטיבית בעברית מלאה (RTL).</li>
+                <li>✅ מאפשר שמירה והדפסה נקייה ל-<strong>PDF</strong> בלחיצת <code class="text-sky-300">Ctrl+P</code> לשליחה לתורמים ולשותפים.</li>
+              </ul>
+            </div>
+            <div class="mt-4 p-3 rounded-lg bg-purple-500/15 border border-purple-400/30 text-xs text-purple-200">
+              🎨 <strong>בונוס (אם יישאר זמן):</strong> הצצה ל-<strong>Claude Design / Artifacts</strong> לתכנון ויזואלי ו-System Design של תהליכים.
+            </div>
+          </div>
+
+          <div class="md:col-span-7 glass-card bg-slate-950/90 border-sky-400/40 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
+              <span class="text-xs font-semibold text-sky-400">פרומפט ליצירת סקיל המצגות של חלאסרטן (לחצו להעתקה)</span>
+              <button type="button" class="copy-prompt-btn text-xs px-3 py-1 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 transition cursor-pointer">
+                📋 העתק פרומפט
+              </button>
+            </div>
+            <pre class="prompt-text whitespace-pre-wrap text-sm text-slate-100 leading-relaxed font-sans">"בוא ניצור יחד Skill חדש בשם halasartan-presentation עבור הנהלת עמותת 'חלאסרטן'.
+הסקיל צריך לקבל נקודות תוכן או מסמך גולמי ולהפיק קובץ HTML יחיד של מצגת שקפים בעברית (RTL) הכוללת:
+1. הטמעת הלוגו של חלאסרטן בראש/תחתית השקפים ופלטת צבעים מותאמת לעמותה.
+2. שפה אנושית, ישירה ובגובה העיניים.
+3. ניווט מקלדת מלא והגדרות @media print מובנות כך שניתן להדפיס את המצגת ישירות לקובץ PDF נקי."</pre>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">📄</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>הקסם של HTML ל-PDF:</strong> מקבלים גם מצגת חיה להצגה במסך מלא וגם קובץ PDF מעוצב לשליחה במייל או בוואטסאפ.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להדגים איך אנחנו בונים את הסקיל עם הלוגו של חלאסרטן על בסיס ארכיטקטורת html-presentation, ואז מראים איך לחיצה על הדפסה בדפדפן הופכת את ה-HTML ל-PDF מושלם. אם נשאר זמן בלו"ז - להראות 3 דקות של סיסטם דיזיין ב-Claude Design.
+      </aside>
+    </section>
+
+    <!-- SLIDE 14: Topics 9 & 10 - Connectors, Information Security & Superpowers Plugin -->
+    <section class="slide" data-slide="14">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">9️⃣ + 🔟 חיבורים, אבטחה ופלאגינים</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">קונקטורים (Connectors), אבטחת מידע ו-Superpowers</h2>
+          <p class="text-base md:text-lg text-slate-300">איך מחברים את קלוד למערכות העבודה שלנו בצורה מאובטחת ואחראית</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          <div class="glass-card border-sky-400/30">
+            <div class="text-3xl mb-2">🔌</div>
+            <h3 class="text-lg font-bold mb-2 text-sky-300">קונקטורים (Connectors)</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              חיבור ישיר של קלוד ל-Google Drive, Gmail, יומן, Slack או Notion. במקום להוריד ולהעלות קבצים ידנית, קלוד שולף את המסמך העדכני ישירות מהדרייב.
+            </p>
+          </div>
+
+          <div class="glass-card border-amber-400/40">
+            <div class="text-3xl mb-2">🛡️</div>
+            <h3 class="text-lg font-bold mb-2 text-amber-300">אבטחת מידע ופרטיות בחלאסרטן</h3>
+            <ul class="space-y-2 text-sm text-slate-300 leading-relaxed">
+              <li>• <strong>מידע רפואי/אישי רגיש:</strong> לא מעלים פרטים מזהים של חברי קהילה ללא אנונימיזציה.</li>
+              <li>• <strong>הרשאות מינימליות:</strong> מחברים רק תיקיות עבודה רלוונטיות ומאשרים פעולות רגישות ידנית.</li>
+            </ul>
+          </div>
+
+          <div class="glass-card border-purple-400/30">
+            <div class="text-3xl mb-2">🦸</div>
+            <h3 class="text-lg font-bold mb-2 text-purple-300">אופציונלי: <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer" class="ext-link">Superpowers Plugin</a></h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              פלאגין שמעניק לקלוד מתודולוגיית עבודה שלמה: במקום לקפוץ מיד לביצוע, הוא עוצר <strong>לסיעור מוחות (Brainstorm) -> כתיבת תוכנית (Plan) -> ביצוע ובדיקה עצמית</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🔒</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>עיקרון המפתח:</strong> כוח גדול דורש בקרה חכמה - אנחנו תמיד נשארים ה"טייס" שמאשר לפני שקלוד שולח או משנה מידע ארגוני.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להראות איפה בתפריט מחברים Connectors (כמו Google Drive), להדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן, ואם הקהל סקרן להראות ב-2 דקות איך הפלאגין Superpowers גורם לקלוד לתכנן לפני ביצוע.
+      </aside>
+    </section>
+
+    <!-- SLIDE 15: Topic 12 - Claude in Chrome Extension -->
+    <section class="slide" data-slide="15">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">🌐 סוכן בתוך הדפדפן</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1"><a href="https://claude.com/claude-in-chrome" target="_blank" rel="noopener noreferrer" class="ext-link">Claude in Chrome</a>: כשקלוד עובד איתכם על כל אתר פתוח</h2>
+          <p class="text-base md:text-lg text-slate-300">תוסף הדפדפן הרשמי שמאפשר לקלוד לראות את הכרטיסייה הפתוחה, לחלץ נתונים ולבצע פעולות web</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          <div class="glass-card">
+            <div class="text-2xl mb-2">📥</div>
+            <h3 class="text-lg font-bold mb-2 text-sky-300">איך מתקינים ב-30 שניות?</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              מתקינים את התוסף הרשמי מ-<a href="https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn" target="_blank" rel="noopener noreferrer" class="ext-link">חנות התוספים של Chrome</a>, מצמידים לסרגל הכלים ופותחים את חלונית הצד בכל עמוד.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <div class="text-2xl mb-2">🪄</div>
+            <h3 class="text-lg font-bold mb-2 text-purple-300">מה זה נותן בפועל?</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              קריאה וסיכום של עמודים ארוכים, איסוף נתונים ממערכות ניהול ופורטלים שאין בהם כפתור ייצוא לאקסל, ומילוי טפסים חזרתיים.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <div class="text-2xl mb-2">🛡️</div>
+            <h3 class="text-lg font-bold mb-2 text-emerald-300">עבודה בטוחה בדפדפן</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              עובדים במצב אישור (Permissions Mode) שבו אתם רואים כל צעד שקלוד מתכנן בדפדפן ומאשרים לפני פעולות חשובות.
+            </p>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🧭</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>בשורה התחתונה:</strong> במקום להעתיק ולהדביק מידע מאתרים לתוך קלוד - מביאים את קלוד ישירות אל האתר הפתוח.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        להדגים פתיחה של תוסף הכרום על עמוד אינטרנט אמיתי ולהראות איך קלוד קורא את המסך ומבצע פעולה שחוסכת עבודה ידנית סיזיפית.
+      </aside>
+    </section>
+
+    <!-- SLIDE 16: Topic 11 - Live Use-Case Workshop for Halasartan Management -->
+    <section class="slide" data-slide="16">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">🎯 שולחן עגול: ה-Use Cases שלכם</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">מפצחים יחד את האתגרים של הנהלת חלאסרטן</h2>
+          <p class="text-base md:text-lg text-slate-300">לוקחים את המשימות האמיתיות מהשולחן שלכם ובונים להן פתרון משולב מהכלים שלמדנו היום</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-auto">
+          <div class="glass-card border-sky-400/30">
+            <h3 class="text-lg font-bold text-sky-300 mb-3">דוגמאות ל-Use Cases מרכזיים בעמותה:</h3>
+            <ul class="space-y-3 text-sm text-slate-200">
+              <li class="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+                <strong>1. גיוס משאבים וקרנות:</strong> פרויקט משותף (Project) + זיכרון הצעות קודמות ב-Obsidian + סקיל מצגות לתורמים.
+              </li>
+              <li class="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+                <strong>2. ניהול קהילה ומיצוי זכויות:</strong> שימוש ב-Haiku לסריקת מסמכי זכויות ועדכונים רגולטוריים והנגשתם בגובה העיניים.
+              </li>
+              <li class="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+                <strong>3. דשבורד הנהלה וישיבות צוות:</strong> Cowork + סקיל דשבורד משימות שמרכז סטטוסים מכל ראשי התחומים.
+              </li>
+            </ul>
+          </div>
+
+          <div class="glass-card border-emerald-400/40 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-emerald-300 mb-3">תבנית פיצוח Use Case (נעבוד עליה עכשיו יחד):</h3>
+              <ol class="space-y-3 text-sm text-slate-200 list-decimal list-inside leading-relaxed">
+                <li><strong>מה המשימה ששואבת לכם הכי הרבה זמן השבוע?</strong></li>
+                <li><strong>איזה הקשר (Context) קלוד צריך כדי לבצע אותה?</strong> (תיקייה / Obsidian / Project)</li>
+                <li><strong>באיזה מודל וכלי נשתמש?</strong> (Haiku לקריאה / Sonnet ליצירה / Cowork לביצוע)</li>
+                <li><strong>האם כדאי לארוז את זה ל-Skill קבוע?</strong></li>
+              </ol>
+            </div>
+            <div class="mt-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-200">
+              💬 עכשיו תורכם: כל חבר/ת הנהלה בוחר/ת תהליך אחד ואנחנו מתכננים אותו בלייב!
+            </div>
+          </div>
+        </div>
+
+        <div class="takeaway-banner">
+          <span class="text-2xl">🛠️</span>
+          <p class="text-sm md:text-base text-slate-200">
+            <strong>המטרה:</strong> שכל אחד ואחת מכם ייצאו מהחדר עם תהליך אמיתי אחד שכבר עובד וחוסך זמן השבוע.
+          </p>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        זה החלק האינטראקטיבי המרכזי של סוף המפגש: עוברים משתתף-משתתף בהנהלת חלאסרטן, שומעים את ה-Use Case שלו, וממפים אותו יחד על המסך לתיקייה, מודל, קונטקסט וסקיל.
+      </aside>
+    </section>
+
+    <!-- SLIDE 17: Summary & Action Checklist -->
+    <section class="slide" data-slide="17">
+      <a href="https://www.stop-cancer.co.il/" target="_blank" rel="noopener noreferrer" class="slide-brand-logo" title="חלאסרטן - חיים בשביל צעירים"><img src="data:image/webp;base64,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" alt="לוגו חלאסרטן" /></a>
+      <div class="slide-inner max-w-6xl mx-auto w-full flex flex-col justify-between gap-5">
+        <div>
+          <span class="badge-pill mb-2">🏁 סיכום וצ'קליסט למחר בבוקר</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-1">5 צעדים קטנים שעושים שינוי ענק בעבודה השוטפת</h2>
+          <p class="text-base md:text-lg text-slate-300">אל תנסו ליישם הכל ביום אחד - התחילו מחמשת הצעדים הבאים לפי הסדר</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 my-auto">
+          <div class="glass-card text-center">
+            <div class="text-2xl mb-2">1️⃣</div>
+            <h3 class="font-bold text-sky-300 text-base mb-1">הראיון ההפוך</h3>
+            <p class="text-xs text-slate-300">הריצו את פרומפט 10 השאלות ועדכנו את ה-Instructions האישיים שלכם.</p>
+          </div>
+          <div class="glass-card text-center">
+            <div class="text-2xl mb-2">2️⃣</div>
+            <h3 class="font-bold text-purple-300 text-base mb-1">סדר בתיקיות</h3>
+            <p class="text-xs text-slate-300">פתחו תיקייה ייעודית וברורה לפרויקט המרכזי שלכם השבוע.</p>
+          </div>
+          <div class="glass-card text-center">
+            <div class="text-2xl mb-2">3️⃣</div>
+            <h3 class="font-bold text-emerald-300 text-base mb-1">Haiku למסמכים</h3>
+            <p class="text-xs text-slate-300">השתמשו ב-Haiku לסריקת מסמכים ארוכים וב-Sonnet לכתיבה ויצירה.</p>
+          </div>
+          <div class="glass-card text-center">
+            <div class="text-2xl mb-2">4️⃣</div>
+            <h3 class="font-bold text-pink-300 text-base mb-1">Project + Obsidian</h3>
+            <p class="text-xs text-slate-300">בנו את מאגר ה-Context הארגוני ושתפו Project אחד עם הצוות.</p>
+          </div>
+          <div class="glass-card text-center">
+            <div class="text-2xl mb-2">5️⃣</div>
+            <h3 class="font-bold text-amber-300 text-base mb-1">Skill ראשון</h3>
+            <p class="text-xs text-slate-300">הפעילו את סקיל המצגות של חלאסרטן ונסו את תוסף ה-Chrome.</p>
+          </div>
+        </div>
+
+        <div class="glass-card bg-slate-900/80 border-sky-400/30 flex flex-wrap items-center justify-between gap-4 py-3 px-5">
+          <div class="text-sm text-slate-200">
+            <strong>קישורים מהירים לכלים מהסדנה:</strong>
+            <a href="https://claude.com/" target="_blank" rel="noopener noreferrer" class="ext-link mx-2">Claude</a> •
+            <a href="https://claude.com/product/cowork" target="_blank" rel="noopener noreferrer" class="ext-link mx-2">Claude Cowork</a> •
+            <a href="https://obsidian.md/" target="_blank" rel="noopener noreferrer" class="ext-link mx-2">Obsidian</a> •
+            <a href="https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md" target="_blank" rel="noopener noreferrer" class="ext-link mx-2">Vercel Find-Skills</a> •
+            <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer" class="ext-link mx-2">Superpowers</a> •
+            <a href="https://claude.com/claude-in-chrome" target="_blank" rel="noopener noreferrer" class="ext-link mx-2">Claude in Chrome</a>
+          </div>
+          <span class="text-xs text-sky-300 font-bold">בהצלחה! עמית רוזן 🚀</span>
+        </div>
+      </div>
+      <aside class="speaker-notes hidden">
+        סיכום אנרגטי של הסדנה! להזכיר למשתתפים שאפשר להדפיס את המצגת הזו ל-PDF ישירות מהדפדפן (Ctrl+P) כדי שכל הקישורים והפרומפטים יישארו אצלם זמינים.
+      </aside>
+    </section>
+
+  </main>
+
+  <!-- Presenter Notes & Timer Drawer (Toggled via 'N' key or button) -->
+  <div id="presenter-drawer" class="hidden fixed bottom-16 left-6 right-6 md:left-auto md:right-6 md:w-96 glass-card border-sky-400/40 z-50 text-right">
+    <div class="flex items-center justify-between border-b border-slate-700/80 pb-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="text-sky-400 font-bold text-sm">🎙️ תצוגת מרצה</span>
+        <span id="timer-display" class="font-mono text-xs px-2 py-0.5 rounded bg-slate-800 text-emerald-400">00:00</span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <button id="timer-toggle-btn" type="button" class="text-xs px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 cursor-pointer">▶ התחל</button>
+        <button id="timer-reset-btn" type="button" class="text-xs px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-400 cursor-pointer">↺</button>
+        <button id="close-presenter-btn" type="button" class="text-xs px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">✕</button>
+      </div>
+    </div>
+    <div class="mb-3">
+      <div class="text-xs text-slate-400 mb-1">הערות לשקף הנוכחי:</div>
+      <p id="presenter-notes-content" class="text-sm text-slate-200 leading-relaxed bg-slate-900/60 p-2.5 rounded-lg border border-slate-800"></p>
+    </div>
+    <div class="text-xs text-slate-400 flex items-center justify-between pt-2 border-t border-slate-800">
+      <span>השקף הבא:</span>
+      <strong id="presenter-next-title" class="text-sky-300 truncate max-w-[200px]"></strong>
+    </div>
+  </div>
+
+  <!-- Bottom Floating Navigation & Controls Bar -->
+  <nav id="deck-controls" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/85 backdrop-blur-md border border-slate-700/70 shadow-xl">
+    <button id="prev-btn" type="button" title="שקף קודם (חץ ימינה)" class="px-3 py-1 rounded-full text-sm font-medium text-slate-200 hover:bg-slate-800 transition cursor-pointer">
+      → הקודם
+    </button>
+    <span id="slide-counter" class="px-3 py-0.5 text-xs font-bold text-pink-300 bg-pink-500/15 rounded-full border border-pink-500/35">
+      1 / 17
+    </span>
+    <button id="next-btn" type="button" title="שקף הבא (חץ שמאלה / רווח)" class="px-3 py-1 rounded-full text-sm font-medium text-slate-200 hover:bg-slate-800 transition cursor-pointer">
+      הבא ←
+    </button>
+    <div class="h-4 w-px bg-slate-700 mx-1"></div>
+    <button id="notes-btn" type="button" title="הערות מרצה וטיימר (N)" class="p-1.5 rounded-full text-xs text-slate-300 hover:bg-slate-800 hover:text-sky-300 transition cursor-pointer">
+      🎙️ מרצה (N)
+    </button>
+    <button id="fullscreen-btn" type="button" title="מסך מלא (F)" class="p-1.5 rounded-full text-xs text-slate-300 hover:bg-slate-800 hover:text-sky-300 transition cursor-pointer">
+      ⛶
+    </button>
+  </nav>
+
+  <script>
+    const HALASARTAN_ROLES = {
+      community: {
+        badge: 'תפקיד פעיל: ניהול קהילה ותוכניות',
+        instructions: `אני מוביל/ה את תחום הקהילה והתוכניות בעמותת "חלאסרטן" (רשת תמיכה וקהילה לחולי ומחלימי סרטן צעירים בגילאי 18-44).
+הצוות שלי מפיק מענים רגשיים, מפגשי קהילה, מדריכי מיצוי זכויות וליווי לחדשים.
+כתוב תמיד בעברית ישירה, אנושית ובגובה העיניים — בלי קלישאות רפואיות מתנשאות ובלי "פילרים".
+כשאתה מנסח תוכן לקהילה או סיכום תוכנית, פתח בצורך האמיתי של הצעירים לפני הפתרון התפעולי.
+סמן תמיד הנחות שדורשות בדיקה רגישה או אישור צוות מקצועי לפני פרסום.`,
+        benefits: [
+          'שומר אוטומטית על השפה הישירה והלא-מתנשאת של חלאסרטן בלי שתצטרכו לבקש בכל פרומפט.',
+          'ממקד כל מסמך או תוכנית קודם כל בכאב ובצורך של חברי הקהילה הצעירים.',
+          'מציף מראש נקודות רגישות שדורשות בדיקה לפני שהחומר יוצא לקהילה.'
+        ]
+      },
+      fundraising: {
+        badge: 'תפקיד פעיל: גיוס משאבים וקרנות',
+        instructions: `אני מוביל/ה את תחום גיוס המשאבים, השותפויות והקרנות בעמותת "חלאסרטן".
+אנחנו מגישים בקשות מענקים לקרנות בארץ ובחו"ל, בונים הצעות שותפות לחברות עסקיות ומפיקים דוחות אימפקט לתורמים.
+התאם את ברירת המחדל שלך לכתיבה מבוססת-נתונים, ממוקדת תוצאות (Impact) ומשכנעת.
+בכל פעם שאתה מציין נתון מספרי או מדד הצלחה, ציין מאיזה מסמך מקור הוא נלקח.
+הדגש תמיד את הערך הייחודי של חלאסרטן בטיפול בצעירים חולי ומחלימי סרטן.`,
+        benefits: [
+          'מייצר בריפים, בקשות מענקים ומכתבי תורמים במבנה מקצועי וממוקד-אימפקט כברירת מחדל.',
+          'מצמיד מקור מדויק לכל נתון מספרי כדי למנוע טעויות מול קרנות ותורמים.',
+          'שומר על קו אחיד שמחבר בין הסיפור האנושי של הקהילה לבין יעדי התרומה.'
+        ]
+      },
+      finance: {
+        badge: 'תפקיד פעיל: מנכ"לות, כספים ותפעול',
+        instructions: `אני בצוות הניהול והכספים של עמותת "חלאסרטן" (ע"ר).
+אנחנו מנהלים תקציבי תוכניות, דוחות ביצוע מול תקציב, התקשרויות ספקים ודיווחים לוועד המנהל.
+התאם את התשובות שלך לתקצירי מנהלים חדים, טבלאות השוואה ברורות ושורה תחתונה כספית בראש המסמך.
+הצף תמיד סיכונים תזרימיים, חריגות תקציביות או סעיפים שחסרה בהם אסמכתא.
+הימנע מהקדמות ארוכות — גש ישר למספרים ולהמלצה הניהולית.`,
+        benefits: [
+          'פותח כל ניתוח בשורה התחתונה התקציבית ובמשמעויות לוועד המנהל.',
+          'מציג נתונים בטבלאות מסודרות וברורות במקום פסקאות טקסט ארוכות.',
+          'מתריע אוטומטית על פערים בנתונים או הנחות תקציביות שדורשות אימות.'
+        ]
+      }
+    };
+
+    class WorkshopDeck {
+      constructor() {
+        this.slides = Array.from(document.querySelectorAll('.slide'));
+        this.currentSlide = 0;
+        this.totalSlides = this.slides.length;
+        this.progressBar = document.getElementById('progress-bar');
+        this.counter = document.getElementById('slide-counter');
+        this.prevBtn = document.getElementById('prev-btn');
+        this.nextBtn = document.getElementById('next-btn');
+        this.notesBtn = document.getElementById('notes-btn');
+        this.fullscreenBtn = document.getElementById('fullscreen-btn');
+        this.presenterDrawer = document.getElementById('presenter-drawer');
+        this.presenterNotesContent = document.getElementById('presenter-notes-content');
+        this.presenterNextTitle = document.getElementById('presenter-next-title');
+        this.closePresenterBtn = document.getElementById('close-presenter-btn');
+        this.timerDisplay = document.getElementById('timer-display');
+        this.timerToggleBtn = document.getElementById('timer-toggle-btn');
+        this.timerResetBtn = document.getElementById('timer-reset-btn');
+        this.timerSeconds = 0;
+        this.timerInterval = null;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.init();
+      }
+
+      init() {
+        this.showSlide(0);
+        this.bindEvents();
+        this.bindCopyButtons();
+        this.bindGlobalInstructionsTabs();
+        this.bindCoworkPromptBuilder();
+      }
+
+      showSlide(index) {
+        if (index < 0 || index >= this.totalSlides) return;
+        this.slides.forEach((slide, idx) => {
+          slide.classList.toggle('active', idx === index);
+        });
+        this.currentSlide = index;
+        if (this.progressBar) {
+          const pct = ((this.currentSlide + 1) / this.totalSlides) * 100;
+          this.progressBar.style.width = `${pct}%`;
+        }
+        if (this.counter) {
+          this.counter.textContent = `${this.currentSlide + 1} / ${this.totalSlides}`;
+        }
+        if (this.prevBtn) {
+          this.prevBtn.disabled = this.currentSlide === 0;
+          this.prevBtn.style.opacity = this.currentSlide === 0 ? '0.4' : '1';
+        }
+        if (this.nextBtn) {
+          this.nextBtn.disabled = this.currentSlide === this.totalSlides - 1;
+          this.nextBtn.style.opacity = this.currentSlide === this.totalSlides - 1 ? '0.4' : '1';
+        }
+        this.updatePresenterView();
+      }
+
+      next() {
+        if (this.currentSlide < this.totalSlides - 1) this.showSlide(this.currentSlide + 1);
+      }
+
+      prev() {
+        if (this.currentSlide > 0) this.showSlide(this.currentSlide - 1);
+      }
+
+      updatePresenterView() {
+        if (!this.presenterNotesContent) return;
+        const activeSlide = this.slides[this.currentSlide];
+        const notesEl = activeSlide ? activeSlide.querySelector('.speaker-notes') : null;
+        this.presenterNotesContent.textContent = notesEl
+          ? notesEl.textContent.trim()
+          : 'אין הערות מרצה מוגדרות לשקף זה.';
+        if (this.presenterNextTitle) {
+          if (this.currentSlide < this.totalSlides - 1) {
+            const nextSlide = this.slides[this.currentSlide + 1];
+            const nextHeading = nextSlide.querySelector('h1, h2, h3');
+            this.presenterNextTitle.textContent = nextHeading
+              ? nextHeading.textContent.trim()
+              : `שקף ${this.currentSlide + 2}`;
+          } else {
+            this.presenterNextTitle.textContent = 'סוף המצגת 🎉';
+          }
+        }
+      }
+
+      togglePresenterDrawer() {
+        if (this.presenterDrawer) this.presenterDrawer.classList.toggle('hidden');
+      }
+
+      toggleTimer() {
+        if (this.timerInterval) {
+          clearInterval(this.timerInterval);
+          this.timerInterval = null;
+          if (this.timerToggleBtn) this.timerToggleBtn.textContent = '▶ המשך';
+        } else {
+          this.timerInterval = setInterval(() => {
+            this.timerSeconds += 1;
+            this.renderTimer();
+          }, 1000);
+          if (this.timerToggleBtn) this.timerToggleBtn.textContent = '⏸ השהה';
+        }
+      }
+
+      resetTimer() {
+        if (this.timerInterval) {
+          clearInterval(this.timerInterval);
+          this.timerInterval = null;
+        }
+        this.timerSeconds = 0;
+        this.renderTimer();
+        if (this.timerToggleBtn) this.timerToggleBtn.textContent = '▶ התחל';
+      }
+
+      renderTimer() {
+        if (!this.timerDisplay) return;
+        const mins = String(Math.floor(this.timerSeconds / 60)).padStart(2, '0');
+        const secs = String(this.timerSeconds % 60).padStart(2, '0');
+        this.timerDisplay.textContent = `${mins}:${secs}`;
+      }
+
+      toggleFullscreen() {
+        try {
+          if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+          else document.exitFullscreen();
+        } catch (err) {}
+      }
+
+      bindGlobalInstructionsTabs() {
+        const tabs = document.querySelectorAll('.role-tab-btn');
+        const instText = document.getElementById('global-inst-text');
+        const roleBadge = document.getElementById('global-inst-role-badge');
+        const benefitsList = document.getElementById('global-inst-benefits');
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => {
+            const roleKey = tab.getAttribute('data-role');
+            const data = HALASARTAN_ROLES[roleKey];
+            if (!data) return;
+
+            tabs.forEach((t) => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            if (instText) instText.textContent = data.instructions;
+            if (roleBadge) roleBadge.textContent = data.badge;
+            if (benefitsList) {
+              benefitsList.innerHTML = data.benefits
+                .map(
+                  (item) => `<li class="flex items-start gap-2.5">
+                    <span class="text-emerald-400 font-black text-lg leading-none mt-1">•</span>
+                    <span>${item}</span>
+                  </li>`
+                )
+                .join('');
+            }
+          });
+        });
+      }
+
+      bindCoworkPromptBuilder() {
+        const chips = document.querySelectorAll('.builder-chip');
+        const delivEl = document.getElementById('preview-deliverable');
+        const inputsEl = document.getElementById('preview-inputs');
+        const nuanceEl = document.getElementById('preview-nuance');
+
+        chips.forEach((chip) => {
+          chip.addEventListener('click', () => {
+            const group = chip.getAttribute('data-group');
+            const val = chip.getAttribute('data-value');
+            if (!group || !val) return;
+
+            document.querySelectorAll(`.builder-chip[data-group="${group}"]`).forEach((sibling) => {
+              sibling.classList.remove('selected');
+            });
+            chip.classList.add('selected');
+
+            if (group === 'deliverable' && delivEl) delivEl.textContent = val;
+            if (group === 'inputs' && inputsEl) inputsEl.textContent = val;
+            if (group === 'nuance' && nuanceEl) nuanceEl.textContent = val;
+          });
+        });
+      }
+
+      bindCopyButtons() {
+        document.querySelectorAll('.copy-prompt-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const card = btn.closest('.glass-card') || btn.parentElement.parentElement;
+            const promptEl = card ? card.querySelector('.prompt-text') : null;
+            if (!promptEl) return;
+            const text = promptEl.textContent.replace(/\s+/g, ' ').trim();
+            const showCopied = () => {
+              const orig = btn.textContent;
+              btn.textContent = '✅ הועתק!';
+              setTimeout(() => { btn.textContent = orig; }, 1800);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(showCopied).catch(() => {
+                this.fallbackCopy(text);
+                showCopied();
+              });
+            } else {
+              this.fallbackCopy(text);
+              showCopied();
+            }
+          });
+        });
+      }
+
+      fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+
+      bindEvents() {
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.prev());
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.next());
+        if (this.notesBtn) this.notesBtn.addEventListener('click', () => this.togglePresenterDrawer());
+        if (this.closePresenterBtn) this.closePresenterBtn.addEventListener('click', () => this.togglePresenterDrawer());
+        if (this.fullscreenBtn) this.fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
+        if (this.timerToggleBtn) this.timerToggleBtn.addEventListener('click', () => this.toggleTimer());
+        if (this.timerResetBtn) this.timerResetBtn.addEventListener('click', () => this.resetTimer());
+
+        document.addEventListener('keydown', (e) => {
+          if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+            e.preventDefault();
+            this.next();
+          } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+            e.preventDefault();
+            this.prev();
+          } else if (e.key.toLowerCase() === 'f') {
+            this.toggleFullscreen();
+          } else if (e.key.toLowerCase() === 'n') {
+            this.togglePresenterDrawer();
+          } else if (e.key.toLowerCase() === 't') {
+            this.toggleTimer();
+          }
+        });
+
+        document.addEventListener('touchstart', (e) => {
+          this.touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+          this.touchEndX = e.changedTouches[0].screenX;
+          const diff = this.touchEndX - this.touchStartX;
+          if (diff > 50) this.next();
+          else if (diff < -50) this.prev();
+        }, { passive: true });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.deck = new WorkshopDeck();
+    });
+  </script>
+</body>
+</html>
