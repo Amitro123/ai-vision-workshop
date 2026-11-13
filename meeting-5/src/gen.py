@@ -60,8 +60,8 @@ def roles_slide():
         cols.append(f'<div class="glass fx col" style="flex:1;padding:30px 34px;gap:18px;min-width:0;border-top:6px solid var(--c{c});">'
                     f'<div class="fx ac jb" style="gap:12px;"><span class="ink-t fw8" style="font-size:30px;">{r(name)}</span>{COPY}</div>'
                     f'<p class="prompt ink-t fw5" style="white-space:pre-wrap;font-size:25px;line-height:1.5;margin:0;">{r(text)}</p></div>')
-    return PRINT_CSS + head("Global Instructions", f'הנחיות קבועות לכל תפקיד: {acc("פעם אחת")} ודי',
-                            r("Settings → Profile → Personal Preferences · מעתיקים את הבלוק של התפקיד שלכם")) + \
+    return PRINT_CSS + head("דוגמאות · Instructions for Claude", f'כך נראית תוצאה של ראיון: {acc("דוגמה לכל תפקיד")}',
+                            r("להשוואה עם מה שקיבלתם, או להעתקה כנקודת פתיחה")) + \
         stage(f'<div class="fx" style="flex:1;gap:28px;min-height:0;">{"".join(cols)}</div>')
 
 TOKENS = ["חלא", "סרט", "ן", "מחבר", "ת", "צעיר", "ים", "חול", "ים", "ו", "מחלימ", "ים"]
@@ -249,7 +249,7 @@ def interview_slide():
                  f'<div class="fx col" style="gap:6px;"><span class="ink-t fw8" style="font-size:31px;">{r(t)}</span><span class="muted fw5" style="font-size:25px;line-height:1.4;">{r(x)}</span></div></div>'
                  for i, ((t, x), c) in enumerate(zip(steps, [1, 3, 5]), 1))
     left = f'<div class="glass fx col" style="flex:.8;min-width:0;padding:36px 38px;gap:34px;justify-content:center;border-top:7px solid var(--c3);">{st}</div>'
-    return PRINT_CSS + head("תרגול: הראיון ההפוך", f'נותנים ל-Claude {acc("לראיין אתכם")}') + \
+    return PRINT_CSS + head("תרגול: הראיון ההפוך", f'עכשיו נלמד את Claude {acc("להכיר אותנו")}', "דייקנו את הפרומפט. עכשיו נותנים ל-Claude לראיין אתכם, פעם אחת.") + \
         stage(row(left, prompt_box("פרומפט הראיון ההפוך", REVERSE, 29).replace('flex:1;', 'flex:1.25;', 1))) + \
         take('5 דקות של ראיון חוסכות <span class="hi">שעות של הסברים חוזרים</span>.')
 
@@ -313,10 +313,10 @@ S.append({"type": "compare", "eyebrow": "חלון ההקשר", "title": "חלו�
           "notes": "חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל לראות ולזכור בשיחה אחת, כמו שולחן עבודה.\n\nמעבר לשקף הבא: אז איך מכוונים את הניחוש בדיוק למה שאנחנו צריכים? מבנה הפרומפט."})
 S.append({"type": "raw", "html": prompt_merged_slide(),
           "notes": "פרומפט = ההוראות שאנחנו נותנים ל-AI. פרומפט טוב = תקשורת טובה: זה לא קסם טכני, זה בדיוק כמו לתת הנחיה לעובד חדש. ככל שנהיה ברורים ומכוונים יותר, נקבל תוצאה טובה יותר.\n\nלהשוות את שתי הדוגמאות: העמום נותן טקסט גנרי; המלא נותן ל-Claude הקשר מדויק (מי כותב, למי, באיזה טון ומה המשימה) ולכן התוצאה מדויקת.\n\nגשר לשקף הבא: שלושה מהמרכיבים (תפקיד, הקשר, סגנון) כמעט לא משתנים אצלכם. אותם אפשר לשמור פעם אחת ב-Instructions for Claude, ולהשקיע את הפרומפט במה שמשתנה."})
-S.append({"type": "raw", "html": roles_slide(),
-          "notes": "לעבור על שלוש העמודות (ניהול קהילה, גיוס משאבים, מנכ\"לות וכספים) ולהראות איך 3 המרכיבים הקבועים (Role + Context + Output) הופכים להנחיות קבועות.\n\nמה זה נותן: שומר על השפה הישירה והלא-מתנשאת; בגיוס: מצמיד מקור לכל נתון; בכספים: פותח בשורה התחתונה ומציג טבלאות.\n\nרוצים כזה שמותאם בול אליכם? השקף הבא."})
 S.append({"type": "raw", "html": interview_slide(),
-          "notes": "במקום לשבור את הראש מול דף לבן, מבקשים מקלוד לשאול אתכם 10 שאלות ולהרכיב עבורכם את ההנחיות הקבועות.\n\nכל אחד לוחץ על כפתור ההעתקה, מדביק בקלוד ועונה. מעכשיו בכל צ'אט חדש קלוד כבר ידבר בשפה שלכם."})
+          "notes": "המעבר: אחרי שהבנו איך לדייק את הפרומפטים שאנחנו כותבים, נבין איך גורמים ל-Claude להכיר אותנו, כדי שההקשר הבסיסי יהיה שם בכל שיחה.\n\nבמקום לשבור את הראש מול דף לבן, מבקשים מ-Claude לשאול 10 שאלות ולהרכיב בעצמו את ה-Instructions. כל אחד לוחץ העתקה, מדביק ועונה.\n\nבשקף הבא: דוגמאות למה שאמור לצאת."})
+S.append({"type": "raw", "html": roles_slide(),
+          "notes": "אחרי שכל אחד הריץ את הראיון: כך נראה בלוק מוכן לשלושה תפקידים בהנהלה (ניהול קהילה, גיוס משאבים, מנכ\"לות וכספים).\n\nלהשוות למה שקיבלתם: האם יש תפקיד, הקשר, וסגנון? מי שלא סיים יכול להעתיק את הבלוק של התפקיד שלו כנקודת פתיחה ולערוך.\n\nמה זה נותן: שפה ישירה ולא מתנשאת בלי לבקש כל פעם; בגיוס, מקור לכל נתון; בכספים, שורה תחתונה וטבלאות."})
 S.append({"type": "raw", "html": icards_slide("שלוש סביבות עבודה", f'יועץ, עובד או בונה: {acc("Chat, Cowork, Code")}', None, [
     icard("💬", "Chat · היועץ", "סיעור מוחות, חידוד מסרים, ניסוח מכתבים לתורמים והתייעצות מהירה.", 1, foot("מתי: צריכים תשובה או עריכה", 1)),
     icard("🤝", "Cowork · העובד", "עובד על התיקיות שלכם, מתכנן ומבצע משימה שלמה מתחילה ועד סוף.", 3, foot("מתי: משימה רב-שלבית על קבצים", 3)),
