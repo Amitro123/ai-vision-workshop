@@ -220,34 +220,37 @@ def tokens_slide2():
         take('כל טוקן שנכנס וכל טוקן שיוצא <span class="hi">נספר במכסה</span>, וכל מילה בפרומפט מכוונת את הניחוש.')
 
 def prompt_merged_slide():
-    comps = [("תפקיד", True), ("הקשר", True), ("הוראה", False), ("נתוני קלט", False), ("פורמט וטון", True)]
-    chips = ''.join(
-        (f'<span class="chip" style="background:var(--c1);color:#fff;font-size:26px;padding:10px 22px;">{i}. {r(n)}</span>' if fx else
-         f'<span class="chip" style="background:#fff;color:var(--c6);border:2px solid var(--c6);font-size:26px;padding:8px 20px;">{i}. {r(n)}</span>')
-        for i, (n, fx) in enumerate(comps, 1))
-    strip = (f'<div class="glass fx ac" style="gap:18px;padding:16px 34px;border-top:6px solid var(--c5);">'
-             f'<span class="fw8" style="font-size:27px;color:var(--c5);flex-shrink:0;">🧱 5 מרכיבים:</span>'
-             f'<div class="fx wrap" style="gap:12px;flex:1;">{chips}</div>'
-             f'<span class="muted fw6" style="font-size:23px;flex-shrink:0;">הצבועים קבועים אצלכם</span></div>')
+    comps = [("תפקיד", "Role", "מי אתם ומה המומחיות?", True), ("הקשר", "Context", "חלאסרטן וקהל היעד", True),
+             ("הוראה", "Instruction", "מה המשימה היום?", False), ("נתוני קלט", "Input", "המסמך או הנתונים", False),
+             ("פורמט וטון", "Output", "בגובה העיניים, מבנה מועדף", True)]
+    rows = ''.join(
+        f'<div class="fx ac" style="gap:16px;"><span class="numchip" style="background:var(--c{1 if fx else 6});width:46px;height:46px;font-size:24px;">{i}</span>'
+        f'<div class="fx col" style="flex:1;gap:2px;"><span class="ink-t fw8" style="font-size:31px;">{r(n)} <span class="muted fw6" style="font-size:23px;" dir="ltr">{e}</span></span>'
+        f'<span class="muted fw5" style="font-size:25px;">{r(q)}</span></div>'
+        + ('<span class="chip" style="background:var(--c1);color:#fff;font-size:22px;">קבוע</span>' if fx else
+           '<span class="chip" style="background:#fff;color:var(--c6);border:2px solid var(--c6);font-size:22px;">משתנה</span>') + '</div>'
+        for i, (n, e, q, fx) in enumerate(comps, 1))
+    comp = (f'<div class="glass fx col" style="flex:.68;min-width:0;padding:28px 34px;gap:16px;justify-content:center;border-top:7px solid var(--c5);">'
+            f'<span class="fw8" style="font-size:34px;color:var(--c5);">🧱 5 המרכיבים</span>{rows}</div>')
     def dcard(icon, title, text, c):
-        return (f'<div class="glass fx col" style="flex:1;min-width:0;padding:26px 36px;gap:10px;justify-content:center;border-top:7px solid var(--c{c});">'
-                f'<span class="fw8" style="font-size:34px;color:var(--c{c});">{icon} {r(title)}</span>'
-                f'<span class="ink-t fw5" style="font-size:27px;line-height:1.4;">{r(text)}</span></div>')
-    defs = (f'<div class="fx" style="gap:24px;flex:.62;min-height:0;">'
-            f'{dcard("💬", "פרומפט = ההוראות שנותנים ל-Claude", "הטקסט שאנחנו כותבים לו: שאלה, בקשה, הוראה או הקשר. הכל פרומפט.", 1)}'
-            f'{dcard("🔗", "איך זה קשור למודל שפה?", "הפרומפט מתפרק לטוקנים, ומודל השפה מנחש מהם את ההמשך. לכן כל מילה בפרומפט מכוונת את התשובה.", 3)}</div>')
+        return (f'<div class="glass fx col" style="flex:1;min-width:0;padding:22px 30px;gap:10px;justify-content:center;border-top:7px solid var(--c{c});">'
+                f'<span class="fw8" style="font-size:30px;color:var(--c{c});">{icon} {r(title)}</span>'
+                f'<span class="ink-t fw5" style="font-size:26px;line-height:1.38;">{r(text)}</span></div>')
+    defs = (f'<div class="fx" style="gap:22px;flex:.52;min-height:0;">'
+            f'{dcard("💬", "ההוראות שנותנים ל-Claude", "הטקסט שכותבים לו: שאלה, בקשה, הוראה או הקשר. הכל פרומפט.", 1)}'
+            f'{dcard("🔗", "הקשר למודל שפה", "הפרומפט מתפרק לטוקנים, ומודל השפה מנחש מהם את ההמשך. לכן כל מילה מכוונת את התשובה.", 3)}</div>')
     hi = lambda t: f'<span style="color:var(--highlight);font-weight:800;">{r(t)}</span>'
-    bad = (f'<div class="glass fx col" style="flex:.85;min-width:0;padding:24px 34px;gap:14px;justify-content:center;border-top:7px solid var(--c6);">'
-           f'<div class="fx ac" style="gap:16px;">{tag("✗ פרומפט עמום", False)}<span class="muted fw6" style="font-size:24px;">טקסט גנרי ומנותק</span></div>'
-           f'{quote(r("״תכתוב לי פוסט לקהילה על מפגש זכויות חדש.״"), 27)}</div>')
+    bad = (f'<div class="glass fx col" style="flex:.8;min-width:0;padding:24px 30px;gap:14px;justify-content:center;border-top:7px solid var(--c6);">'
+           f'<div>{tag("✗ פרומפט עמום", False)}</div>{quote(r("״תכתוב לי פוסט לקהילה על מפגש זכויות חדש.״"), 28)}'
+           f'<span class="muted fw6" style="font-size:24px;">טקסט גנרי ומנותק</span></div>')
     good_q = ('״' + hi("אני מנהל/ת הקהילה בחלאסרטן (צעירים חולי סרטן 18-44).") + ' ' + hi("כתוב בעברית ישירה ובגובה העיניים, בלי קלישאות.") + ' '
               + r("נסח פוסט שמזמין למפגש מיצוי זכויות ביום ג׳, עם 3 סיבות למה שווה להגיע.") + '״')
-    good = (f'<div class="glass fx col" style="flex:1.15;min-width:0;padding:24px 34px;gap:14px;justify-content:center;border-top:7px solid var(--c1);">'
-            f'<div class="fx ac" style="gap:16px;">{tag("✓ פרומפט מלא", True)}<span class="ink-t fw6" style="font-size:24px;">המודגש הוא ההקשר: מי כותב, למי ובאיזה טון</span></div>'
-            f'{quote(good_q, 26)}</div>')
-    ex = f'<div class="fx" style="gap:24px;flex:1;min-height:0;">{bad}{good}</div>'
-    return head("הנדסת פרומפטים", f'מה זה {acc("פרומפט")}?') + \
-        stage(f'<div class="fx col" style="flex:1;gap:22px;min-height:0;">{defs}{ex}{strip}</div>') + \
+    good = (f'<div class="glass fx col" style="flex:1.3;min-width:0;padding:24px 30px;gap:14px;justify-content:center;border-top:7px solid var(--c1);">'
+            f'<div>{tag("✓ פרומפט מלא", True)}</div>{quote(good_q, 25)}'
+            f'<span class="ink-t fw6" style="font-size:24px;">המודגש = ההקשר: מי, למי ובאיזה טון</span></div>')
+    ex = f'<div class="fx" style="gap:22px;flex:1;min-height:0;">{bad}{good}</div>'
+    leftcol = f'<div class="fx col" style="flex:1.3;min-width:0;gap:22px;min-height:0;">{defs}{ex}</div>'
+    return head("הנדסת פרומפטים", f'מה זה {acc("פרומפט")}?') + stage(row(comp, leftcol, gap=24)) + \
         take('פרומפט טוב = תקשורת טובה: ככל שההקשר מדויק יותר, <span class="hi">התוצאה טובה יותר</span>.')
 
 def context_slide():
