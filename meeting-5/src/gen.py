@@ -176,37 +176,47 @@ def agenda_slide():
     return head("מה הולך לקרות היום", f'שעתיים, חמישה פרקים, {acc("ארבעה תרגולים")}') + stage(row(*cards, gap=22)) + \
         take('בסוף המפגש כל אחד יוצא עם <span class="hi">תהליך אחד שכבר עובד</span>.')
 
+def llm_slide():
+    models = ''.join(f'<span class="chip" style="font-size:28px;padding:10px 22px;{st}">{m}</span>' for m, st in
+                     [("ChatGPT", "background:#fff;color:var(--muted);border:2px solid var(--c4);"), ("Claude", "background:var(--c1);color:#fff;"), ("Gemini", "background:#fff;color:var(--muted);border:2px solid var(--c4);")])
+    card = lambda c, f: f'<div class="glass fx col" style="flex:{f};min-width:0;padding:38px 44px;gap:24px;border-top:7px solid var(--c{c});">'
+    llm = (card(5, 1) + f'<span class="fw8" style="font-size:38px;color:var(--c5);">🧠 מה זה LLM?</span>'
+           f'<span class="ink-t fw7" style="font-size:28px;" dir="ltr">Large Language Model</span>'
+           f'<p class="ink-t fw5" style="font-size:30px;line-height:1.45;margin:0;">מודל שפה גדול: קרא המון טקסט, ולמד מה בדרך כלל בא אחרי מה. כולם מודלי שפה, כל אחד בנוי קצת אחרת.</p>'
+           f'<div class="fx wrap" style="gap:12px;" dir="ltr">{models}</div>'
+           f'<p class="muted fw6" style="font-size:27px;line-height:1.4;margin:0;margin-top:auto;">לא מוח אנושי, אלא מנוע שפה ששואל כל הזמן: מה ההמשך הכי סביר?</p></div>')
+    bars = [("שטיח", 61, 1), ("ספה", 24, 3), ("כיסא", 9, 5)]
+    b = ''.join(f'<div class="fx ac" style="gap:18px;"><span class="ink-t fw7" style="font-size:30px;width:96px;">{w}</span>'
+                f'<div style="flex:1;height:28px;border-radius:999px;background:var(--bg-2);"><div style="width:{v}%;height:100%;border-radius:999px;background:var(--c{c});"></div></div>'
+                f'<span class="fw8" style="font-size:30px;color:var(--c{c});width:76px;">{v}%</span></div>' for w, v, c in bars)
+    right = (card(3, 1.1) + f'<span class="fw8" style="font-size:38px;color:var(--c3);">✍️ איך Claude כותב</span>'
+             f'<p class="ink-t fw5" style="font-size:30px;line-height:1.4;margin:0;">מנחש את ההמשך הכי סביר, מוסיף, וחוזר חלילה:</p>'
+             f'{quote("״החתול ישב על ה___״", 34)}<div class="fx col" style="gap:18px;">{b}</div>'
+             f'<span class="muted" style="font-size:22px;margin-top:auto;">המספרים להמחשה בלבד</span></div>')
+    return head("מושגי יסוד", f'Claude הוא מודל שפה: הוא {acc("מנחש את ההמשך")}') + stage(row(llm, right, gap=28)) + \
+        take('🤔 ומה בדיוק הוא מנחש? לא מילים שלמות, אלא <span class="hi">חתיכות קטנות של טקסט שנקראות טוקנים</span>.')
+
 def tokens_slide2():
-    words = ''.join(f'<span class="chip" style="font-size:25px;padding:7px 16px;background:#fff;color:var(--ink);border:2px solid var(--c4);">{w}</span>' for w in "חלאסרטן מחברת צעירים חולים ומחלימים".split())
     def tchip(i, t):
         if t == " ":
-            return '<span class="chip" style="font-size:22px;padding:6px 8px;min-width:30px;background:transparent;border:2px dashed rgba(255,255,255,.45);">&nbsp;</span>'
+            return '<span class="chip" style="font-size:30px;padding:8px 10px;min-width:38px;background:transparent;border:2px dashed rgba(255,255,255,.45);">&nbsp;</span>'
         faded = t.endswith("~")
-        return f'<span class="chip" style="font-size:22px;padding:6px 12px;background:var(--c{(i % 5) + 1});color:#fff;{"opacity:.5;" if faded else ""}">{t.rstrip("~")}</span>'
+        return f'<span class="chip" style="font-size:30px;padding:8px 16px;background:var(--c{(i % 5) + 1});color:#fff;{"opacity:.5;" if faded else ""}">{t.rstrip("~")}</span>'
     chips = ''.join(tchip(i, t) for i, t in enumerate(TOKENS))
-    models = ''.join(f'<span class="chip" style="font-size:26px;padding:10px 20px;{st}">{m}</span>' for m, st in
-                     [("ChatGPT", "background:#fff;color:var(--muted);border:2px solid var(--c4);"), ("Claude", "background:var(--c1);color:#fff;"), ("Gemini", "background:#fff;color:var(--muted);border:2px solid var(--c4);")])
-    card = lambda c, f: f'<div class="glass fx col" style="flex:{f};min-width:0;padding:30px 32px;gap:18px;border-top:7px solid var(--c{c});">'
-    llm = (card(5, 1) + f'<span class="fw8" style="font-size:32px;color:var(--c5);">🧠 מה זה LLM?</span>'
-           f'<span class="ink-t fw7" style="font-size:24px;" dir="ltr">Large Language Model</span>'
-           f'<p class="ink-t fw5" style="font-size:25px;line-height:1.45;margin:0;">מודל שפה גדול: קרא המון טקסט, ולמד מה בדרך כלל בא אחרי מה. כולם מודלי שפה, כל אחד בנוי קצת אחרת.</p>'
-           f'<div class="fx wrap" style="gap:10px;" dir="ltr">{models}</div>'
-                      f'<p class="muted fw6" style="font-size:24px;line-height:1.4;margin:0;margin-top:auto;">לא מוח אנושי, אלא מנוע שפה ששואל כל הזמן: מה ההמשך הכי סביר?</p></div>')
-    left = (card(1, 1.7) + f'<span class="fw8" style="font-size:32px;color:var(--c1);">🧩 איך Claude קורא</span>'
-            f'<span class="muted fw7" style="font-size:23px;">אנחנו רואים 5 מילים:</span><div class="fx wrap" style="gap:10px;">{words}</div>'
-            f'<span class="muted fw7" style="font-size:23px;">Claude רואה {len(TOKENS)} טוקנים<span style="color:var(--c1);">*</span>:</span>'
-            f'<div class="fx wrap" style="gap:7px;padding:16px;border-radius:16px;background:var(--ink);">{chips}</div>'
-            f'<span class="ink-t fw8" style="font-size:27px;">{r("35 תווים, " + str(len(TOKENS)) + " טוקנים:")} <span style="color:var(--c1);">כמעט טוקן לכל אות</span></span>'
-            f'<p class="muted fw5" style="font-size:22px;line-height:1.4;margin:0;margin-top:auto;"><span style="color:var(--c1);font-weight:800;">*</span> באנגלית כמות הטוקנים והמחיר שונים, בדרך כלל נמוכים יותר.</p></div>')
-    bars = [("שטיח", 61, 1), ("ספה", 24, 3), ("כיסא", 9, 5)]
-    b = ''.join(f'<div class="fx ac" style="gap:14px;"><span class="ink-t fw7" style="font-size:25px;width:70px;">{w}</span>'
-                f'<div style="flex:1;height:22px;border-radius:999px;background:var(--bg-2);"><div style="width:{v}%;height:100%;border-radius:999px;background:var(--c{c});"></div></div>'
-                f'<span class="fw8" style="font-size:25px;color:var(--c{c});width:58px;">{v}%</span></div>' for w, v, c in bars)
-    right = (card(3, .8) + f'<span class="fw8" style="font-size:32px;color:var(--c3);">✍️ איך Claude כותב</span>'
-             f'<p class="ink-t fw5" style="font-size:25px;line-height:1.4;margin:0;">מנחש את הטוקן הבא הכי סביר, מוסיף, וחוזר חלילה:</p>'
-             f'{quote("״החתול ישב על ה___״", 27)}<div class="fx col" style="gap:12px;">{b}</div>'
-             f'<span class="muted" style="font-size:20px;">המספרים להמחשה בלבד</span></div>')
-    return head("מושגי יסוד", f'Claude הוא מודל שפה. הוא קורא וכותב {acc("טוקנים")}') + stage(row(llm, left, right, gap=22)) + \
+    words = ''.join(f'<span class="chip" style="font-size:32px;padding:9px 22px;background:#fff;color:var(--ink);border:2px solid var(--c4);">{w}</span>' for w in "חלאסרטן מחברת צעירים חולים ומחלימים".split())
+    star = '<span style="color:var(--c1);font-weight:800;">*</span>'
+    main = (f'<div class="glass fx col" style="flex:1.9;min-width:0;padding:38px 44px;gap:22px;border-top:7px solid var(--c1);">'
+            f'<span class="muted fw7" style="font-size:27px;">אתם כותבים 5 מילים:</span><div class="fx wrap" style="gap:12px;">{words}</div>'
+            f'<span class="muted fw7" style="font-size:27px;">Claude קורא {len(TOKENS)} טוקנים{star}:</span>'
+            f'<div class="fx wrap" style="gap:8px;padding:20px;border-radius:16px;background:var(--ink);">{chips}</div>'
+            f'<span class="ink-t fw8" style="font-size:32px;">{r("35 תווים, " + str(len(TOKENS)) + " טוקנים:")} <span style="color:var(--c1);">כמעט טוקן לכל אות</span></span>'
+            f'<p class="muted fw5" style="font-size:23px;line-height:1.4;margin:0;margin-top:auto;">{star} באנגלית כמות הטוקנים והמחיר שונים, בדרך כלל נמוכים יותר.</p></div>')
+    pts = ["יחידת הטקסט הקטנה ש-Claude עובד איתה.", "יכול להיות מילה, חלק ממילה, אות או רווח.", "באנגלית בערך טוקן למילה. בעברית, כמעט טוקן לכל אות."]
+    pl = ''.join(f'<div class="fx" style="gap:16px;align-items:baseline;"><span class="bullet" style="background:var(--c{c});width:16px;height:16px;flex-shrink:0;"></span>'
+                 f'<span class="ink-t fw6" style="font-size:30px;line-height:1.4;">{r(t)}</span></div>' for t, c in zip(pts, [1, 3, 5]))
+    side = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:38px 40px;gap:30px;justify-content:center;border-top:7px solid var(--c5);">'
+            f'<span class="fw8" style="font-size:38px;color:var(--c5);">🧩 מה זה טוקן?</span>{pl}</div>')
+    return head("מושגי יסוד · טוקנים", f'אתם שולחים הודעה ל-Claude. {acc("איך הוא קורא אותה?")}') + stage(row(main, side, gap=28)) + \
         take('כל טוקן שנכנס וכל טוקן שיוצא <span class="hi">נספר במכסה</span>, וכל מילה בפרומפט מכוונת את הניחוש.')
 
 def prompt_merged_slide():
@@ -309,8 +319,10 @@ S.append({"type": "cover", "mode": "dark", "eyebrow": "סדנת המשך · הנ
           "notes": "ברוכים הבאים לסדנת ההמשך של הנהלת חלאסרטן! במפגש הקודם טעמנו מהעולם של AI, והיום אנחנו עולים קומה.\n\nנתחיל מלהבין איך המודל קורא טוקנים ופרומפטים, ונראה איך מתוך ההבנה הזו בונים לקלוד זיכרון קבוע, פרויקטים משותפים וסקילים שחוסכים שעות של עבודה."})
 S.append({"type": "raw", "html": agenda_slide(),
           "notes": "סדר היום בקצרה. חלוקת זמנים מוצעת לשעתיים:\n\nאיך Claude חושב + ראיון הפוך: 30 דקות.\nאיפה עובדים + משימה ל-Cowork: 20 דקות.\nסדר וצוות: 10 דקות.\nיכולות + סקיל מצגות: 35 דקות.\nשולחן עגול: 20 דקות.\n\nלהדגיש: ארבעה תרגולים, לא הרצאה."})
+S.append({"type": "raw", "html": llm_slide(),
+          "notes": "LLM = Large Language Model: מודל שפה גדול שקרא המון טקסט ולמד לזהות מה בדרך כלל בא אחרי מה. ChatGPT, Claude ו-Gemini הם כולם מודלי שפה: אותו רעיון בסיסי, כל אחד בנוי קצת אחרת.\n\nזה לא מוח אנושי, זה מנוע שפה. בכל רגע הוא שואל: מה ההמשך הכי סביר לטקסט הזה? לכן ככל שנדבר איתו ברור יותר, נקבל תוצאה טובה יותר.\n\nדוגמה: \"החתול ישב על ה___\". המודל נותן הסתברות לכל המשך אפשרי ובוחר. המספרים להמחשה בלבד.\n\nומה בדיוק הוא מנחש? לא מילים שלמות, אלא חתיכות קטנות של טקסט שנקראות טוקנים. זה המעבר לשקף הבא."})
 S.append({"type": "raw", "html": tokens_slide2(),
-          "notes": "LLM = Large Language Model: מודל שפה גדול שקרא המון טקסט ולמד לזהות מה בדרך כלל בא אחרי מה. ChatGPT, Claude ו-Gemini הם כולם מודלי שפה: אותו רעיון בסיסי, כל אחד בנוי קצת אחרת. זה לא מוח אנושי, זה מנוע שפה. לכן ככל שנדבר איתו ברור יותר, נקבל תוצאה טובה יותר.\n\nכמו שלמדנו במפגש 2: מודל שפה מנבא את הטוקן הבא על סמך הטוקנים שכבר נמצאים בחלון ההקשר שלו.\n\nטוקן הוא אבן הבניין הקטנה ביותר שהמודל מעבד. בעברית זה בולט במיוחד: המשפט \"חלאסרטן מחברת צעירים חולים ומחלימים\" (35 תווים) יוצא 32 טוקנים, כמעט טוקן לכל אות. האות ן הצריכה אפילו שני טוקנים (הטוקן הדהוי), והרווחים נספרים גם הם. הפירוק לקוח מכלי הערכה (Lunary, לפי המודל claude-opus-5-5), אז זו הערכה ולא מספר מדויק של Claude.\n\n* באנגלית אותו רעיון יוצא בדרך כלל בפחות טוקנים (בערך טוקן למילה), ולכן גם המחיר שונה: הכל נספר לפי טוקנים, ועברית יקרה יותר מאנגלית.\n\nהצד השמאלי: Claude לא יודע את התשובה, הוא מנחש את ההמשך הכי סביר. לכן כל מילה בפרומפט משנה לאן הניחוש הולך. המספרים בדוגמת השטיח להמחשה בלבד."})
+          "notes": "כמו שלמדנו במפגש 2: מודל שפה מנבא את הטוקן הבא על סמך הטוקנים שכבר נמצאים בחלון ההקשר שלו.\n\nטוקן הוא אבן הבניין הקטנה ביותר שהמודל מעבד. בעברית זה בולט במיוחד: המשפט \"חלאסרטן מחברת צעירים חולים ומחלימים\" (35 תווים) יוצא 32 טוקנים, כמעט טוקן לכל אות. האות ן הצריכה אפילו שני טוקנים (הטוקן הדהוי), והרווחים נספרים גם הם. הפירוק לקוח מכלי הערכה (Lunary, לפי המודל claude-opus-5-5), אז זו הערכה ולא מספר מדויק של Claude.\n\n* באנגלית אותו רעיון יוצא בדרך כלל בפחות טוקנים (בערך טוקן למילה), ולכן גם המחיר שונה: הכל נספר לפי טוקנים, ועברית יקרה יותר מאנגלית.\n\nגם הפרומפט שלכם וגם התשובה הם רצף של טוקנים, וכולם נספרים במכסה."})
 S.append({"type": "compare", "eyebrow": "חלון ההקשר", "title": "חלון ההקשר הוא *שולחן העבודה* של Claude",
           "subtitle": "כמות הטוקנים ש-Claude רואה וזוכר בשיחה אחת, בבת אחת.",
           "left": {"label": "שולחן עמוס", "title": "אובדן פוקוס", "items": ["5 נושאים באותה שיחה ארוכה", "הטוקנים מתבזבזים", "איכות התשובה צונחת"]},
