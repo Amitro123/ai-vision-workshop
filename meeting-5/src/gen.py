@@ -274,6 +274,51 @@ def context_slide():
         stage(f'<div class="fx col" style="flex:1;gap:24px;min-height:0;">{top}{bottom}</div>') + \
         take('ככל שהתכנים והתשובות ארוכים יותר, <span class="hi">מגיעים מהר יותר למיליון</span>. משימה חדשה? צ׳אט חדש.')
 
+def skills_intro_slide():
+    def line(icon, lead, text, c):
+        return (f'<div class="fx" style="gap:18px;align-items:flex-start;"><span style="font-size:42px;line-height:1.15;">{icon}</span>'
+                f'<span class="ink-t fw5" style="font-size:28px;line-height:1.4;"><span class="fw8" style="color:var(--c{c});">{r(lead)}</span> {r(text)}</span></div>')
+    know = (f'<div class="glass fx col" style="flex:1.1;min-height:0;padding:26px 36px;gap:18px;justify-content:center;border-top:7px solid var(--c1);">'
+            f'<span class="fw8" style="font-size:34px;color:var(--c1);">🤔 מכירים את זה?</span>'
+            + line("🔁", "משימה שחוזרת על עצמה:", "סיכום שבועי, מכתב לקופת חולים, פוסט לקהילה.", 1)
+            + line("💬", "שיחה ארוכה עם Claude:", "אחרי הרבה תיקונים הגעתם לתוצאה מושלמת. ובפעם הבאה? מתחילים מאפס.", 1) + '</div>')
+    ask = (f'<div class="glass fx col" style="flex:.9;min-height:0;padding:26px 36px;gap:16px;justify-content:center;border-top:7px solid var(--c3);">'
+           f'<span class="fw8" style="font-size:32px;color:var(--c3);">✨ במקום להדביק את אותו פרומפט ארוך, פשוט מבקשים:</span>'
+           f'{quote(r("״על בסיס השיחה הזו, צור לי Skill שאוכל להשתמש בו שוב בפעם הבאה.״"), 28)}</div>')
+    right = f'<div class="fx col" style="flex:1.05;min-width:0;gap:22px;min-height:0;">{know}{ask}</div>'
+    items = [("🥕", "המרכיבים", "מה הוא מקבל מכם, ובאיזה סגנון לכתוב."), ("📋", "שלבי ההכנה", "מה עושים, ובאיזה סדר."), ("⭐", "איך נראית מנה מוצלחת", "דוגמה לתוצאה שאהבתם.")]
+    its = ''.join(line(ic, t + ":", x, 5) for ic, t, x in items)
+    chef = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:30px 38px;gap:22px;justify-content:center;border-top:7px solid var(--c5);">'
+            f'<div class="fx ac" style="gap:18px;"><span style="font-size:64px;line-height:1;">🧑‍🍳</span><div class="fx col"><span class="fw8" style="font-size:36px;color:var(--c5);">המתכון להכנת המנה המושלמת</span>'
+            f'<span class="muted fw6" style="font-size:26px;">אתם כותבים, Claude מבשל</span></div></div>'
+            f'{its}'
+            f'<div style="background:var(--bg-2);border:2px solid var(--c4);border-radius:16px;padding:18px 24px;font-size:28px;line-height:1.4;" class="ink-t fw7">'
+            f'🔥 Claude מדליק את התנור ומבצע, ובכל פעם יוצאת <span style="color:var(--c1);">אותה מנה טעימה</span>.</div></div>')
+    return head("סקילים", f'Skill: {acc("המתכון שלכם")} ל-Claude') + stage(row(right, chef, gap=26)) + \
+        take('Skill = <span class="hi">מתכון למשימה מסוימת</span>, ש-Claude שולף בדיוק כשצריך.')
+
+def skills_example_slide():
+    import base64
+    img = base64.b64encode(open('assets/skill_morning_board.png', 'rb').read()).decode()
+    left = (f'<div class="glass fx col" style="flex:1.2;min-width:0;min-height:0;padding:22px 26px;gap:12px;border-top:7px solid var(--c1);">'
+            f'<div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;">'
+            f'<img src="data:image/png;base64,{img}" alt="צילום מסך: לוח משימות יומי עם עמודות לביצוע, בתהליך והושלם, שנבנה אוטומטית ממיילים, יומן ומשימות" '
+            f'style="max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;border:1px solid var(--c4);"></div>'
+            f'<span class="muted fw6" style="font-size:22px;text-align:center;">התוצאה: לוח יומי שאפשר לגרור בו משימות (נתונים לדוגמה)</span></div>')
+    def li(icon, t):
+        return f'<div class="fx ac" style="gap:16px;"><span style="font-size:34px;line-height:1;">{icon}</span><span class="ink-t fw6" style="font-size:27px;">{r(t)}</span></div>'
+    write = (f'<div class="glass fx col" style="flex:none;padding:16px 34px;gap:8px;justify-content:center;border-top:7px solid var(--c3);">'
+             f'<span class="fw8" style="font-size:30px;color:var(--c3);">✍️ מה אני כותב</span>{quote("☀️ ״תתחיל את היום שלי״", 28)}</div>')
+    does = (f'<div class="glass fx col" style="flex:1;min-height:0;padding:18px 34px;gap:10px;justify-content:center;border-top:7px solid var(--c5);">'
+            f'<span class="fw8" style="font-size:30px;color:var(--c5);">🤖 מה ה-Skill עושה לבד</span>'
+            + li("📧", "קורא מיילים שעוד לא נקראו") + li("📅", "בודק מה יש ביומן היום") + li("✅", "אוסף משימות פתוחות") + li("🗂️", "ממיין לפי דחיפות ובונה לוח אחד")
+            + '</div>')
+    share = ('<div class="fx ac" style="gap:14px;padding:10px 28px;border-radius:16px;background:var(--bg-2);border:2px dashed var(--c3);flex:none;">'
+             '<span style="font-size:34px;">🎁</span><span class="ink-t fw8" style="font-size:27px;">את הסקיל הזה אשתף אתכם</span></div>')
+    right = f'<div class="fx col" style="flex:1;min-width:0;gap:18px;min-height:0;">{write}{does}{share}</div>'
+    return head("סקילים · דוגמה אמיתית", f'Skill שבניתי: {acc("תדריך בוקר")}') + stage(row(right, left, gap=26)) + \
+        take('משפט אחד, ותוצאה מלאה, <span class="hi">כי המתכון כבר כתוב</span>.')
+
 def badgood_slide():
     hi = lambda t: f'<span style="color:var(--highlight);font-weight:800;">{r(t)}</span>'
     bad = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c6);">'
@@ -386,23 +431,18 @@ S.append({"type": "steps", "eyebrow": "עבודת צוות", "title": "Projects:
                     {"title": "משתפים עם הצוות", "text": "Share, וכל מי שנכנס נהנה מאותו זיכרון ומאותן הנחיות."}],
           "takeaway": "שפה ארגונית אחידה, *וחפיפה קצרה בהרבה*.",
           "notes": "להראות בלייב: Projects → New, Project Knowledge, ואז Share כדי שכל ההנהלה תעבוד על אותה תשתית ידע.\n\nאם עולה שאלה על זיכרון ארוך טווח: Obsidian היא תיקייה של קבצי טקסט שאפשר לחבר ל-Cowork כמוח שני של הארגון."})
-S.append({"type": "image", "eyebrow": "סקילים", "title": "סקיל = *מתכון של שף* ל-Claude",
-          "subtitle": "בלי סקיל מסבירים כל פעם מחדש. עם סקיל, Claude מקבל יכולת קבועה.",
-          "src": "assets/onboarding-binder.jpg", "alt": "איור: אדם מגיש לעוזר דיגיטלי קלסר נהלים מסודר עם רשימת בדיקה",
-          "points": ["*המרכיבים*: מה Claude מקבל, ובאיזה סגנון לכתוב.", "*שלבי ההכנה*: מה עושים, ובאיזה סדר.", "*איך נראית מנה מוצלחת*: בדיקה לפני שמגישים."],
-          "takeaway": "כל פעולה שחוזרת *יותר מפעמיים בחודש* ראויה לסקיל.",
-          "notes": "מתכון שף: קובץ SKILL.md אורז את כל שלבי העבודה, הסגנון ובדיקות האיכות. כשמבקשים משימה מוכרת, Claude שולף את המתכון לבד ומבצע ברמה של שף.\n\nאת הסיפור המלא (איך בניתי סקיל ומה למדתי) נותנים בנפרד: skills-example.html."})
-S.append({"type": "image", "eyebrow": "סקיל שבניתי", "title": "מכל המקורות, *לוח משימות אחד*",
-          "src": "assets/skill_morning_board.png", "alt": "צילום מסך: לוח משימות יומי עם עמודות לביצוע, בתהליך והושלם, שנבנה ממיילים, יומן וכלי משימות",
-          "points": ["מבקשים במשפט אחד: *״תתחיל את היום שלי״*.", "קורא מיילים, יומן, אקסלים ופתקים.", "ממיין לפי דחיפות ובונה דשבורד אחד."],
-          "takeaway": "משפט אחד, ותוצאה מלאה, *כי המתכון כבר כתוב*.",
-          "notes": "לספר מאיפה זה בא: צורך לנהל משימות טוב יותר מכל סוגי הדאטות. להראות את הסקיל רץ בלייב.\n\nהנתונים בצילום הם דוגמה."})
+S.append({"type": "raw", "html": skills_intro_slide(),
+          "notes": "מכירים את זה? משימה שחוזרת על עצמה, או שיחה ארוכה שבסוף הגעתם בה לתוצאה מושלמת, ובפעם הבאה מתחילים מאפס.\n\nבמקום להדביק בכל שיחה את אותו פרומפט ארוך, מבקשים מ-Claude בסוף שיחה מוצלחת: \"על בסיס השיחה הזו, צור לי Skill שאוכל להשתמש בו שוב בפעם הבאה\".\n\nמתכון שף: קובץ שאורז את המרכיבים (מה Claude מקבל מכם ובאיזה סגנון לכתוב), שלבי ההכנה (מה עושים ובאיזה סדר) ואיך נראית מנה מוצלחת. Claude שולף את המתכון לבד כשהמשימה מתאימה ומבצע ברמה של שף.\n\nכל פעולה שחוזרת יותר מפעמיים בחודש ראויה לסקיל. את הסיפור המלא (איך בניתי סקיל ומה למדתי) נותנים בנפרד: skills-example.html."})
+S.append({"type": "raw", "html": skills_example_slide(),
+          "notes": "הדוגמה הכי ויזואלית: סקיל שבניתי לניהול משימות. כותבים משפט אחד, \"תתחיל את היום שלי\", ו-Claude קורא מיילים, בודק את היומן, אוסף משימות פתוחות, ממיין לפי דחיפות ובונה לוח אחד. בערב: \"סיים את היום\" ומקבלים סיכום של מה הספקתי ומה עובר למחר. הנתונים בצילום הם דוגמה.\n\nמבפנים: הסקיל הוא קובץ טקסט אחד (SKILL.md) עם תיאור שאומר ל-Claude מתי להשתמש בו, ומתכון מלא. Claude רואה בתחילת השיחה רק את התיאורים של כל הסקילים, ופותח את המתכון המלא רק כשצריך. זוכרים את הטוקנים? בגלל זה אפשר להחזיק הרבה סקילים בלי להעמיס על חלון ההקשר.\n\nאת הסקיל הזה אשתף אתכם."})
 S.append({"type": "raw", "html": icards_slide("לא להמציא את הגלגל", f'מתקינים סקיל, או {acc("מוצאים מוכן")}', None, [
-    icard("📦", "איך מתקינים", "מעלים את קובץ הסקיל בהגדרות של Claude, או שמים אותו בתיקיית הסקילים של הפרויקט.", 1),
-    icard("🔎", "Find Skills", "הסקיל של Vercel מחפש בשבילכם בין אלפי סקילים שמישהו כבר בנה ובדק.", 3, foot("לפני שבונים, מחפשים", 3)),
+    icard("💬", "איך מתקינים?", "פשוט מבקשים מ-Claude להתקין, והוא כבר מתקין בשבילכם.", 1, foot("בלי קבצים ובלי הגדרות", 1)),
+    icard("🔎", "Find Skills", "הסקיל של Vercel מחפש בשבילכם בין אלפי סקילים שמישהו כבר בנה ובדק.", 3,
+          '<a href="https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md" target="_blank" rel="noopener noreferrer" dir="ltr" '
+          'class="chip" style="align-self:flex-start;background:var(--c3);color:#fff;font-size:24px;text-decoration:none;">github.com/vercel-labs/skills ↗</a>'),
     icard("✨", "מתי לבנות לבד", "כשאין סקיל מתאים, והמשימה חוזרת על עצמה שוב ושוב.", 5)],
     'לפני שבונים סקיל, <span class="hi">בודקים אם מישהו כבר בנה</span>.'),
-          "notes": "להראות איך מתקינים סקיל בממשק (הגדרות → Skills) ובתיקייה.\n\nלהדגים את find-skills. פקודת ההתקנה (מהמסך שלי, לא לשקף):\nnpx skills add vercel-labs/skills --skill find-skills"})
+          "notes": "מתקינים סקיל? פשוט מבקשים מ-Claude להתקין, והוא כבר מתקין. אפשר גם להדביק לו את הקישור לסקיל.\n\nלהדגים את find-skills של Vercel (הקישור על השקף): סקיל שמחפש בין אלפי סקילים שמישהו כבר בנה ובדק. לפני שבונים לבד, בודקים אם כבר יש.\n\nלמי שרוצה את הפקודה (לא לשקף): npx skills add vercel-labs/skills --skill find-skills"})
 S.append({"type": "raw", "html": handson_slide(),
           "notes": "כל אחד מעתיק את הפרומפט, מדביק בקלוד ובונים יחד את הסקיל עם הלוגו של חלאסרטן. אחרי שנבנה: לבקש מצגת קצרה, ו-Ctrl+P ל-PDF.\n\nבונוס אם נשאר זמן: 3 דקות של Claude Design ואיך בונים שם סיסטם דיזיין.\n\nדוגמה מוכנה לתוצר: המצגת הזו, ו-skills-example.html."})
 S.append({"type": "raw", "html": icards_slide("קונקטורים ואבטחת מידע", f'לחבר את Claude {acc("בצורה אחראית")}', None, [
