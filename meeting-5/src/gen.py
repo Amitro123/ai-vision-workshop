@@ -319,6 +319,34 @@ def skills_example_slide():
     return head("סקילים · דוגמה אמיתית", f'Skill שבניתי: {acc("תדריך בוקר")}') + stage(row(right, left, gap=26)) + \
         take('משפט אחד, ותוצאה מלאה, <span class="hi">כי המתכון כבר כתוב</span>.')
 
+def skill_structure_slide():
+    chipd = 'background:rgba(255,255,255,.14);color:var(--highlight);'
+    desc = (f'<div class="fx col" style="gap:8px;">'
+            f'<div><span class="chip" style="{chipd}font-size:22px;" dir="ltr">description</span> <span class="fw7" style="font-size:22px;color:var(--on-dark-2);">כריכת המתכון</span></div>'
+            f'<span class="fw6" style="font-size:25px;line-height:1.4;color:var(--on-dark);">{r("שם: תדריך בוקר")}</span>'
+            f'<span class="fw5" style="font-size:25px;line-height:1.4;color:var(--on-dark);">{r("תיאור: בונה לוח משימות יומי מהמייל, מהיומן ומהמשימות. השתמש כשהמשתמש כותב ״תתחיל את היום שלי״.")}</span></div>')
+    steps = ["בדוק מה ביקשו: תחילת יום או סוף יום", "אסוף מיילים, פגישות ומשימות פתוחות", "מיין: דחוף / בתהליך / בוצע", "בנה לוח אחד ברור", "אל תצטט תוכן אישי מהמיילים"]
+    body = (f'<div class="fx col" style="gap:8px;">'
+            f'<div><span class="chip" style="{chipd}font-size:22px;" dir="ltr">body</span> <span class="fw7" style="font-size:22px;color:var(--on-dark-2);">המתכון המלא</span></div>'
+            + ''.join(f'<span class="fw5" style="font-size:25px;line-height:1.35;color:var(--on-dark);">{i}. {r(t)}</span>' for i, t in enumerate(steps, 1)) + '</div>')
+    md = (f'<div class="inkcard fx col" style="flex:1.05;min-width:0;padding:26px 36px;gap:16px;justify-content:center;">'
+          f'<div class="fx ac jb"><span class="fw8" style="font-size:30px;color:var(--on-dark);" dir="ltr">📄 SKILL.md</span><span class="fw6" style="font-size:22px;color:var(--on-dark-2);">בתרגום חופשי · קובץ טקסט אחד</span></div>'
+          f'{desc}<div style="height:2px;background:rgba(255,255,255,.2);"></div>{body}</div>')
+    def st(i, lead, text, c):
+        return (f'<div class="fx" style="gap:16px;align-items:flex-start;"><span class="numchip" style="background:var(--c{c});width:46px;height:46px;font-size:24px;">{i}</span>'
+                f'<span class="ink-t fw5" style="font-size:26px;line-height:1.4;"><span class="fw8" style="color:var(--c{c});">{r(lead)}</span> {r(text)}</span></div>')
+    how = (f'<div class="glass fx col" style="flex:1;min-height:0;padding:26px 36px;gap:18px;justify-content:center;border-top:7px solid var(--c1);">'
+           f'<span class="fw8" style="font-size:34px;color:var(--c1);">🤖 איך Claude קורא את זה?</span>'
+           + st(1, "מעיין בתוכן העניינים:", "בתחילת השיחה הוא רואה רק את ה-description של כל הסקילים.", 1)
+           + st(2, "מזהה התאמה:", "כתבתם ״תתחיל את היום שלי״? התיאור אומר לו שזה הזמן.", 3)
+           + st(3, "פותח את המתכון:", "רק עכשיו הוא קורא את ה-body ומבצע שלב אחרי שלב.", 5) + '</div>')
+    good = (f'<div class="glass fx col" style="flex:none;padding:16px 34px;gap:6px;border-top:7px solid var(--c3);">'
+            f'<span class="ink-t fw6" style="font-size:25px;">{r("description טוב = Claude יודע מתי לשלוף את המתכון.")}</span>'
+            f'<span class="ink-t fw6" style="font-size:25px;">{r("body טוב = המנה יוצאת טעימה.")}</span></div>')
+    right = f'<div class="fx col" style="flex:.95;min-width:0;gap:18px;min-height:0;">{how}{good}</div>'
+    return head("סקילים · מבנה", f'ממה בנוי {acc("Skill")}?') + stage(row(md, right, gap=26)) + \
+        take('זוכרים את הטוקנים? ככה אפשר להחזיק <span class="hi">עשרות סקילים</span> בלי להעמיס על Claude.')
+
 def badgood_slide():
     hi = lambda t: f'<span style="color:var(--highlight);font-weight:800;">{r(t)}</span>'
     bad = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c6);">'
@@ -435,6 +463,8 @@ S.append({"type": "raw", "html": skills_intro_slide(),
           "notes": "מכירים את זה? משימה שחוזרת על עצמה, או שיחה ארוכה שבסוף הגעתם בה לתוצאה מושלמת, ובפעם הבאה מתחילים מאפס.\n\nבמקום להדביק בכל שיחה את אותו פרומפט ארוך, מבקשים מ-Claude בסוף שיחה מוצלחת: \"על בסיס השיחה הזו, צור לי Skill שאוכל להשתמש בו שוב בפעם הבאה\".\n\nמתכון שף: קובץ שאורז את המרכיבים (מה Claude מקבל מכם ובאיזה סגנון לכתוב), שלבי ההכנה (מה עושים ובאיזה סדר) ואיך נראית מנה מוצלחת. Claude שולף את המתכון לבד כשהמשימה מתאימה ומבצע ברמה של שף.\n\nכל פעולה שחוזרת יותר מפעמיים בחודש ראויה לסקיל. את הסיפור המלא (איך בניתי סקיל ומה למדתי) נותנים בנפרד: skills-example.html."})
 S.append({"type": "raw", "html": skills_example_slide(),
           "notes": "הדוגמה הכי ויזואלית: סקיל שבניתי לניהול משימות. כותבים משפט אחד, \"תתחיל את היום שלי\", ו-Claude קורא מיילים, בודק את היומן, אוסף משימות פתוחות, ממיין לפי דחיפות ובונה לוח אחד. בערב: \"סיים את היום\" ומקבלים סיכום של מה הספקתי ומה עובר למחר. הנתונים בצילום הם דוגמה.\n\nמבפנים: הסקיל הוא קובץ טקסט אחד (SKILL.md) עם תיאור שאומר ל-Claude מתי להשתמש בו, ומתכון מלא. Claude רואה בתחילת השיחה רק את התיאורים של כל הסקילים, ופותח את המתכון המלא רק כשצריך. זוכרים את הטוקנים? בגלל זה אפשר להחזיק הרבה סקילים בלי להעמיס על חלון ההקשר.\n\nאת הסקיל הזה אשתף אתכם."})
+S.append({"type": "raw", "html": skill_structure_slide(),
+          "notes": "סקיל הוא קובץ טקסט אחד (SKILL.md) עם שני חלקים, וכל חלק נקרא בזמן אחר. זה אותו סקיל תדריך בוקר מהשקף הקודם, בתרגום חופשי.\n\ndescription: כריכת המתכון. שם ותיאור קצר שאומר ל-Claude מתי להשתמש בסקיל.\nbody: המתכון המלא, שלב אחרי שלב.\n\nאיך Claude קורא את זה: בתחילת השיחה הוא רואה רק את התיאורים של כל הסקילים (כמו תוכן עניינים). כשכתבתם \"תתחיל את היום שלי\" הוא מזהה התאמה, ורק אז פותח את המתכון המלא.\n\nזוכרים את הטוקנים? בגלל זה אפשר להחזיק עשרות סקילים בלי להעמיס על חלון ההקשר: רק התיאורים נטענים, והמתכון נפתח רק כשצריך.\n\ndescription טוב = Claude יודע מתי לשלוף. body טוב = התוצאה יוצאת טעימה."})
 S.append({"type": "raw", "html": icards_slide("לא להמציא את הגלגל", f'מתקינים סקיל, או {acc("מוצאים מוכן")}', None, [
     icard("💬", "איך מתקינים?", "פשוט מבקשים מ-Claude להתקין, והוא כבר מתקין בשבילכם.", 1, foot("בלי קבצים ובלי הגדרות", 1)),
     icard("🔎", "Find Skills", "הסקיל של Vercel מחפש בשבילכם בין אלפי סקילים שמישהו כבר בנה ובדק.", 3,
@@ -445,18 +475,14 @@ S.append({"type": "raw", "html": icards_slide("לא להמציא את הגלגל
           "notes": "מתקינים סקיל? פשוט מבקשים מ-Claude להתקין, והוא כבר מתקין. אפשר גם להדביק לו את הקישור לסקיל.\n\nלהדגים את find-skills של Vercel (הקישור על השקף): סקיל שמחפש בין אלפי סקילים שמישהו כבר בנה ובדק. לפני שבונים לבד, בודקים אם כבר יש.\n\nלמי שרוצה את הפקודה (לא לשקף): npx skills add vercel-labs/skills --skill find-skills"})
 S.append({"type": "raw", "html": handson_slide(),
           "notes": "כל אחד מעתיק את הפרומפט, מדביק בקלוד ובונים יחד את הסקיל עם הלוגו של חלאסרטן. אחרי שנבנה: לבקש מצגת קצרה, ו-Ctrl+P ל-PDF.\n\nבונוס אם נשאר זמן: 3 דקות של Claude Design ואיך בונים שם סיסטם דיזיין.\n\nדוגמה מוכנה לתוצר: המצגת הזו, ו-skills-example.html."})
-S.append({"type": "raw", "html": icards_slide("קונקטורים ואבטחת מידע", f'לחבר את Claude {acc("בצורה אחראית")}', None, [
-    icard("🔌", "Connectors", "Drive, Gmail, יומן, Slack או Notion. Claude שולף את המסמך העדכני בעצמו.", 1, foot("מחברים בהגדרות → Connectors", 1)),
-    icard("🛡️", "מידע רגיש", "בלי פרטים מזהים של חברי קהילה. מידע רפואי עולה רק אחרי התממה.", 3),
-    icard("🔑", "הרשאות מינימליות", "מחברים רק תיקיות רלוונטיות, ופעולות רגישות מאשרים ידנית.", 5)],
+_srcs = ''.join(f'<span class="chip" style="background:#fff;color:var(--c5);border:2px solid var(--c4);font-size:23px;padding:7px 16px;" dir="ltr">{n}</span>' for n in ["Google Drive", "Gmail", "Calendar", "Slack", "Notion"])
+S.append({"type": "raw", "html": icards_slide("קונקטורים, אבטחה ופלאגינים", f'לחבר את Claude {acc("למקורות המידע שלכם")}', None, [
+    icard("🔌", "Connectors", "Claude מתחבר ישירות למקורות שלכם ושולף את המסמך העדכני בעצמו.", 1,
+          f'<div class="fx wrap" style="gap:10px;">{_srcs}</div>' + foot("מחברים בהגדרות → Connectors", 1), fs=28),
+    icard("🛡️", "אבטחת מידע", "בלי פרטים מזהים של חברי קהילה: מידע רפואי עולה רק אחרי התממה. מחברים רק תיקיות רלוונטיות, ופעולות רגישות מאשרים ידנית.", 3, fs=28),
+    icard("🦸", "פלאגינים · רשות", "Superpowers: Claude עוצר לסיעור מוחות ולתוכנית לפני שהוא מבצע, ובודק את עצמו בסוף. חבילה של סקילים שמתקינים בבת אחת.", 5, fs=28)],
     'אנחנו תמיד <span class="hi">הטייס שמאשר</span> לפני שליחה או שינוי של מידע ארגוני.'),
-          "notes": "להראות איפה בתפריט מחברים Connectors (כמו Google Drive) ומה זה חוסך: לא מורידים ומעלים קבצים ידנית.\n\nלהדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן."})
-S.append({"type": "steps", "eyebrow": "פלאגינים · רשות", "title": "Superpowers: Claude *חושב לפני שהוא עושה*",
-          "steps": [{"title": "סיעור מוחות", "text": "שואל ומברר מה בדיוק צריך, במקום לקפוץ לביצוע."},
-                    {"title": "תוכנית", "text": "כותב תוכנית עבודה ומציג אותה לאישור."},
-                    {"title": "ביצוע ובדיקה", "text": "מבצע לפי התוכנית ובודק את עצמו בסוף."}],
-          "takeaway": "פלאגין = *חבילה של סקילים וכלים* שמתקינים בבת אחת.",
-          "notes": "אופציונלי, רק אם הקהל סקרן ויש זמן: 2 דקות להראות איך Superpowers גורם לקלוד לתכנן לפני ביצוע."})
+          "notes": "הקונקטורים הם הגשר בין Claude למקורות המידע שלכם: Drive, Gmail, יומן, Slack, Notion. במקום להוריד ולהעלות קבצים ידנית, Claude שולף את המסמך העדכני בעצמו. להראות איפה בתפריט מחברים (הגדרות → Connectors).\n\nלהדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן: מידע רפואי או אישי לא עולה בלי התממה; הרשאות מינימליות, כלומר מחברים רק מה שצריך; פעולות רגישות מאשרים ידנית.\n\nאופציונלי, אם יש זמן ויש סקרנות: פלאגין הוא חבילה של סקילים וכלים. Superpowers גורם ל-Claude לתכנן לפני ביצוע: סיעור מוחות, תוכנית, ביצוע ובדיקה עצמית. 2 דקות להדגים."})
 S.append({"type": "raw", "html": icards_slide("סוכן בתוך הדפדפן", f'Claude in Chrome: {acc("Claude בא אל האתר")}', None, [
     icard("📥", "התקנה ב-30 שניות", "תוסף רשמי מחנות Chrome, נצמד לסרגל ונפתח בחלונית צד.", 1, foot("עובד על כל אתר פתוח", 1)),
     icard("🪄", "מה זה נותן", "סיכום עמודים ארוכים, איסוף נתונים מפורטלים, מילוי טפסים חוזרים.", 3),
