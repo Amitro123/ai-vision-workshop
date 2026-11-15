@@ -138,11 +138,11 @@ meta = {
 
 
 # ---------- visual helpers (bento cards in the style of meetings 2 and 4) ----------
-def icard(icon, title, text, c, extra='', fs=31, style=''):
+def icard(icon, title, text, c, extra='', fs=31, style='', raw=False):
     return (f'<div class="glass fx col" style="flex:1;min-width:0;padding:40px 42px;gap:24px;justify-content:center;border-top:7px solid var(--c{c});{style}">'
             f'<span style="font-size:76px;line-height:1;">{icon}</span>'
             f'<span class="fw8" style="font-size:42px;color:var(--c{c});">{r(title)}</span>'
-            f'<p class="ink-t fw5" style="font-size:{fs}px;line-height:1.45;margin:0;">{r(text)}</p>{extra}</div>')
+            f'<p class="ink-t fw5" style="font-size:{fs}px;line-height:1.45;margin:0;">{text if raw else r(text)}</p>{extra}</div>')
 
 def foot(text, c):
     return (f'<div class="fw7" style="margin-top:8px;padding-top:18px;border-top:2px dashed var(--c4);font-size:27px;color:var(--c{c});">{r(text)}</div>')
@@ -162,8 +162,8 @@ def icards_slide(eyebrow, title, sub, cards, takeaway=None):
 
 def agenda_slide():
     items = [("🧠", "איך Claude חושב", "טוקנים, פרומפטים, ו-Instructions שמכירים אתכם", 1, "תרגול: הראיון ההפוך"),
-             ("🛠️", "איפה עובדים", "Chat, Cowork, Code, ואיזה מודל לבחור", 3, "תרגול: Cowork"),
-             ("📁", "סדר וצוות", "תיקייה לכל פרויקט, ו-Projects משותפים", 5, None),
+             ("🛠️", "איפה עובדים", "Chat, Cowork, Code, מודלים, תיקייה ובטיחות", 3, "תרגול: Cowork"),
+             ("📁", "זיכרון וצוות", "Projects, משימות מתוזמנות וארבע שכבות", 5, None),
              ("⚡", "יכולות", "סקילים, קונקטורים, פלאגינים ו-Chrome", 2, "תרגול: סקיל מצגות"),
              ("🎯", "השולחן שלכם", "מפצחים יחד משימה אמיתית מהעבודה", 1, "תרגול: Use Cases")]
     cards = []
@@ -342,10 +342,111 @@ def skill_structure_slide():
            + st(3, "פותח את המתכון:", "רק עכשיו הוא קורא את ה-body ומבצע שלב אחרי שלב.", 5) + '</div>')
     good = (f'<div class="glass fx col" style="flex:none;padding:16px 34px;gap:6px;border-top:7px solid var(--c3);">'
             f'<span class="ink-t fw6" style="font-size:25px;">{r("description טוב = Claude יודע מתי לשלוף את המתכון.")}</span>'
-            f'<span class="ink-t fw6" style="font-size:25px;">{r("body טוב = המנה יוצאת טעימה.")}</span></div>')
+            f'<span class="ink-t fw6" style="font-size:25px;">{r("body טוב = המנה יוצאת טעימה.")}</span>'
+            f'<span class="muted fw6" style="font-size:23px;">{r("ויכול לכלול גם לוגו ותבניות, דוגמאות וסקריפטים.")}</span></div>')
     right = f'<div class="fx col" style="flex:.95;min-width:0;gap:18px;min-height:0;">{how}{good}</div>'
     return head("סקילים · מבנה", f'ממה בנוי {acc("Skill")}?') + stage(row(md, right, gap=26)) + \
         take('זוכרים את הטוקנים? ככה אפשר להחזיק <span class="hi">עשרות סקילים</span> בלי להעמיס על Claude.')
+
+def folders_safety_slide():
+    tree = ("📁 Halasartan-Projects/\n  └─ 📁 2026-11-Donors-Event/\n       ├─ 📁 01-Raw-Materials/\n       ├─ 📁 02-Outputs/\n       └─ 📄 CLAUDE.md")
+    legend = [("01-Raw-Materials", "מסמכי מקור ונתונים"), ("02-Outputs", "מצגות, דוחות ותוצרים"), ("CLAUDE.md", "הנחיות הפרויקט")]
+    lg = ''.join(f'<div class="fx ac" style="gap:14px;font-size:25px;"><span class="dot" style="background:var(--c{c});"></span><span class="ink-t fw8" dir="ltr">{a}</span><span class="muted fw5">{r(b)}</span></div>'
+                 for (a, b), c in zip(legend, [1, 3, 5]))
+    folder = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:30px 36px;gap:18px;border-top:7px solid var(--c1);">'
+              f'<div><span class="chip" style="background:var(--c1);color:#fff;font-size:26px;">📁 תיקייה ייעודית לכל פרויקט</span></div>'
+              f'<pre dir="ltr" style="margin:0;background:var(--ink);color:var(--on-dark);border-radius:14px;padding:20px 26px;font-size:24px;line-height:1.5;font-family:ui-monospace,Menlo,Consolas,monospace;text-align:left;">{html.escape(tree)}</pre>'
+              f'<div class="fx col" style="gap:8px;">{lg}</div>'
+              f'<div class="fw7" style="margin-top:auto;font-size:25px;line-height:1.4;color:var(--c6);">{r("Claude קורא וכותב רק בתיקייה הזו, ולא ב-Downloads או ב-Desktop")}</div></div>')
+    def mode(dot, name, text):
+        return (f'<div class="fx" style="gap:16px;align-items:flex-start;"><span style="font-size:34px;line-height:1.2;">{dot}</span>'
+                f'<span class="ink-t fw5" style="font-size:29px;line-height:1.4;"><span class="fw8">{r(name)}</span> {r(text)}</span></div>')
+    rules = ''.join(f'<span class="chip" style="background:var(--bg-2);color:var(--c5);font-size:23px;padding:9px 18px;">{r(t)}</span>'
+                    for t in ["💾 מגבים מה שאי אפשר לשחזר", "🧪 מנסים קודם על עותק", "✍️ ״טיוטה בלבד, אל תשלח״"])
+    control = (f'<div class="glass fx col" style="flex:1.05;min-width:0;padding:30px 36px;gap:30px;border-top:7px solid var(--c5);">'
+               f'<span class="fw8" style="font-size:38px;color:var(--c5);">🔐 אתם בשליטה</span>'
+               + mode("🟢", "Ask before acting:", "ברירת המחדל. Claude עוצר לאישורכם לפני שליחה, פרסום ושיתוף.")
+               + mode("🟡", "Act without asking:", "רק למשימות שאתם סומכים עליהן.")
+               + mode("🔴", "מחיקה קבועה:", "תמיד שואל. אי אפשר לדלג.")
+               + f'<div class="fx wrap" style="gap:10px;margin-top:auto;">{rules}</div></div>')
+    return head("סדר ובטיחות", f'כל פרויקט מקבל {acc("תיקייה משלו")}') + stage(row(folder, control)) + \
+        take('Claude מכין, אתם שולחים. <span class="hi">מאצילים את העבודה, לא את שיקול הדעת</span>.')
+
+PRACTICE = """תסתכל על כל מה שיש בתיקייה הזו וכתוב לי סיכום: מה יש בה, איך המסמכים קשורים זה לזה, ומה הפתיע אותך.
+טיוטה בלבד: אל תשנה ואל תמחק שום קובץ."""
+
+def practice_slide():
+    steps = [("בוחרים תיקייה עם חומר אמיתי", "או עותק שלה. לא קבצי הדגמה."), ("מחברים אפליקציה אחת", "זו שבה רוב ההקשר שלכם: מייל או דרייב."),
+             ("מבקשים סיכום", "Claude מציג תוכנית ושואל שאלות. עונים ומאשרים."), ("בודקים מול מה שאתם יודעים", "מה Claude תפס שפספסתם? ומה הוא פספס?")]
+    st = ''.join(f'<div class="fx" style="gap:18px;align-items:flex-start;"><span class="numchip" style="background:var(--c{c});width:50px;height:50px;font-size:26px;">{i}</span>'
+                 f'<div class="fx col" style="gap:4px;"><span class="ink-t fw8" style="font-size:31px;">{r(t)}</span><span class="muted fw5" style="font-size:26px;line-height:1.4;">{r(x)}</span></div></div>'
+                 for i, ((t, x), c) in enumerate(zip(steps, [1, 3, 5, 2]), 1))
+    left = f'<div class="glass fx col" style="flex:.9;min-width:0;padding:32px 38px;gap:26px;justify-content:center;border-top:7px solid var(--c3);">{st}</div>'
+    ideas = (f'<div class="glass fx col" style="flex:.8;min-height:0;padding:22px 34px;gap:12px;justify-content:center;border-top:7px solid var(--c5);">'
+             f'<span class="fw8" style="font-size:30px;color:var(--c5);">💡 עוד רעיונות</span>'
+             f'<span class="ink-t fw5" style="font-size:26px;line-height:1.4;">{r("📝 סיכום הפגישות מהשבוע האחרון, עם מסקנות ו-action items")}</span>'
+             f'<span class="ink-t fw5" style="font-size:26px;line-height:1.4;">{r("🗂️ ארגון תיקייה: ״הצע תוכנית, ואל תזיז כלום עד שאאשר״")}</span></div>')
+    col = f'<div class="fx col" style="flex:1.1;min-width:0;gap:20px;min-height:0;">{prompt_box("פרומפט ראשון", PRACTICE, 28).replace("flex:1;", "flex:1.2;", 1)}{ideas}</div>'
+    return PRINT_CSS + head("תרגול ראשון ב-Cowork", f'מוסרים ל-Cowork {acc("משימה אמיתית")}') + stage(row(left, col)) + \
+        take('תוך כדי עבודה אפשר <span class="hi">לעצור ולכוון</span>. לא מחכים לסוף.')
+
+def projects_slide():
+    steps = [("פותחים Project ומגדירים מטרה", "למשל ״גיוס שותפויות וקרנות״, עם הנחיות רק לפרויקט הזה."), ("מעלים מסמכי ליבה", "דפי עמדה, נתוני אימפקט ובקשות מענקים מוצלחות."),
+             ("משתפים עם הצוות", "Share, וכולם נהנים מאותו זיכרון ומאותן הנחיות.")]
+    st = ''.join(f'<div class="fx" style="gap:18px;align-items:flex-start;"><span class="numchip" style="background:var(--c{c});width:50px;height:50px;font-size:26px;">{i}</span>'
+                 f'<div class="fx col" style="gap:4px;"><span class="ink-t fw8" style="font-size:32px;">{r(t)}</span><span class="muted fw5" style="font-size:26px;line-height:1.4;">{r(x)}</span></div></div>'
+                 for i, ((t, x), c) in enumerate(zip(steps, [1, 3, 5]), 1))
+    left = f'<div class="glass fx col" style="flex:1;min-width:0;padding:34px 40px;gap:34px;justify-content:center;border-top:7px solid var(--c1);">{st}</div>'
+    items = [("📋", "הוראות", "רק לפרויקט הזה", None), ("📁", "תיקיות וקישורים", "ההקשר ש-Claude חוזר אליו", None),
+             ("🕘", "משימות מתוזמנות", "רצות עם ההקשר של הפרויקט", None), ("🧠", "זיכרון", "נבנה לבד מהשיחות בפרויקט", "ההבדל הגדול")]
+    it = ''.join(f'<div class="fx ac" style="gap:18px;"><span style="font-size:44px;line-height:1;">{ic}</span>'
+                 f'<div class="fx col" style="flex:1;gap:2px;"><span class="ink-t fw8" style="font-size:30px;">{r(t)}</span><span class="muted fw5" style="font-size:25px;">{r(x)}</span></div>'
+                 + (f'<span class="chip" style="background:var(--c1);color:#fff;font-size:21px;">{r(b)}</span>' if b else '') + '</div>' for ic, t, x, b in items)
+    right = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:34px 40px;gap:22px;justify-content:center;border-top:7px solid var(--c5);">'
+             f'<span class="fw8" style="font-size:34px;color:var(--c5);">🧩 מה יש בתוך פרויקט</span>{it}</div>')
+    return head("עבודת צוות", f'Projects: {acc("סביבת עבודה משותפת")} לכל תחום') + stage(row(left, right)) + \
+        take('מחוץ לפרויקט כל שיחה מתחילה מאפס. בפנים, <span class="hi">כל שיחה מוסיפה לידע</span>.')
+
+def scheduled_slide():
+    steps = [("עושים את המשימה פעם אחת", "ב-Cowork, ומוודאים שהתוצאה טובה."), ("כותבים /schedule", "ובוחרים תדירות: שעה, יום, ימי חול או ידני."),
+             ("עוברים על הפרומפט ומאשרים", "Claude מנסח אותו, ואתם בודקים.")]
+    st = ''.join(f'<div class="fx" style="gap:18px;align-items:flex-start;"><span class="numchip" style="background:var(--c{c});width:50px;height:50px;font-size:26px;">{i}</span>'
+                 f'<div class="fx col" style="gap:4px;"><span class="ink-t fw8" style="font-size:31px;">{"<span dir=ltr>/schedule</span>".join(r(p) for p in t.split("/schedule"))}</span><span class="muted fw5" style="font-size:26px;line-height:1.4;">{r(x)}</span></div></div>'
+                 for i, ((t, x), c) in enumerate(zip(steps, [1, 3, 5]), 1))
+    how = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:30px 38px;gap:26px;justify-content:center;border-top:7px solid var(--c1);">'
+           f'<span class="fw8" style="font-size:34px;color:var(--c1);">🕘 הדרך הטבעית</span>{st}</div>')
+    ideas = [("📅", "סקירת יום שישי", "מה קרה בשבוע ומה מחכה בשבוע הבא"), ("📊", "סיכום חודשי", "מהגיליונות, ב-1 בחודש"), ("☀️", "בריף בוקר", "לפגישות של היום, כמו הסקיל שראינו")]
+    idl = ''.join(f'<div class="fx ac" style="gap:18px;"><span style="font-size:44px;line-height:1;">{ic}</span><div class="fx col"><span class="ink-t fw8" style="font-size:30px;">{r(t)}</span>'
+                  f'<span class="muted fw5" style="font-size:25px;">{r(x)}</span></div></div>' for ic, t, x in ideas)
+    ide = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:30px 38px;gap:22px;justify-content:center;border-top:7px solid var(--c3);">'
+           f'<span class="fw8" style="font-size:34px;color:var(--c3);">💡 מה שווה לתזמן</span>{idl}</div>')
+    def note(icon, t):
+        return (f'<div class="glass fx ac" style="flex:1;min-width:0;gap:16px;padding:16px 24px;"><span style="font-size:40px;line-height:1;">{icon}</span>'
+                f'<span class="ink-t fw6" style="font-size:24px;line-height:1.35;">{r(t)}</span></div>')
+    notes = (f'<div class="fx" style="gap:20px;flex:none;">{note("🖥️", "קבצים מקומיים: האפליקציה צריכה להיות פתוחה")}'
+             f'{note("📱", "אפשר להתחיל גם מהטלפון, מול קונקטורים")}{note("✍️", "בהתחלה מתזמנים טיוטות, לא שליחה")}</div>')
+    return head("Cowork · משימות מתוזמנות", f'שהעבודה תרוץ {acc("בלי שתבקשו")}') + \
+        stage(f'<div class="fx col" style="flex:1;gap:20px;min-height:0;">{row(how, ide)}{notes}</div>') + \
+        take('קודם <span class="hi">מוודאים שהמשימה עובדת</span> ידנית, ורק אז מתזמנים.')
+
+def layers_slide():
+    items = [("🪪", "Instructions", "מי אתם ואיך אתם עובדים", "כל משימה מתחילה כבר מכוילת לתפקיד שלכם", 1, "✓ ראינו"),
+             ("📁", "Projects", "ההקשר של תחום עבודה אחד", "עובד כמו מי שכבר בצוות, עם הקבצים וההחלטות", 3, "✓ ראינו"),
+             ("🍳", "Skills", "איך תהליך מסוים נעשה", "משימה מוכרת רצה לפי התבניות והצעדים שלכם", 5, "הבא"),
+             ("🧩", "Plugins", "המומחיות של התפקיד שלכם", "מ-Claude כללי למומחה, עם תהליכים וחיבורים מוכנים", 2, "בהמשך")]
+    cards = []
+    for ic, t, learns, unlocks, c, st in items:
+        done = st.startswith("✓")
+        chip = (f'<span class="chip" style="background:{"var(--c1)" if done else "#fff"};color:{"#fff" if done else "var(--c5)"};{"" if done else "border:2px solid var(--c4);"}font-size:22px;">{r(st)}</span>')
+        cards.append(f'<div class="glass fx col" style="flex:1;min-width:0;padding:30px 30px;gap:14px;border-top:7px solid var(--c{c});">'
+                     f'<div class="fx ac jb"><span style="font-size:64px;line-height:1;">{ic}</span>{chip}</div>'
+                     f'<span class="fw8" style="font-size:42px;color:var(--c{c});" dir="ltr">{t}</span>'
+                     f'<span class="muted fw7" style="font-size:26px;margin-top:14px;">Claude לומד</span>'
+                     f'<span class="ink-t fw6" style="font-size:32px;line-height:1.35;">{r(learns)}</span>'
+                     f'<span class="muted fw7" style="font-size:26px;margin-top:14px;">וזה פותח</span>'
+                     f'<span class="ink-t fw6" style="font-size:32px;line-height:1.35;">{r(unlocks)}</span></div>')
+    return head("המפה", f'ארבע דרכים ללמד את Claude {acc("להכיר אתכם")}') + stage(row(*cards, gap=22)) + \
+        take('כל שכבה <span class="hi">חוסכת הסברים חוזרים</span>. מתחילים מהראשונה.')
 
 def badgood_slide():
     hi = lambda t: f'<span style="color:var(--highlight);font-weight:800;">{r(t)}</span>'
@@ -362,7 +463,7 @@ def badgood_slide():
 
 def interview_slide():
     steps = [("מדביקים את הפרומפט", "כפתור ההעתקה כאן משמאל."), ("עונים על 10 שאלות", "תפקיד, קהל, סגנון, ומה מעצבן אתכם בתשובות AI."),
-             ("שומרים את הסיכום", "Settings → Profile → Instructions for Claude")]
+             ("שומרים את הסיכום", "בהגדרות, ב-Instructions for Claude (או Global instructions)")]
     st = ''.join(f'<div class="fx" style="gap:20px;align-items:flex-start;"><span class="numchip" style="background:var(--c{c});">{i}</span>'
                  f'<div class="fx col" style="gap:6px;"><span class="ink-t fw8" style="font-size:31px;">{r(t)}</span><span class="muted fw5" style="font-size:25px;line-height:1.4;">{r(x)}</span></div></div>'
                  for i, ((t, x), c) in enumerate(zip(steps, [1, 3, 5]), 1))
@@ -420,7 +521,7 @@ S.append({"type": "cover", "mode": "dark", "eyebrow": "סדנת המשך · הנ
           "subtitle": "מצ'אט שמתחיל כל פעם מאפס, לסביבת עבודה עם זיכרון, פרויקטים משותפים וסקילים.",
           "notes": "ברוכים הבאים לסדנת ההמשך של הנהלת חלאסרטן! במפגש הקודם טעמנו מהעולם של AI, והיום אנחנו עולים קומה.\n\nנתחיל מלהבין איך המודל קורא טוקנים ופרומפטים, ונראה איך מתוך ההבנה הזו בונים לקלוד זיכרון קבוע, פרויקטים משותפים וסקילים שחוסכים שעות של עבודה."})
 S.append({"type": "raw", "html": agenda_slide(),
-          "notes": "סדר היום בקצרה. חלוקת זמנים מוצעת לשעתיים:\n\nאיך Claude חושב + ראיון הפוך: 30 דקות.\nאיפה עובדים + משימה ל-Cowork: 20 דקות.\nסדר וצוות: 10 דקות.\nיכולות + סקיל מצגות: 35 דקות.\nשולחן עגול: 20 דקות.\n\nלהדגיש: ארבעה תרגולים, לא הרצאה."})
+          "notes": "סדר היום בקצרה. חלוקת זמנים מוצעת לשעתיים:\n\nאיך Claude חושב + ראיון הפוך (שקפים 3-7): 25 דקות.\nאיפה עובדים, תיקייה ובטיחות + תרגול ראשון ב-Cowork (8-12): 35 דקות.\nזיכרון וצוות: Projects, משימות מתוזמנות וארבע שכבות (13-15): 15 דקות.\nיכולות: סקילים, תרגול סקיל מצגות, קונקטורים, פלאגינים ו-Chrome (16-22): 30 דקות.\nשולחן עגול וסיכום (23-24): 15 דקות.\n\nלהדגיש: ארבעה תרגולים, לא הרצאה.\n\nלפני המפגש כדאי לבקש מהמשתתפים להתקין את אפליקציית הדסקטופ של Claude ולוודא שיש להם תוכנית בתשלום: Cowork עובד על קבצים מקומיים רק משם."})
 S.append({"type": "raw", "html": llm_slide(),
           "notes": "LLM = Large Language Model: מודל שפה גדול שקרא המון טקסט ולמד לזהות מה בדרך כלל בא אחרי מה. ChatGPT, Claude ו-Gemini הם כולם מודלי שפה: אותו רעיון בסיסי, כל אחד בנוי קצת אחרת.\n\nזה לא מוח אנושי, זה מנוע שפה. בכל רגע הוא שואל: מה ההמשך הכי סביר לטקסט הזה? לכן ככל שנדבר איתו ברור יותר, נקבל תוצאה טובה יותר.\n\nדוגמה: \"החתול ישב על ה___\". המודל נותן הסתברות לכל המשך אפשרי ובוחר. המספרים להמחשה בלבד.\n\nומה בדיוק הוא מנחש? לא מילים שלמות, אלא חתיכות קטנות של טקסט שנקראות טוקנים. זה המעבר לשקף הבא."})
 S.append({"type": "raw", "html": tokens_slide2(),
@@ -431,17 +532,16 @@ S.append({"type": "raw", "html": prompt_merged_slide(),
           "notes": "פרומפט = ההוראות שאנחנו נותנים ל-AI: הטקסט שאנחנו כותבים לו. שאלה, בקשה, הוראה, הקשר, הכל פרומפט.\n\nאיך זה קשור למה שראינו: הפרומפט מתפרק לטוקנים, ומודל השפה מנבא מהם את ההמשך. לכן כל מילה בפרומפט מכוונת את התשובה.\n\nפרומפט טוב = תקשורת טובה. זה לא קסם טכני, זה בדיוק כמו לתת הנחיה לעובד חדש: ככל שנהיה ברורים ומכוונים יותר, נקבל תוצאה טובה יותר.\n\nלהשוות את שתי הדוגמאות: העמום נותן טקסט גנרי; המלא נותן ל-Claude הקשר מדויק (מי כותב, למי, באיזה טון ומה המשימה), ולכן התוצאה מדויקת.\n\n5 המרכיבים: תפקיד, הקשר, הוראה, נתוני קלט, פורמט וטון. שלושה מהם (תפקיד, הקשר, סגנון) כמעט לא משתנים אצלכם. בשקף הבא נראה איך גורמים ל-Claude להכיר אותנו, כדי שלא נצטרך לכתוב אותם כל פעם."})
 S.append({"type": "raw", "html": interview_slide(),
           "notes": "המעבר: אחרי שהבנו איך לדייק את הפרומפטים שאנחנו כותבים, נבין איך גורמים ל-Claude להכיר אותנו, כדי שההקשר הבסיסי יהיה שם בכל שיחה.\n\nבמקום לשבור את הראש מול דף לבן, מבקשים מ-Claude לשאול 10 שאלות ולהרכיב בעצמו את ה-Instructions. כל אחד לוחץ העתקה, מדביק ועונה.\n\nבשקף הבא: דוגמאות למה שאמור לצאת."})
-S.append({"type": "raw", "html": roles_slide(),
-          "notes": "אחרי שכל אחד הריץ את הראיון: כך נראה בלוק מוכן לשלושה תפקידים בהנהלה (ניהול קהילה, גיוס משאבים, מנכ\"לות וכספים).\n\nלהשוות למה שקיבלתם: האם יש תפקיד, הקשר, וסגנון? מי שלא סיים יכול להעתיק את הבלוק של התפקיד שלו כנקודת פתיחה ולערוך.\n\nמה זה נותן: שפה ישירה ולא מתנשאת בלי לבקש כל פעם; בגיוס, מקור לכל נתון; בכספים, שורה תחתונה וטבלאות."})
+S[-1]["notes"] += "\n\nמה כותבים ב-Instructions: מי אתם ומה אתם עושים; ראשי תיבות וקיצורים שאתם משתמשים בהם (כדי ש-Claude לא ישאל מה זה 'דוח הרבעון'); ואיך אתם אוהבים לקבל תוצרים (פורמט, אורך, טון). לא צריך לגמור ביום הראשון: כל תיקון שאתם חוזרים עליו, כמו 'פתח בשורה התחתונה', הוא מועמד להוראה קבועה.\n\nדוגמאות לשלושה תפקידים בהנהלה (להעתקה מהמסך שלי):\n\n" + "\n\n".join(f"{n}:\n{t}" for n, c, t in ROLES)
 S.append({"type": "raw", "html": icards_slide("שלוש סביבות עבודה", f'יועץ, עובד או בונה: {acc("Chat, Cowork, Code")}', None, [
-    icard("💬", "Chat · היועץ", "סיעור מוחות, חידוד מסרים, ניסוח מכתבים לתורמים והתייעצות מהירה.", 6, foot("מתי: צריכים תשובה או עריכה", 6)),
-    icard("🤝", "Cowork · העובד", "עובד על התיקיות שלכם, מתכנן ומבצע משימה שלמה מתחילה ועד סוף.", 1, foot("מתי: משימה רב-שלבית על קבצים", 1),
+    icard("💬", "Chat · היועץ", "סיעור מוחות, חידוד מסרים, ניסוח מכתבים לתורמים והתייעצות מהירה.", 6, foot("מתי: התשובה היא השיחה", 6)),
+    icard("🤝", "Cowork · העובד", "עובד על התיקיות שלכם, מתכנן ומבצע משימה שלמה מתחילה ועד סוף.", 1, foot("מתי: יש קבצים ותוצר שנשמר", 1),
           style="flex:1.3;box-shadow:0 0 0 4px var(--c1),0 18px 48px rgba(194,24,91,.22);").replace(
           '<span style="font-size:76px;line-height:1;">🤝</span>',
           '<div class="fx ac jb"><span style="font-size:76px;line-height:1;">🤝</span><span class="chip" style="background:var(--c1);color:#fff;font-size:24px;">⭐ כאן עובדים היום</span></div>', 1),
     icard("⚡", "Code · הבונה", "בונה כלים, דשבורדים, מצגות וסקילים, גם מבקשה בשפה פשוטה.", 5, foot("מתי: רוצים כלי חדש", 5))],
     'בסדנה נעבוד ב-<span class="hi">Cowork</span>: נותנים משימה ותיקייה, ומקבלים <span class="hi">קובץ מוכן</span>.'),
-          "notes": "חשוב: את כל התרגולים היום נעשה ב-Cowork. Chat ו-Code מוצגים כדי להבין את ההבדל.\n\nלהדגיש את ההבדל בין Chat (שיחה) לבין Cowork (\"Claude Code בלי קוד\" לאנשי ניהול ותפעול) שבו מצביעים על תיקייה במחשב ונותנים לקלוד לעבוד.\n\nדוגמה ל-Cowork: \"עבור על כל הקבלות בתיקייה והפק טבלת סיכום\"."})
+          "notes": "חשוב: את כל התרגולים היום נעשה ב-Cowork. Chat ו-Code מוצגים כדי להבין את ההבדל.\n\nכלל הכרעה: יש קבצים אמיתיים ותוצר שנשמר? Cowork. התשובה היא השיחה עצמה? Chat. גם כשיש חיבור לקונקטור, זה לא הופך משימה ל-Cowork: השאלה היא מה אתם רוצים לקבל.\n\nCowork הוא הכלי להאצלה: מתארים תוצאה, ו-Claude מתכנן, מבצע ומחזיר תוצר שלם. בשביל גישה לקבצים צריך את אפליקציית הדסקטופ ותוכנית בתשלום. מהאינטרנט או מהטלפון Cowork מגיע רק לקונקטורים.\n\nלהדגיש את ההבדל בין Chat (שיחה) לבין Cowork (\"Claude Code בלי קוד\" לאנשי ניהול ותפעול) שבו מצביעים על תיקייה במחשב ונותנים לקלוד לעבוד.\n\nדוגמה ל-Cowork: \"עבור על כל הקבלות בתיקייה והפק טבלת סיכום\"."})
 S.append({"type": "table", "eyebrow": "בחירת המודל", "title": "Haiku, Sonnet או Opus: *מודל לפי משימה*",
           "columns": ["מודל", "האופי", "מתי להשתמש", "מהירות ומכסה"],
           "rows": [["⚡ Haiku", "הסורק המהיר", "קריאת מסמכים, סיכום פרוטוקולים", "מיידי · הכי חסכוני"],
@@ -451,20 +551,22 @@ S.append({"type": "table", "eyebrow": "בחירת המודל", "title": "Haiku, 
           "notes": "הכל מתחבר לטוקנים: מסמכים ארוכים שורפים המון טוקנים. עם Opus המכסה תיגמר מהר. Haiku קורא מסמכים מהר ובמינימום עלות.\n\nBest practice: Haiku לקריאה וסריקה, Sonnet לכתיבה ויצירה, Opus לחשיבה אסטרטגית."})
 S.append({"type": "raw", "html": cowork_slide(),
           "notes": "התפקיד והרקע כבר שמורים ב-Instructions, אז ב-Cowork מגדירים רק 3 מרכיבים: התוצר, חומרי הגלם והדגש.\n\nללחוץ על אפשרויות שונות ולהראות איך הפרומפט משתנה. כפתור ההעתקה מעתיק את הפרומפט המורכב."})
-S.append({"type": "raw", "html": folders_slide(),
-          "notes": "כשעובדים עם סוכני AI, סדר בתיקיות הוא לא עניין טכני. הוא המפתח לכך שנדע איפה כל דבר נשמר ואיך חוזרים אליו.\n\nהמבנה הזה מונע את \"איפה הקובץ שקלוד יצר לי בשבוע שעבר?\" ומאפשר ל-Cowork לעבוד רק בתוך התיקייה של הפרויקט."})
-S.append({"type": "steps", "eyebrow": "עבודת צוות", "title": "Projects: *סביבת עבודה משותפת* לכל תחום",
-          "steps": [{"title": "פותחים Project ומגדירים מטרה", "text": "למשל \"גיוס שותפויות וקרנות\", עם הנחיות רק לפרויקט הזה."},
-                    {"title": "מעלים מסמכי ליבה", "text": "דפי עמדה, נתוני אימפקט ובקשות מענקים מוצלחות מהעבר."},
-                    {"title": "משתפים עם הצוות", "text": "Share, וכל מי שנכנס נהנה מאותו זיכרון ומאותן הנחיות."}],
-          "takeaway": "שפה ארגונית אחידה, *וחפיפה קצרה בהרבה*.",
-          "notes": "להראות בלייב: Projects → New, Project Knowledge, ואז Share כדי שכל ההנהלה תעבוד על אותה תשתית ידע.\n\nאם עולה שאלה על זיכרון ארוך טווח: Obsidian היא תיקייה של קבצי טקסט שאפשר לחבר ל-Cowork כמוח שני של הארגון."})
+S.append({"type": "raw", "html": folders_safety_slide(),
+          "notes": "כשעובדים עם סוכני AI, סדר בתיקיות הוא לא עניין טכני: התיקייה היא הגבול של מה ש-Claude יכול לקרוא, לכתוב ולמחוק (באישורכם). ב-Cowork, לתיקייה שבוחרים יש הרשאת קריאה וגם כתיבה.\n\nתיקייה ייעודית, ולא Downloads, Desktop או Documents. זה כמו לתת לעמית חדש לחטט בכל הקבצים שלכם. כלל אצבע: לפני משימה חדשה פותחים לה תיקייה עם שם ברור.\n\nשני מצבי הרשאה. Ask before acting (ברירת המחדל): Claude עוצר לאישורכם לפני כל פעולה שמשפיעה החוצה, כמו שליחת מייל, פרסום או שיתוף. Act without asking: רק למשימות שאתם סומכים עליהן. מחיקה קבועה תמיד דורשת אישור, ואי אפשר לדלג עליו.\n\nשלושה הרגלים: מגבים מה שאי אפשר לשחזר (עותק במקום ש-Cowork לא מגיע אליו). מנסים משימה חדשה קודם על עותק. מנסחים במפורש: 'טיוטה בלבד, אל תשלח', 'אל תמחק', 'רק 3 הקבצים האחרונים'.\n\nמתי Cowork לא הכלי הנכון: תהליכים שדורשים תיעוד לביקורת, מידע אישי רגיש מעבר למה שהארגון אישר, ופעולות שלא הייתם משאירים לעמית חכם בלי פיקוח (שליחת מסמך משפטי, הודעה פומבית). Claude יכין, אתם שולחים."})
+S.append({"type": "raw", "html": practice_slide(),
+          "notes": "זה התרגול הראשון ב-Cowork. כל אחד בוחר תיקייה עם חומר אמיתי (או עותק שלה) ומחבר אפליקציה אחת, בדרך כלל מייל או דרייב.\n\nהלולאה של Cowork: Claude מציג תוכנית לפני שהוא מתחיל, ושואל שאלות הבהרה (בדרך כלל בוחרים אפשרות, ואפשר לענות במילים שלכם). תוך כדי עבודה רואים את ההתקדמות, ואפשר לעצור ולכוון. לא מחכים לסוף כדי להתחיל מחדש.\n\nבסוף בודקים את התוצר כמו טיוטה ממישהו שאתם סומכים עליו אבל עוד לא מכירים: האם הוא עונה על המטרה? האם העובדות נכונות (לבקש ממנו לציין מאילו מסמכים לקח)? האם משהו נשמע מומצא, כמו תאריך, שם או ציטוט שאי אפשר לאתר? אם התוצאה כמעט נכונה, מבקשים תיקון ולא מתחילים מחדש.\n\nרעיונות: סיכום הפגישות מהשבוע האחרון, עם מסקנות ופעולות, ואיפה הייתי יכול להיות יעיל יותר. בוחרים תיקייה של סיכומי שיחות, Claude שואל איך להציג את התשובה, בונה תוכנית, ותוך זמן קצר יש סיכום של כל השבוע. או ארגון תיקייה: 'ארגן את תיקיית Downloads. הצע תוכנית, ואל תשנה כלום עד שאאשר'.\n\nאם יש זמן: לנסח משימה לפי הנוסחה מהשקף הקודם: תוצר, חומרי גלם ודגש. אתם מאצילים את העבודה, לא את שיקול הדעת."})
+S.append({"type": "raw", "html": projects_slide(),
+          "notes": "להראות בלייב: Projects ← New, הוספת תיקיות וקבצים, ואם יש אצלכם, Share לשיתוף עם ההנהלה.\n\nב-Cowork פרויקט הוא מרחב עבודה לתחום אחד: הוראות (כמו Instructions, רק לפרויקט), תיקיות וקישורים שהשיחות מסתמכות עליהם, משימות מתוזמנות, וזיכרון ש-Claude בונה לבד מהשיחות. זה ההבדל הגדול: מחוץ לפרויקט כל שיחה מתחילה מאפס (חוץ מה-Instructions). בתוכו כל שיחה מוסיפה לידע, וכך המשימה הבאה כבר פותחת עם המצב של הלקוח, ההחלטות מהשבוע שעבר ומה שעדיין פתוח.\n\nשלוש דרכים להתחיל: מאפס, מתיקייה קיימת במחשב, או מפרויקט קיים.\n\nאם עולה שאלה על זיכרון ארוך טווח: Obsidian היא תיקייה של קבצי טקסט שאפשר לחבר ל-Cowork כמוח שני של הארגון."})
+S.append({"type": "raw", "html": scheduled_slide(),
+          "notes": "יש שתי דרכים להגדיר משימה מתוזמנת. הדרך הטבעית: עושים את המשימה פעם אחת ב-Cowork, בודקים שהתוצאה טובה, וכותבים /schedule כדי להפוך בדיוק את התהליך הזה לחוזר. אפשר גם להתחיל מאפס: כותבים /schedule, מתארים את המשימה ואת התדירות, ו-Claude מנסח פרומפט לאישורכם.\n\nתדירות: כל שעה, כל יום, ימי חול או ידני.\n\nאיפה זה רץ: משימה שמשתמשת רק בקונקטורים יכולה לרוץ מרחוק, גם כשהמחשב כבוי. משימה שצריכה קבצים או אפליקציות מהמחשב רצה על המחשב, ולכן אפליקציית הדסקטופ צריכה להיות פתוחה. אם המחשב סגור או ישן, Claude ימשיך כשתחזרו ויודיע שהיה עיכוב.\n\nרעיונות: סקירה ביום שישי (מה קרה בשבוע, החלטות, מה מחכה בשבוע הבא), סיכום חודשי מגיליונות ב-1 בחודש, ובריף בוקר לפגישות של היום, בדיוק כמו סקיל תדריך בוקר.\n\nגם מהטלפון: אפשר להתחיל משימה מאפליקציית המובייל, והיא רצה מרחוק ומחכה לכם. היא מגיעה לקונקטורים, לא לתיקיות במחשב.\n\nבהתחלה מתזמנים טיוטות לבדיקה, ולא שליחה אוטומטית."})
+S.append({"type": "raw", "html": layers_slide(),
+          "notes": "זו מפה של מה שראינו ומה שמגיע. יש ארבע דרכים ללמד את Claude להכיר אתכם, וכל אחת חוסכת הסברים חוזרים.\n\nInstructions: Claude לומד מי אתם ואיך אתם עובדים, ולכן כל משימה מתחילה כבר מכוילת לתפקיד שלכם.\nProjects: הוא לומד את ההקשר של תחום עבודה אחד, ועובד כמו מי שכבר בצוות: יש לו את הקבצים, ההיסטוריה וההחלטות.\nSkills: הוא לומד איך תהליך מסוים נעשה, ומשימה מוכרת רצה לפי התבניות, הסטנדרטים והצעדים שלכם.\nPlugins: הוא לומד את המומחיות של התפקיד שלכם, ומ-Claude כללי הופך למומחה עם תהליכים וחיבורים מוכנים.\n\nשתי הראשונות כבר ראינו. הבא: סקילים."})
 S.append({"type": "raw", "html": skills_intro_slide(),
           "notes": "מכירים את זה? משימה שחוזרת על עצמה, או שיחה ארוכה שבסוף הגעתם בה לתוצאה מושלמת, ובפעם הבאה מתחילים מאפס.\n\nבמקום להדביק בכל שיחה את אותו פרומפט ארוך, מבקשים מ-Claude בסוף שיחה מוצלחת: \"על בסיס השיחה הזו, צור לי Skill שאוכל להשתמש בו שוב בפעם הבאה\".\n\nמתכון שף: קובץ שאורז את המרכיבים (מה Claude מקבל מכם ובאיזה סגנון לכתוב), שלבי ההכנה (מה עושים ובאיזה סדר) ואיך נראית מנה מוצלחת. Claude שולף את המתכון לבד כשהמשימה מתאימה ומבצע ברמה של שף.\n\nכל פעולה שחוזרת יותר מפעמיים בחודש ראויה לסקיל. את הסיפור המלא (איך בניתי סקיל ומה למדתי) נותנים בנפרד: skills-example.html."})
 S.append({"type": "raw", "html": skills_example_slide(),
           "notes": "הדוגמה הכי ויזואלית: סקיל שבניתי לניהול משימות. כותבים משפט אחד, \"תתחיל את היום שלי\", ו-Claude קורא מיילים, בודק את היומן, אוסף משימות פתוחות, ממיין לפי דחיפות ובונה לוח אחד. בערב: \"סיים את היום\" ומקבלים סיכום של מה הספקתי ומה עובר למחר. הנתונים בצילום הם דוגמה.\n\nמבפנים: הסקיל הוא קובץ טקסט אחד (SKILL.md) עם תיאור שאומר ל-Claude מתי להשתמש בו, ומתכון מלא. Claude רואה בתחילת השיחה רק את התיאורים של כל הסקילים, ופותח את המתכון המלא רק כשצריך. זוכרים את הטוקנים? בגלל זה אפשר להחזיק הרבה סקילים בלי להעמיס על חלון ההקשר.\n\nאת הסקיל הזה אשתף אתכם."})
 S.append({"type": "raw", "html": skill_structure_slide(),
-          "notes": "סקיל הוא קובץ טקסט אחד (SKILL.md) עם שני חלקים, וכל חלק נקרא בזמן אחר. זה אותו סקיל תדריך בוקר מהשקף הקודם, בתרגום חופשי.\n\ndescription: כריכת המתכון. שם ותיאור קצר שאומר ל-Claude מתי להשתמש בסקיל.\nbody: המתכון המלא, שלב אחרי שלב.\n\nאיך Claude קורא את זה: בתחילת השיחה הוא רואה רק את התיאורים של כל הסקילים (כמו תוכן עניינים). כשכתבתם \"תתחיל את היום שלי\" הוא מזהה התאמה, ורק אז פותח את המתכון המלא.\n\nזוכרים את הטוקנים? בגלל זה אפשר להחזיק עשרות סקילים בלי להעמיס על חלון ההקשר: רק התיאורים נטענים, והמתכון נפתח רק כשצריך.\n\ndescription טוב = Claude יודע מתי לשלוף. body טוב = התוצאה יוצאת טעימה."})
+          "notes": "סקיל הוא קובץ טקסט אחד (SKILL.md) עם שני חלקים, וכל חלק נקרא בזמן אחר. זה אותו סקיל תדריך בוקר מהשקף הקודם, בתרגום חופשי.\n\ndescription: כריכת המתכון. שם ותיאור קצר שאומר ל-Claude מתי להשתמש בסקיל.\nbody: המתכון המלא, שלב אחרי שלב.\n\nאיך Claude קורא את זה: בתחילת השיחה הוא רואה רק את התיאורים של כל הסקילים (כמו תוכן עניינים). כשכתבתם \"תתחיל את היום שלי\" הוא מזהה התאמה, ורק אז פותח את המתכון המלא.\n\nזוכרים את הטוקנים? בגלל זה אפשר להחזיק עשרות סקילים בלי להעמיס על חלון ההקשר: רק התיאורים נטענים, והמתכון נפתח רק כשצריך.\n\ndescription טוב = Claude יודע מתי לשלוף. body טוב = התוצאה יוצאת טעימה.\n\nסקיל יכול להכיל ארבעה סוגי קבצים: הוראות (SKILL.md), נכסים (לוגו, תבניות, פונטים), דוגמאות (איך נראה תוצר טוב) וסקריפטים (קוד קטן לחלקים שחייבים להיעשות אותו דבר בכל פעם). סקיל המצגות שלנו כולל את כולם. לפני ששולחים סקיל לאחרים, בודקים אותו על בקשה אמיתית ומשווים למה ש-Claude היה עושה בלעדיו."})
 S.append({"type": "raw", "html": icards_slide("לא להמציא את הגלגל", f'מתקינים סקיל, או {acc("מוצאים מוכן")}', None, [
     icard("💬", "איך מתקינים?", "פשוט מבקשים מ-Claude להתקין, והוא כבר מתקין בשבילכם.", 1, foot("בלי קבצים ובלי הגדרות", 1)),
     icard("🔎", "Find Skills", "הסקיל של Vercel מחפש בשבילכם בין אלפי סקילים שמישהו כבר בנה ובדק.", 3,
@@ -478,22 +580,22 @@ S.append({"type": "raw", "html": handson_slide(),
 _srcs = ''.join(f'<span class="chip" style="background:#fff;color:var(--c5);border:2px solid var(--c4);font-size:23px;padding:7px 16px;" dir="ltr">{n}</span>' for n in ["Google Drive", "Gmail", "Calendar", "Slack", "Notion"])
 S.append({"type": "raw", "html": icards_slide("קונקטורים, אבטחה ופלאגינים", f'לחבר את Claude {acc("למקורות המידע שלכם")}', None, [
     icard("🔌", "Connectors", "Claude מתחבר ישירות למקורות שלכם ושולף את המסמך העדכני בעצמו.", 1,
-          f'<div class="fx wrap" style="gap:10px;">{_srcs}</div>' + foot("מחברים בהגדרות → Connectors", 1), fs=28),
-    icard("🛡️", "אבטחת מידע", "בלי פרטים מזהים של חברי קהילה: מידע רפואי עולה רק אחרי התממה. מחברים רק תיקיות רלוונטיות, ופעולות רגישות מאשרים ידנית.", 3, fs=28),
-    icard("🦸", "פלאגינים · רשות", "Superpowers: Claude עוצר לסיעור מוחות ולתוכנית לפני שהוא מבצע, ובודק את עצמו בסוף. חבילה של סקילים שמתקינים בבת אחת.", 5, fs=28)],
+          f'<div class="fx wrap" style="gap:10px;">{_srcs}</div>' + foot("מדליקים רק מה שצריך למשימה", 1), fs=28),
+    icard("🛡️", "אבטחת מידע", "בלי פרטים מזהים של חברי קהילה: מידע רפואי עולה רק אחרי התממה, ורק במסגרת מה שהארגון אישר. פעולות רגישות מאשרים ידנית.", 3, fs=28),
+    icard("🦸", "פלאגינים · רשות", 'חבילת סקילים לתפקיד, בהתקנה אחת. כותבים <span dir="ltr">/setup-claude</span> ו-<span dir="ltr">Claude</span> מראיין אתכם ומציע פלאגין. למשל: <span dir="ltr">Superpowers</span>.', 5, fs=28, raw=True)],
     'אנחנו תמיד <span class="hi">הטייס שמאשר</span> לפני שליחה או שינוי של מידע ארגוני.'),
-          "notes": "הקונקטורים הם הגשר בין Claude למקורות המידע שלכם: Drive, Gmail, יומן, Slack, Notion. במקום להוריד ולהעלות קבצים ידנית, Claude שולף את המסמך העדכני בעצמו. להראות איפה בתפריט מחברים (הגדרות → Connectors).\n\nלהדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן: מידע רפואי או אישי לא עולה בלי התממה; הרשאות מינימליות, כלומר מחברים רק מה שצריך; פעולות רגישות מאשרים ידנית.\n\nאופציונלי, אם יש זמן ויש סקרנות: פלאגין הוא חבילה של סקילים וכלים. Superpowers גורם ל-Claude לתכנן לפני ביצוע: סיעור מוחות, תוכנית, ביצוע ובדיקה עצמית. 2 דקות להדגים."})
+          "notes": "הקונקטורים הם הגשר בין Claude למקורות המידע שלכם: Drive, Gmail, יומן, Slack, Notion. במקום להוריד ולהעלות קבצים ידנית, Claude שולף את המסמך העדכני בעצמו. להראות איפה בתפריט מחברים (הגדרות → Connectors).\n\nלהדגיש את נהלי אבטחת המידע בעמותה שמטפלת בצעירים חולי סרטן: מידע רפואי או אישי לא עולה בלי התממה; הרשאות מינימליות, כלומר מחברים רק מה שצריך; פעולות רגישות מאשרים ידנית.\n\nאופציונלי, אם יש זמן ויש סקרנות: פלאגין הוא חבילה של סקילים (וגם הקונקטורים שהם צריכים) סביב תפקיד. Anthropic מפרסמת פלאגינים לתפקידים נפוצים, כמו כספים, משפטים, שיווק ותמיכה, ואפשר להתקין אחד, להתאים אותו או לבנות משלכם. הדרך הקלה למצוא: לכתוב /setup-claude בשיחה חדשה. Claude מראיין על סוג העבודה שלכם ומציע פלאגין. עוד דוגמה: Superpowers גורם ל-Claude לתכנן לפני ביצוע: סיעור מוחות, תוכנית, ביצוע ובדיקה עצמית. 2 דקות להדגים.\n\nכל קונקטור שמדליקים הוא כלי ש-Cowork יכול להגיע אליו, ולכן מדליקים רק את מה שצריך לכל משימה. חלק מהקונקטורים רק קוראים ומחפשים (כמו Drive), וחלקם גם יוצרים ועורכים: קוראים את התיאור לפני שמדליקים."})
 S.append({"type": "raw", "html": icards_slide("סוכן בתוך הדפדפן", f'Claude in Chrome: {acc("Claude בא אל האתר")}', None, [
     icard("📥", "התקנה ב-30 שניות", "תוסף רשמי מחנות Chrome, נצמד לסרגל ונפתח בחלונית צד.", 1, foot("עובד על כל אתר פתוח", 1)),
-    icard("🪄", "מה זה נותן", "סיכום עמודים ארוכים, איסוף נתונים מפורטלים, מילוי טפסים חוזרים.", 3),
-    icard("🛡️", "עבודה בטוחה", "רואים כל צעד שהוא מתכנן, ומאשרים לפני פעולות חשובות.", 5, foot("אתם מאשרים, הוא מבצע", 5))],
+    icard("🪄", "מה זה נותן", "הגשר לכלים בלי קונקטור: פורטלים ודשבורדים. הוא אוסף בדפדפן, ו-Cowork בונה את התוצר.", 3),
+    icard("🛡️", "עבודה בטוחה", "אתם מתחברים לאתר בעצמכם. רואים כל צעד ומאשרים פעולות חשובות.", 5, foot("Claude לא מתחבר בשבילכם", 5))],
     'במקום להעתיק מאתרים ל-Claude, <span class="hi">מביאים את Claude לאתר</span>.'),
           "notes": "להדגים פתיחה של התוסף על עמוד אמיתי ולהראות איך קלוד קורא את המסך ומבצע פעולה שחוסכת עבודה ידנית.\n\nלהזכיר את מצב ההרשאות."})
 S.append({"type": "raw", "html": usecases_slide(),
           "notes": "החלק האינטראקטיבי המרכזי: עוברים משתתף-משתתף, שומעים את ה-Use Case, וממפים אותו יחד על המסך: תיקייה, מודל, הקשר וסקיל."})
 S.append({"type": "closing", "eyebrow": "צ'קליסט למחר בבוקר", "title": "5 צעדים קטנים, *לפי הסדר*",
           "points": [{"title": "הראיון ההפוך", "text": "מריצים את 10 השאלות ומעדכנים Instructions."},
-                     {"title": "סדר בתיקיות", "text": "תיקייה ברורה לפרויקט המרכזי של השבוע."},
+                     {"title": "סדר בתיקיות", "text": "תיקייה ברורה לפרויקט של השבוע, ו-Ask before acting נשאר דלוק."},
                      {"title": "Haiku למסמכים", "text": "Haiku לסריקה, Sonnet לכתיבה."},
                      {"title": "Project משותף", "text": "Project אחד עם הצוות, עם מסמכי הליבה."},
                      {"title": "סקיל ראשון", "text": "סקיל המצגות, ונסיון עם תוסף Chrome."}],
