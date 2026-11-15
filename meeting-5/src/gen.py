@@ -245,6 +245,27 @@ def prompt_merged_slide():
     return head("הנדסת פרומפטים", f'פרומפט טוב = {acc("הקשר מדויק")}', "זה לא קסם טכני. זה כמו לתת הנחיה לעובד חדש.") + stage(row(comp, ex)) + \
         take('פרומפט טוב = תקשורת טובה: ככל שההקשר מדויק יותר, <span class="hi">התוצאה טובה יותר</span>.')
 
+def context_slide():
+    import base64
+    img = base64.b64encode(open('assets/context-meter.png', 'rb').read()).decode()
+    def src(icon, title, text, c):
+        return (f'<div class="glass fx col" style="flex:1;min-width:0;padding:30px 40px;gap:12px;justify-content:center;border-top:7px solid var(--c{c});">'
+                f'<span class="fw8" style="font-size:38px;color:var(--c{c});">{icon} {r(title)}</span>'
+                f'<span class="ink-t fw5" style="font-size:30px;line-height:1.4;">{r(text)}</span></div>')
+    plus = '<span class="fw8" style="font-size:72px;line-height:1;color:var(--c3);align-self:center;">+</span>'
+    top = (f'<div class="fx" style="gap:22px;flex:1;min-height:0;">'
+           f'{src("📤", "מה שאנחנו שולחים", "הודעות, מסמכים, קבצים ותמונות", 1)}{plus}'
+           f'{src("💬", "מה ש-Claude עונה", "כל התשובות שהוא כותב לנו בחזרה", 5)}</div>')
+    bottom = (f'<div class="glass fx ac" style="flex:1;min-height:0;gap:48px;padding:24px 48px;border-top:7px solid var(--c3);">'
+              f'<div class="fx col" style="flex:1;gap:10px;"><span class="fw8" style="font-size:38px;color:var(--c3);">📊 כך זה נראה ב-Claude</span>'
+              f'<span class="ink-t fw5" style="font-size:30px;line-height:1.4;">{r("34% מהמיליון כבר בשימוש: 335.2k מתוך 1M טוקנים.")}</span></div>'
+              f'<img src="data:image/png;base64,{img}" alt="מד ההקשר ב-Claude: 34% בשימוש, 335.2k מתוך 1M" '
+              f'style="height:100%;max-height:170px;width:auto;border-radius:12px;border:1px solid var(--c4);background:#fff;padding:10px 16px;box-sizing:content-box;"></div>')
+    return head("חלון ההקשר", f'בכל שיחה מוקצים {acc("מיליון טוקנים")}',
+                "הם מתמלאים בכל מה שנכנס לשיחה ובכל מה שיוצא ממנה.") + \
+        stage(f'<div class="fx col" style="flex:1;gap:24px;min-height:0;">{top}{bottom}</div>') + \
+        take('ככל שהתכנים והתשובות ארוכים יותר, <span class="hi">מגיעים מהר יותר למיליון</span>. משימה חדשה? צ׳אט חדש.')
+
 def badgood_slide():
     hi = lambda t: f'<span style="color:var(--highlight);font-weight:800;">{r(t)}</span>'
     bad = (f'<div class="glass fx col" style="flex:1;min-width:0;padding:40px 44px;gap:30px;justify-content:center;border-top:7px solid var(--c6);">'
@@ -323,12 +344,8 @@ S.append({"type": "raw", "html": llm_slide(),
           "notes": "LLM = Large Language Model: מודל שפה גדול שקרא המון טקסט ולמד לזהות מה בדרך כלל בא אחרי מה. ChatGPT, Claude ו-Gemini הם כולם מודלי שפה: אותו רעיון בסיסי, כל אחד בנוי קצת אחרת.\n\nזה לא מוח אנושי, זה מנוע שפה. בכל רגע הוא שואל: מה ההמשך הכי סביר לטקסט הזה? לכן ככל שנדבר איתו ברור יותר, נקבל תוצאה טובה יותר.\n\nדוגמה: \"החתול ישב על ה___\". המודל נותן הסתברות לכל המשך אפשרי ובוחר. המספרים להמחשה בלבד.\n\nומה בדיוק הוא מנחש? לא מילים שלמות, אלא חתיכות קטנות של טקסט שנקראות טוקנים. זה המעבר לשקף הבא."})
 S.append({"type": "raw", "html": tokens_slide2(),
           "notes": "כמו שלמדנו במפגש 2: מודל שפה מנבא את הטוקן הבא על סמך הטוקנים שכבר נמצאים בחלון ההקשר שלו.\n\nטוקן הוא אבן הבניין הקטנה ביותר שהמודל מעבד. בעברית זה בולט במיוחד: המשפט \"חלאסרטן מחברת צעירים חולים ומחלימים\" (35 תווים) יוצא 32 טוקנים, כמעט טוקן לכל אות. האות ן הצריכה אפילו שני טוקנים (הטוקן הדהוי), והרווחים נספרים גם הם. הפירוק לקוח מכלי הערכה (Lunary, לפי המודל claude-opus-5-5), אז זו הערכה ולא מספר מדויק של Claude.\n\n* באנגלית אותו רעיון יוצא בדרך כלל בפחות טוקנים (בערך טוקן למילה), ולכן גם המחיר שונה: הכל נספר לפי טוקנים, ועברית יקרה יותר מאנגלית.\n\nגם הפרומפט שלכם וגם התשובה הם רצף של טוקנים, וכולם נספרים במכסה."})
-S.append({"type": "compare", "eyebrow": "חלון ההקשר", "title": "חלון ההקשר הוא *שולחן העבודה* של Claude",
-          "subtitle": "כמות הטוקנים ש-Claude רואה וזוכר בשיחה אחת, בבת אחת.",
-          "left": {"label": "שולחן עמוס", "title": "אובדן פוקוס", "items": ["5 נושאים באותה שיחה ארוכה", "הטוקנים מתבזבזים", "איכות התשובה צונחת"]},
-          "right": {"label": "שולחן נקי", "title": "תשובה חדה", "items": ["רק ההקשר של המשימה", "Claude ממוקד במה שחשוב", "*צ'אט חדש לכל משימה*"]},
-          "takeaway": "כלל ברזל: משימה חדשה? *פותחים צ'אט חדש ונקי*.",
-          "notes": "חלון ההקשר הוא כמות הטוקנים המקסימלית שקלוד מסוגל לראות ולזכור בשיחה אחת, כמו שולחן עבודה.\n\nמעבר לשקף הבא: אז איך מכוונים את הניחוש בדיוק למה שאנחנו צריכים? מבנה הפרומפט."})
+S.append({"type": "raw", "html": context_slide(),
+          "notes": "במילים פשוטות: בכל שיחה מוקצים ל-Claude מיליון טוקנים. הם מורכבים מכל מה שאנחנו שולחים לו (הודעות, מסמכים, תמונות) וגם מכל התשובות שהוא נותן לנו. ככל שהתכנים שאנחנו שולחים והתשובות שלו ארוכים יותר, מגיעים מהר יותר למיליון.\n\nבצילום המסך: מד ה-Context. כאן 34% בשימוש, 335.2k מתוך 1M. (המספר המדויק משתנה לפי המודל והתוכנית.)\n\nמי ששמע את המונח הטכני: זה נקרא חלון הקשר (Context Window). כמו שולחן עבודה: ככל שהוא עמוס בנושאים שונים, Claude פחות ממוקד.\n\nכלל ברזל: משימה חדשה? פותחים צ'אט חדש.\n\nמעבר לשקף הבא: איך מדייקים את מה שאנחנו כותבים, כלומר הפרומפט."})
 S.append({"type": "raw", "html": prompt_merged_slide(),
           "notes": "פרומפט = ההוראות שאנחנו נותנים ל-AI. פרומפט טוב = תקשורת טובה: זה לא קסם טכני, זה בדיוק כמו לתת הנחיה לעובד חדש. ככל שנהיה ברורים ומכוונים יותר, נקבל תוצאה טובה יותר.\n\nלהשוות את שתי הדוגמאות: העמום נותן טקסט גנרי; המלא נותן ל-Claude הקשר מדויק (מי כותב, למי, באיזה טון ומה המשימה) ולכן התוצאה מדויקת.\n\nגשר לשקף הבא: שלושה מהמרכיבים (תפקיד, הקשר, סגנון) כמעט לא משתנים אצלכם. אותם אפשר לשמור פעם אחת ב-Instructions for Claude, ולהשקיע את הפרומפט במה שמשתנה."})
 S.append({"type": "raw", "html": interview_slide(),
